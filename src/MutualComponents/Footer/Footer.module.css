@@ -1,0 +1,107 @@
+.footer {
+    background: #f0f0f0;
+    padding: 60px 80px 82px;
+}
+
+.content {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px 100px;
+}
+
+.brand {
+    max-width: 200px; /* Giảm chiều rộng của khung chứa phần mô tả */
+}
+
+.brandName {
+    font: 700 32px Lato, sans-serif;
+    color: #000;
+    margin: 0;
+}
+
+.brandDescription {
+    color: rgba(0, 0, 0, 0.6);
+    font: 400 14px Lato, sans-serif;
+    line-height: 22px;
+    margin: 25px 0;
+}
+
+.linksContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.linkGroup {
+    min-width: 150px;
+}
+
+.linkTitle {
+    font: 500 16px Lato, sans-serif;
+    color: #000;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 26px;
+}
+
+.linkList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.link {
+    color: rgba(0, 0, 0, 0.6);
+    font: 400 16px Lato, sans-serif;
+    text-decoration: none;
+    line-height: 19px;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 49px auto;
+    max-width: 1240px;
+}
+
+.bottom {
+    max-width: 1234px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.payments {
+    display: flex;
+    gap: 12px;
+}
+
+.paymentIcon {
+    width: 60px; /* Tăng kích thước của hình ảnh phương thức thanh toán */
+    aspect-ratio: 1.57;
+    object-fit: contain;
+}
+
+@media (max-width: 991px) {
+    .footer {
+        padding: 100px 20px 0;
+    }
+    
+    .content {
+        max-width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .linksContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+}
