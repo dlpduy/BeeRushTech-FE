@@ -1,0 +1,84 @@
+.cart {
+  background: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1242px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  font: 400 16px Lato, sans-serif;
+}
+
+.breadcrumbLink {
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  background: none; /* Xóa nền */
+  border: none; /* Xóa khung viền */
+  padding: 0; /* Xóa padding */
+  font: 400 16px Lato, sans-serif;
+  cursor: pointer; /* Thêm con trỏ chuột để chỉ định có thể click */
+}
+
+.breadcrumbLink:hover {
+  text-decoration: underline; /* Thêm gạch chân khi hover */
+}
+
+.breadcrumbIcon {
+  width: 16px;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.breadcrumbCurrent {
+  color: #000;
+}
+
+.title {
+  font: 700 40px Lato, sans-serif;
+  color: #000;
+  margin: 27px 0 24px;
+}
+
+.content {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 80px;
+}
+
+.cartItems {
+  flex: 0 0 59%;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.sidebar {
+  flex: 0 0 41%;
+}
+
+@media (max-width: 991px) {
+  .container {
+    max-width: 100%;
+  }
+  
+  .content {
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+  
+  .cartItems,
+  .sidebar {
+    flex: 1;
+  }
+}

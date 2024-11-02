@@ -1,0 +1,107 @@
+.cartItem {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .productImage {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .productDetails {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .mainDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .productInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .productTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .productSpecs {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .specText {
+    font-size: 14px;
+    color: #888;
+    margin: 0;
+  }
+  
+  .specValue {
+    font-weight: 500;
+    color: #000;
+  }
+  
+  .price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+  }
+  
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .removeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .actionIcon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f5f5f5;
+    border-radius: 24px;
+    padding: 6px 12px;
+  }
+  
+  .quantityButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .quantityIcon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .quantityValue {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
