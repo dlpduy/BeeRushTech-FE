@@ -1,0 +1,176 @@
+.manageContainer {
+  width:100%;
+  font-family: Lato;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.title {
+  text-align: left;
+  margin: 0;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  table-layout: fixed;
+  
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  height: 25px;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Đặt chiều rộng cụ thể cho từng cột */
+/* .table th:nth-child(1), .table td:nth-child(1) { width: 10%; }
+.table th:nth-child(2), .table td:nth-child(2) { width: 20%; }
+.table th:nth-child(3), .table td:nth-child(3) { width: 30%; }
+.table th:nth-child(4), .table td:nth-child(4) { width: 20%; }
+.table th:nth-child(5), .table td:nth-child(5) { width: 20%; } */
+
+.inputField {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: none;
+  padding: 8px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  background-color: transparent;
+  outline: none;
+}
+
+.table input[type="text"],
+.table input[type="number"] {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0;
+  text-align: left;
+  background-color: transparent;
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  display: block;
+  line-height: 24px;
+}
+
+.editButton {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+.deleteButton {
+  background-color: #ea4657;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+
+.addButton {
+  background-color: #78d2dc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popupContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.popupFormRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.popupLabel {
+  flex: 1;
+  font-weight: bold;
+}
+
+.popupInput {
+  flex: 2;
+  padding: 6px;
+  margin-left: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.saveButton, .cancelButton {
+  margin-top: 10px;
+  padding: 8px 12px;
+}
+
+.saveButton, .cancelButton {
+  margin-top: 10px;
+  padding: 8px 12px;
+}
+/*filter */
+
+.filterSelect {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.filterSelect:focus {
+  border-color: #5bc0de; /* Đổi màu viền khi chọn */
+  outline: none;
+}

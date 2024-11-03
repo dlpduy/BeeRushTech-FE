@@ -11,7 +11,7 @@ const initialCartItems = [
     id: 1,
     image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/d07bc4911a6420610641cd1d5c59b0319418027d239c31f5aa62a2bdb2e96ec1?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8',
     title: 'Gradient Graphic T-shirt',
-    size: 'Large',
+    size: 'Large', 
     color: 'White',
     price: 145,
     quantity: 1
