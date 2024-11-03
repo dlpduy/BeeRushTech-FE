@@ -1,4 +1,5 @@
-
+import React from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Cart from './Cart';
 import PrivacyPolicy from './FAQ/Privacy/PrivacyPolicy'
