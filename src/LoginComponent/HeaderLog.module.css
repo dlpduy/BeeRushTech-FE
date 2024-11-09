@@ -1,0 +1,190 @@
+/* Đảm bảo không có đường viền trên toàn bộ header */
+.header {
+  background-color:  #ffb13a;
+    width: 100%;
+    border: none; /* Loại bỏ mọi đường viền trực tiếp trên header */
+    box-shadow: none; /* Xóa mọi hiệu ứng bóng nếu có */
+  }
+  
+  /* CSS reset để loại bỏ bất kỳ style không mong muốn nào */
+  .header, .header * {
+    all: unset; /* Xóa mọi style mặc định */
+    box-sizing: border-box;
+    background-color:  #ffb13a;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Nội dung header */
+  .headerContent {
+    max-width: 1242px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    border-bottom: none; /* Đảm bảo không có đường viền dưới */
+  }
+  
+  /* Container cho logo */
+  .logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa logo và chữ */
+  }
+  
+  .logo {
+    width: 83px;
+    aspect-ratio: 1.2;
+    object-fit: contain;
+  }
+  
+  .brandName {
+    color: #000;
+    font: 700 24px Lato, sans-serif; 
+  }
+  
+  .navigation {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-left: 20px; /* Khoảng cách từ logo sang menu */
+    flex: 1;
+  }
+  
+  /* Các liên kết trong navigation */
+  .navLinks {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navLink {
+    color: #000;
+    text-decoration: none;
+    font: 400 16px Lato, sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .navLink:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+  
+  .navIcon {
+    width: 16px;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+  
+  .searchForm {
+    all: unset;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f0f0f0;
+    border-radius: 62px;
+    padding: 12px 16px;
+    flex: 1;
+    max-width: 500px;
+  }
+  
+  .searchIcon {
+    all: unset;
+    width: 24px;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+  
+  .searchInput {
+
+    border: none;
+    background: transparent;
+    width: 100%;
+    font: 400 16px Lato, sans-serif;
+    color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .searchInput:focus {
+    outline: none;
+  }
+  
+  .userActions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  
+  .iconButton {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .actionIcon {
+    width: 24px;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+  
+  /* Đảm bảo layout phù hợp trên màn hình nhỏ */
+  @media (max-width: 991px) {
+    .navigation {
+      margin-top: 20px;
+    }
+  
+    .headerContent {
+      max-width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .searchForm {
+      max-width: 100%;
+    }
+  }
+  
+  /* Top-right buttons for Sign Up, Sign In, and Forget Password */
+.top-right-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.top-right-buttons button {
+  padding: 8px 16px;
+  background-color: #ff9900;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.top-right-buttons button:hover {
+  background-color: #ff7700;
+}
+
+.forgot-password {
+  color: #555;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.forgot-password:hover {
+  color: #333;
+}

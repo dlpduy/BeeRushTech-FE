@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Footer.module.css';
 import { Link } from 'react-router-dom';
 
+
 const footerLinks = {
   company: ['About', 'Features', 'Works', 'Career'],
   help: ['Customer Support', 'Delivery Details', 'Terms & Conditions', 'Privacy Policy'],

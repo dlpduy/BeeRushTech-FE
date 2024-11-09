@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 
+
 export const Header = () => {
+
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
@@ -50,12 +52,14 @@ export const Header = () => {
             />
           </form>
           <div className={styles.userActions}>
-            <button className={styles.iconButton} aria-label="User account">
+            <button className={styles.iconButton} aria-label="User account"  >
               <img 
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/f2f89bc29975d179540a0a77d4a46123ef4301f3712d8e4aa60395a3d5ca0f65?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8" 
                 alt="" 
                 className={styles.actionIcon} 
               />
+              
+          
             </button>
             <Link to="/cart" className={styles.iconButton} aria-label="Shopping cart">
               <img 

@@ -1,0 +1,8 @@
+.brandContainer{
+    background-color: #FFB13A;
+    display: inline-flex;
+    height: 122px;
+    align-items: center;
+    gap:18%;
+    padding-left: 109px;
+}

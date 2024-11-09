@@ -1,0 +1,35 @@
+.product-card {
+    display: flex;
+    width: 295px;
+    height: 298px;
+    background: #FFB13A;
+    border-radius: 20px;
+    padding: 44px 42px 44px 43px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .product-image {
+    display: flex;
+    width: 210px;
+    height: 210px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #FFB13A;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .product-info {
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .product-info h3{
+    color: #000;
+font-family: Lato;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+  }

@@ -1,0 +1,31 @@
+.review-card {
+    display: inline-block;
+    width: 400px;
+    padding: 28px 32px;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 24px 342px;
+    flex-wrap: wrap;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+  }
+  
+  .review-rating {
+    color: #f5a623; /* Star color */
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+  
+  .review-card h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+    white-space: nowrap;
+  }
+  
+  .review-card p {
+    font-size: 0.9rem;
+    color: #666;
+    white-space: wrap;
+  }
+  

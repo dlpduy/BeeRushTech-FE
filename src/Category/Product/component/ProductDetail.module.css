@@ -1,0 +1,23 @@
+.product_detail{
+    display: flex;
+    padding: 15px;
+    gap:10px;
+}
+.product_image{
+    width: 48%;
+}
+
+.product_detail_info{
+    width: 48%;
+    flex-direction: column;
+}
+
+.product_name{
+    color: #000;
+font-family: Lato;
+font-size: 40px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
