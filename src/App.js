@@ -13,6 +13,7 @@ import Congratulation from './Authentication/SignUp/Congratulation';
 import SignUp from './Authentication/SignUp/SignUp';
 import SignIn from './Authentication/SignIn/SignIn';
 import Verification from './Authentication/SignUp/Verification';
+import ResetPassword from './Authentication/ResetPassword/ResetPassword';
 
 
 
@@ -34,6 +35,7 @@ function App() {
       <Route path="/Category" element={<Category/>}/>
       <Route path='/SignUp' element={<SignUp/>}/>
       <Route path='/SignIn' element={<SignIn/>}/>
+      <Route path='/ResetPassword' element={<ResetPassword/>}/>
       <Route path='/Congratulation' element={<Congratulation/>}/>
       <Route path="/ProductInfo" element={<ProductInfo/>} />
         <Route path="/Cart" element={<Cart/>} />

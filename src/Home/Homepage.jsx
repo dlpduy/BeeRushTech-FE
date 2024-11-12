@@ -1,6 +1,6 @@
 import React from "react";
 import { Footer } from "../MutualComponents/Footer/Footer";
-import { HeaderLog } from "../LoginComponent/HeaderLog";
+import { Header } from "../MutualComponents/Header/Header";
 import HomeMain from "./component/HomeMain";
 import Brand from "./component/Brand";
 import NewProduct from "./component/NewProduct";
@@ -17,14 +17,11 @@ export const HomePage = () => {
 
     return (
         <main className={styles.homepage}>    
-        <HeaderLog/>
-        
+        <Header/>
         <HomeMain/>
         <Brand/>
         <NewProduct/>
-        <div className={styles.divider}></div>
         <HotItem/>
-        <div className={styles.divider}></div>
         <Review/>
         <div className={styles.container}>
         <NewsletterSection/>

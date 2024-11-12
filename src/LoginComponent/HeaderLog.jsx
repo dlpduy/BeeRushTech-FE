@@ -7,7 +7,9 @@ export const HeaderLog = () => {
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <div className={styles.logoContainer}>
-          <h1 className={styles.brandName}>Bee RushTech</h1>
+          <Link to="/">
+            <h1 className={styles.brandName}>Bee RushTech</h1>
+          </Link>
         </div>
         <nav className={styles.navigation}>
           <ul className={styles.navLinks}>
@@ -65,6 +67,3 @@ export const HeaderLog = () => {
     </header>
   );
 };
-
-
-

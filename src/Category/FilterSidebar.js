@@ -75,7 +75,7 @@ const styles = {
         width: '250px',
         padding: '16px',
         border: '1px solid #ddd',
-        borderRadius: '8px',
+        borderRadius: '8px', 
     },
     title: {
         fontSize: '18px',

@@ -21,3 +21,30 @@ font-weight: 700;
 line-height: normal;
 }
 
+.content{
+    padding-top:60px;
+    padding-left: 64px;
+    display: flex;
+    margin-bottom: 80px;
+}
+
+.pic {
+    flex: 0 0 50%;
+}
+.detail{
+    flex: 0 0 50%;
+}
+@media (max-width: 991px) {
+    .container {
+    max-width: 100%;
+    }
+    
+    .content {
+    flex-direction: column;
+    margin-bottom: 40px;
+    }
+    
+    .detail {
+    flex: 1;
+    }
+}

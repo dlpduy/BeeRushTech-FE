@@ -2,19 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 
-
 export const Header = () => {
-
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <div className={styles.logoContainer}>
-          <img 
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/bcc09774b4dd341bcb6a90cb4b35b19922586f4028b83c62a4e7d616d3addb3e?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8" 
-            alt="Bee RushTech Logo" 
-            className={styles.logo} 
-          />
-          <h1 className={styles.brandName}>Bee RushTech</h1>
+          <Link to="/">
+            <img 
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/bcc09774b4dd341bcb6a90cb4b35b19922586f4028b83c62a4e7d616d3addb3e?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8" 
+              alt="Bee RushTech Logo" 
+              className={styles.logo} 
+            />
+          </Link>
+          <Link to="/" className={styles.brandName}>
+            <h1>Bee RushTech</h1>
+          </Link>
         </div>
         <nav className={styles.navigation}>
           <ul className={styles.navLinks}>
@@ -32,10 +34,14 @@ export const Header = () => {
               <button className={styles.navLink} aria-label="On Sale">On Sale</button>
             </li>
             <li className={styles.navItem}>
-              <button className={styles.navLink} aria-label="New Arrivals">New Arrivals</button>
+              <Link to="/category" className={styles.navLink} aria-label="New Arrivals">
+                New Arrivals
+              </Link>
             </li>
             <li className={styles.navItem}>
-              <button className={styles.navLink} aria-label="Brands">Brands</button>
+              <Link to="/category" className={styles.navLink} aria-label="Brands">
+                Brands
+              </Link>
             </li>
           </ul>
           <form className={styles.searchForm}>
@@ -52,14 +58,12 @@ export const Header = () => {
             />
           </form>
           <div className={styles.userActions}>
-            <button className={styles.iconButton} aria-label="User account"  >
+            <button className={styles.iconButton} aria-label="User account">
               <img 
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/f2f89bc29975d179540a0a77d4a46123ef4301f3712d8e4aa60395a3d5ca0f65?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8" 
                 alt="" 
                 className={styles.actionIcon} 
               />
-              
-          
             </button>
             <Link to="/cart" className={styles.iconButton} aria-label="Shopping cart">
               <img 
@@ -74,6 +78,3 @@ export const Header = () => {
     </header>
   );
 };
-
-
-

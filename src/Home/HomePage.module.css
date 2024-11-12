@@ -1,12 +1,12 @@
 .homepage {
-    background: #F0F0F0;
+
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
   
   .container {
-    background: #F0F0F0;
+
     max-width: 1242px;
     margin: 0 auto;
     padding: 0 20px;
