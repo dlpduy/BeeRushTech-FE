@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 
 const FilterSidebar = ({ setFilterCriteria, applyFilter }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [expandedCategory, setExpandedCategory] = useState(null);
     const [priceRange, setPriceRange] = useState([0, 300]);
 
     const handleCategorySelect = (category) => {
         setSelectedCategory(category);
+        setExpandedCategory(category === expandedCategory ? null : category);
     };
 
     const handlePriceChange = (event, index) => {
@@ -20,25 +22,58 @@ const FilterSidebar = ({ setFilterCriteria, applyFilter }) => {
     };
 
     return (
-        <div>
+        <div style={styles.sidebar}>
+            <h4 style={styles.title}>Filters</h4>
+            
+            {/* Category Section */}
             <div style={styles.section}>
                 
                 <ul style={styles.categoryList}>
-                    <li style={styles.categoryItem} onClick={() => handleCategorySelect('Máy ảnh & Máy quay')}>
-                        Máy ảnh & Máy quay
+                    <li style={styles.categoryHeader} onClick={() => handleCategorySelect('Máy ảnh & Máy quay')}>
+                        <span>Máy ảnh & Máy quay</span>
+                        <span style={styles.arrow}>{expandedCategory === 'Máy ảnh & Máy quay' ? '▼' : '►'}</span>
                     </li>
-                    <li style={styles.categoryItem} onClick={() => handleCategorySelect('Chân máy')}>
-                        Chân máy
+                    {expandedCategory === 'Máy ảnh & Máy quay' && (
+                        <ul style={styles.subcategoryList}>
+                            <li style={styles.subcategoryItem}>Sony</li>
+                            <li style={styles.subcategoryItem}>Fujifilm</li>
+                            <li style={styles.subcategoryItem}>Nikon</li>
+                        </ul>
+                    )}
+                    <li style={styles.categoryHeader} onClick={() => handleCategorySelect('Ống kính')}>
+                        <span>Ống kính</span>
+                        <span style={styles.arrow}>{expandedCategory === 'Ống kính' ? '▼' : '►'}</span>
                     </li>
-                    <li style={styles.categoryItem} onClick={() => handleCategorySelect('Flycam')}>
-                        Flycam
+                    {expandedCategory === 'Ống kính' && (
+                        <ul style={styles.subcategoryList}>
+                            <li style={styles.subcategoryItem}>Canon</li>
+                            <li style={styles.subcategoryItem}>Sigma</li>
+                        </ul>
+                    )}
+                    <li style={styles.categoryHeader} onClick={() => handleCategorySelect('Chân máy')}>
+                        <span>Chân máy</span>
+                        <span style={styles.arrow}>{expandedCategory === 'Chân máy' ? '▼' : '►'}</span>
                     </li>
-                    <li style={styles.categoryItem} onClick={() => handleCategorySelect('Smart phone')}>
-                        Smart phone
+                    {expandedCategory === 'Chân máy' && (
+                        <ul style={styles.subcategoryList}>
+                            <li style={styles.subcategoryItem}>Manfrotto</li>
+                            <li style={styles.subcategoryItem}>Gitzo</li>
+                        </ul>
+                    )}
+                    <li style={styles.categoryHeader} onClick={() => handleCategorySelect('Flycam')}>
+                        <span>Flycam</span>
+                        <span style={styles.arrow}>{expandedCategory === 'Flycam' ? '▼' : '►'}</span>
                     </li>
+                    {expandedCategory === 'Flycam' && (
+                        <ul style={styles.subcategoryList}>
+                            <li style={styles.subcategoryItem}>DJI</li>
+                            <li style={styles.subcategoryItem}>Parrot</li>
+                        </ul>
+                    )}
                 </ul>
             </div>
 
+            {/* Price Section */}
             <div style={styles.section}>
                 <h4 style={styles.categoryTitle}>Price</h4>
                 <div style={styles.sliderContainer}>
@@ -72,17 +107,17 @@ const FilterSidebar = ({ setFilterCriteria, applyFilter }) => {
 
 const styles = {
     sidebar: {
-        width: '250px',
-        padding: '16px',
-        border: '1px solid #ddd',
-        borderRadius: '8px', 
+        fontFamily: 'Lato, sans-serif',
+        padding: '20px',
+        h4: '20px',
     },
     title: {
         fontSize: '18px',
         fontWeight: 'bold',
-        marginBottom: '16px',
+        marginBottom: '24px',
     },
     section: {
+        marginTop: '24px',
         marginBottom: '16px',
     },
     categoryTitle: {
@@ -94,9 +129,27 @@ const styles = {
         listStyleType: 'none',
         padding: 0,
     },
-    categoryItem: {
+    categoryHeader: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         padding: '8px 0',
         cursor: 'pointer',
+        fontSize: '16px',
+    },
+    arrow: {
+        marginLeft: 'auto',
+        fontSize: '12px',
+    },
+    subcategoryList: {
+        listStyleType: 'none',
+        padding: '8px 0 0 16px',
+        margin: 0,
+    },
+    subcategoryItem: {
+        padding: '4px 0',
+        cursor: 'pointer',
+        fontSize: '14px',
     },
     sliderContainer: {
         display: 'flex',

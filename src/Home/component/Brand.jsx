@@ -7,17 +7,29 @@ const Brand = () => {
     const navigate = useNavigate();
 
     const handleBrandClick = (brand) => {
-        // Chuyển hướng đến trang Category và có thể truyền thêm dữ liệu thương hiệu nếu cần
+        // Navigate to Category page and pass brand data
         navigate(`/Category`, { state: { brand } });
     };
 
+    const brands = [
+        { name: "Apple", logo: "https://via.placeholder.com/100?text=Apple" },
+        { name: "Samsung", logo: "https://via.placeholder.com/100?text=Samsung" },
+        { name: "Fujifilm", logo: "https://via.placeholder.com/100?text=Fujifilm" },
+        { name: "Sony", logo: "https://via.placeholder.com/100?text=Sony" },
+        { name: "Nikon", logo: "https://via.placeholder.com/100?text=Nikon" }
+    ];
+
     return (
         <div className={styles.brandContainer}>
-            <div className={styles.logo} onClick={() => handleBrandClick("Apple")}>Apple</div>
-            <div className={styles.logo} onClick={() => handleBrandClick("Samsung")}>Samsung</div>
-            <div className={styles.logo} onClick={() => handleBrandClick("Fujifilm")}>Fujifilm</div>
-            <div className={styles.logo} onClick={() => handleBrandClick("Sony")}>Sony</div>
-            <div className={styles.logo} onClick={() => handleBrandClick("Nikon")}>Nikon</div>
+            {brands.map((brand) => (
+                <img
+                    key={brand.name}
+                    src={brand.logo}
+                    alt={brand.name}
+                    className={styles.logo}
+                    onClick={() => handleBrandClick(brand.name)}
+                />
+            ))}
         </div>
     );
 };

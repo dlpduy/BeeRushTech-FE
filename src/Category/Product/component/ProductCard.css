@@ -1,35 +1,52 @@
+/* ProductCard.css */
+
 .product-card {
-    display: flex;
-    width: 295px;
-    height: 298px;
-    background: #FFB13A;
-    border-radius: 20px;
-    padding: 44px 42px 44px 43px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .product-image {
-    display: flex;
-    width: 210px;
-    height: 210px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    background-color: #FFB13A;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .product-info {
-    padding: 10px;
-    border-radius: 8px;
-  }
-  .product-info h3{
-    color: #000;
-font-family: Lato;
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 295px;
+  height: 340px; /* Adjusted to fit additional info */
+  background: #FFB13A;
+  border-radius: 20px;
+  padding: 44px 42px 44px 43px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hover effect for scaling the product image */
+.product-card:hover .product-image {
+  transform: scale(1.1);
+}
+
+/* Style for the image container */
+.product-image {
+  width: 210px;
+  height: 210px;
+  background-size: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Style for product info */
+.product-info {
+  text-align: center;
+  color: #000;
+  font-family: Lato, sans-serif;
+}
+
+.product-info h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 10px 0 5px 0;
+}
+
+.product-info p {
+  font-size: 16px;
+  font-weight: 400;
+}

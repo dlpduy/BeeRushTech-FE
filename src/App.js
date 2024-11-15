@@ -35,18 +35,18 @@ function App() {
       <Routes>
       <Route path="/" element={<HomePage/>} />
       <Route path="/verification" element={<Verification/>}/>
-      <Route path="/Category" element={<Category/>}/>
-      <Route path='/SignUp' element={<SignUp/>}/>
-      <Route path='/SignIn' element={<SignIn/>}/>
-      <Route path='/ResetPassword' element={<ResetPassword/>}/>
-      <Route path='/Congratulation' element={<Congratulation/>}/>
-      <Route path="/ProductInfo" element={<ProductInfo/>} />
-      <Route path="/Cart" element={<Cart/>} />
-      <Route path="/PrivacyPolicy" element={<PrivacyPolicy/>} />
-      <Route path="/RentalTerms" element={<RentalTerms/>} />
-      <Route path="/PaymentTerms" element={<PaymentTerms/>} />
-      <Route path="/Compensation" element={<CompensationTerms/>} />
-      <Route path="/Admin" element={<Admin/>} >
+      <Route path="/category" element={<Category/>}/>
+      <Route path='/signup' element={<SignUp/>}/>
+      <Route path='/signin' element={<SignIn/>}/>
+      <Route path='/resetpassword' element={<ResetPassword/>}/>
+      <Route path='/congratulation' element={<Congratulation/>}/>
+      <Route path="/product-info" element={<ProductInfo/>} />
+      <Route path="/cart" element={<Cart/>} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+      <Route path="/rental-terms" element={<RentalTerms/>} />
+      <Route path="/payment-terms" element={<PaymentTerms/>} />
+      <Route path="/compensation-terms" element={<CompensationTerms/>} />
+      <Route path="/admin" element={<Admin/>} >
         <Route path="product" element={<ManageProduct/>} />
         <Route path="user" element={<ManageUser/>} />
       </Route>

@@ -2,12 +2,31 @@ import React from 'react';
 import styles from './Footer.module.css';
 import { Link } from 'react-router-dom';
 
-
 const footerLinks = {
-  company: ['About', 'Features', 'Works', 'Career'],
-  help: ['Customer Support', 'Delivery Details', 'Terms & Conditions', 'Privacy Policy'],
-  faq: ['Privacy Policy', 'Rental Terms', 'Compensation Terms', 'Payment Terms'],
-  resources: ['Free eBooks', 'Development Tutorial', 'How to - Blog', 'Youtube Playlist']
+  company: [
+    { name: 'About' },
+    { name: 'Features'},
+    { name: 'Works'},
+    { name: 'Career'}
+  ],
+  help: [
+    { name: 'Customer Support', path: '/customer-support' },
+    { name: 'Delivery Details', path: '/delivery-details' },
+    { name: 'Terms & Conditions', path: '/terms' },
+    { name: 'Privacy Policy', path: '/privacy-policy' }
+  ],
+  faq: [
+    { name: 'Privacy Policy', path: '/privacy-policy' },
+    { name: 'Rental Terms', path: '/rental-terms' },
+    { name: 'Compensation Terms', path: '/compensation-terms' },
+    { name: 'Payment Terms', path: '/payment-terms' }
+  ],
+  resources: [
+    { name: 'Free eBooks', path: '/free-ebooks' },
+    { name: 'Development Tutorial', path: '/development-tutorial' },
+    { name: 'How to - Blog', path: '/how-to-blog' },
+    { name: 'Youtube Playlist', path: '/youtube-playlist' }
+  ]
 };
 
 const paymentMethods = [
@@ -34,14 +53,10 @@ export const Footer = () => {
             <nav key={title} className={styles.linkGroup}>
               <h3 className={styles.linkTitle}>{title.toUpperCase()}</h3>
               <ul className={styles.linkList}>
-                {links.map((link) => (
-                  <li key={link}>
-                    <Link 
-                      to={link === 'Privacy Policy' ? '/privacy-policy' : '/'}
-                      className={styles.link}
-                      aria-label={link}
-                    >
-                      {link}
+                {links.map(({ name, path }) => (
+                  <li key={name}>
+                    <Link to={path} className={styles.link} aria-label={name}>
+                      {name}
                     </Link>
                   </li>
                 ))}

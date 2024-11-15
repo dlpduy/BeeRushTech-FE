@@ -43,7 +43,7 @@ const Category = () => {
     };
 
     const handleProductClick = (productId) => {
-        navigate(`/ProductInfo`);
+        navigate(`/product-info`);
     };
 
     return (
@@ -53,10 +53,7 @@ const Category = () => {
                 <div className={styles.content}>
                     <div className={styles.filter_border}>
                         <div className={styles.filter_container}>
-                            <div className={styles.filter_title}>Filter</div>
-                            <div className={styles.align}>
                             <FilterSidebar setFilterCriteria={setFilterCriteria} applyFilter={applyFilter} />
-                            </div>
                         </div>
                     </div>
                     <aside className={styles.sidebar}>

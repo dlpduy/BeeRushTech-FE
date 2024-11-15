@@ -1,8 +1,22 @@
-.brandContainer{
-    background-color: #FFB13A;
-    display: inline-flex;
-    height: 122px;
-    align-items: center;
-    gap:18%;
-    padding-left: 109px;
+/* Brand.module.css */
+
+.brandContainer {
+    background: #FFB13A;
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+}
+
+/* Scale up the logo on hover */
+.logo:hover {
+    transform: scale(1.1);
 }

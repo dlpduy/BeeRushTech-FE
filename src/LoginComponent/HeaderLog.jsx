@@ -27,10 +27,14 @@ export const HeaderLog = () => {
               <button className={styles.navLink} aria-label="On Sale">On Sale</button>
             </li>
             <li className={styles.navItem}>
-              <button className={styles.navLink} aria-label="New Arrivals">New Arrivals</button>
+              <Link to="/category" className={styles.navLink} aria-label="New Arrivals">
+                New Arrivals
+              </Link>
             </li>
             <li className={styles.navItem}>
-              <button className={styles.navLink} aria-label="Brands">Brands</button>
+              <Link to="/category" className={styles.navLink} aria-label="Brands">
+                Brands
+              </Link>
             </li>
           </ul>
           <form className={styles.searchForm}>
