@@ -2,7 +2,10 @@ import React from 'react';
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Cart from './Cart';
-import PrivacyPolicy from './FAQ/Privacy/PrivacyPolicy'
+import PrivacyPolicy from './FAQ/PrivacyPolicy'
+import RentalTerms from './FAQ/RentalTerms';
+import PaymentTerms from './FAQ/PaymentTerms';
+import CompensationTerms from './FAQ/CompensationTerms';
 import  Admin  from './Admin/Admin';
 import  ManageProduct from './Admin/ManageProduct'
 import  ManageUser from './Admin/ManageUser'
@@ -38,12 +41,15 @@ function App() {
       <Route path='/ResetPassword' element={<ResetPassword/>}/>
       <Route path='/Congratulation' element={<Congratulation/>}/>
       <Route path="/ProductInfo" element={<ProductInfo/>} />
-        <Route path="/Cart" element={<Cart/>} />
-        <Route path="/PrivacyPolicy" element={<PrivacyPolicy/>} />
-        <Route path="/Admin" element={<Admin/>} >
-          <Route path="product" element={<ManageProduct/>} />
-          <Route path="user" element={<ManageUser/>} />
-        </Route>
+      <Route path="/Cart" element={<Cart/>} />
+      <Route path="/PrivacyPolicy" element={<PrivacyPolicy/>} />
+      <Route path="/RentalTerms" element={<RentalTerms/>} />
+      <Route path="/PaymentTerms" element={<PaymentTerms/>} />
+      <Route path="/Compensation" element={<CompensationTerms/>} />
+      <Route path="/Admin" element={<Admin/>} >
+        <Route path="product" element={<ManageProduct/>} />
+        <Route path="user" element={<ManageUser/>} />
+      </Route>
       </Routes>
     </Router>
   );
