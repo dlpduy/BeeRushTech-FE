@@ -8,7 +8,7 @@ const Brand = () => {
 
     const handleBrandClick = (brand) => {
         // Navigate to Category page and pass brand data
-        navigate(`/Category`, { state: { brand } });
+        navigate(`/category`, { state: { brand } });
     };
 
     const brands = [

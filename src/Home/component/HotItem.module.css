@@ -96,12 +96,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0 auto; /* Center the button horizontally */
     border-radius: 62px;
     border: 1px solid rgba(0, 0, 0, 0.10);
     width: 218px;
     height: 52px;
-    align-items: center;
+    margin-top: 20px; /* Add space above the button */
 }
+
 
 .view_all_content {
     padding: 16px 54px;

@@ -7,7 +7,7 @@ export const HomeMain = () => {
     const navigate = useNavigate();
 
     const handleRentNowClick = () => {
-        navigate("/Category");
+        navigate("/category");
     };
 
     return (

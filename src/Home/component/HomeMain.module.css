@@ -43,6 +43,7 @@
     padding: 16px 54px;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .statistic{

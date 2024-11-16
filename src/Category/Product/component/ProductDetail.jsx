@@ -42,7 +42,7 @@ const ProductDetail = ({ product }) => {
                     <p className={styles.description}>
                         This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.
                     </p>
-                    
+                    <div className={styles.divider}></div>
                     <div className={styles.select_colors}>
                         <p>Select Colors</p>
                         <div className={styles.colors}>
@@ -56,7 +56,7 @@ const ProductDetail = ({ product }) => {
                             ))}
                         </div>
                     </div>
-                    
+                    <div className={styles.divider}></div>
                     <div className={styles.select_storage}>
                         <p>Choose Storage</p>
                         <div className={styles.storage_options}>
@@ -72,6 +72,7 @@ const ProductDetail = ({ product }) => {
                             <span className={styles.stock}>5 last products</span>
                         </div>
                     </div>
+                    <div className={styles.divider}></div>
                     <div className={styles.Rent}>
                     <div className={styles.quantity_section}>
                         <button onClick={() => handleQuantityChange('decrease')} className={styles.quantity_button}>-</button>

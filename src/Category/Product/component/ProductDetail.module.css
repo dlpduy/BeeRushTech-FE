@@ -20,7 +20,13 @@ font-style: normal;
 font-weight: 700;
 line-height: normal;
 }
-
+.divider{
+    width: 590px;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.10);
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
 .content{
     padding-top:60px;
     padding-left: 64px;

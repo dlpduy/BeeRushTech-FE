@@ -127,4 +127,5 @@ padding-top: 40px;
         height: 163;
         aspect-ratio: 1.2;
         object-fit: contain;
+        cursor: pointer;
     }

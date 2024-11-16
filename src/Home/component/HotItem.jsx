@@ -22,11 +22,11 @@ const HotItem = () => {
     }, []);
 
     const handleProductClick = (product) => {
-        navigate(`/ProductInfo`, { state: { product } });
+        navigate(`/product-info`, { state: { product } });
     };
 
     const handleViewAllClick = () => {
-        navigate(`/Category`);
+        navigate(`/category`);
     };
 
     return (
@@ -45,12 +45,13 @@ const HotItem = () => {
                         </div>
                     </div>
                 ))}
-                <div className={styles.viewAll} onClick={handleViewAllClick}>
+                
+            </div>
+            <div className={styles.viewAll} onClick={handleViewAllClick}>
                     <div className={styles.view_all_content}>
                         View all
                     </div>
                 </div>
-            </div>
         </div>
     );
 };

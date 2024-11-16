@@ -35,11 +35,13 @@
   width: 83px;
   aspect-ratio: 1.2;
   object-fit: contain;
+  cursor: pointer;
 }
 
 .brandName {
   color: #000;
   font: 700 24px Lato, sans-serif; 
+  cursor: pointer;
 }
 
 .navigation {

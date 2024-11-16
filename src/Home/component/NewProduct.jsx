@@ -22,7 +22,7 @@ const NewProduct = () => {
     }, []);
 
     const handleProductClick = (product) => {
-        navigate(`/ProductInfo`, { state: { product } });
+        navigate(`/product-info`, { state: { product } });
     };
 
     return (

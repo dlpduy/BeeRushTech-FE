@@ -57,7 +57,9 @@ export const Cart = () => {
   return (
     <main className={styles.cart}>
       <Header />
+      
       <div className={styles.container}>
+      <div className={styles.divider}></div>
         <nav className={styles.breadcrumb}>
           <button className={styles.breadcrumbLink} aria-label="Home">Home</button>
           <img 

@@ -20,10 +20,11 @@ export const HomePage = () => {
         <Header/>
         <HomeMain/>
         <Brand/>
+        <div className={styles.container}>
         <NewProduct/>
+        <div className={styles.divider}></div>
         <HotItem/>
         <Review/>
-        <div className={styles.container}>
         <NewsletterSection/>
         </div>
         <Footer/>
