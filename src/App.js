@@ -17,6 +17,7 @@ import SignUp from './Authentication/SignUp/SignUp';
 import SignIn from './Authentication/SignIn/SignIn';
 import Verification from './Authentication/SignUp/Verification';
 import ResetPassword from './Authentication/ResetPassword/ResetPassword';
+import Checkout from './Cart/Checkout';
 
 
 
@@ -41,7 +42,9 @@ function App() {
       <Route path='/resetpassword' element={<ResetPassword/>}/>
       <Route path='/congratulation' element={<Congratulation/>}/>
       <Route path="/product-info" element={<ProductInfo/>} />
-      <Route path="/cart" element={<Cart/>} />
+      <Route path="/cart" element={<Cart/>} >
+        <Route path='checkout' element={<Checkout/>}/>
+      </Route>
       <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
       <Route path="/rental-terms" element={<RentalTerms/>} />
       <Route path="/payment-terms" element={<PaymentTerms/>} />

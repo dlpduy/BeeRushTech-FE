@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   width: 295px;
-  height: 340px; /* Adjusted to fit additional info */
+  height: 298px; /* Adjusted to fit additional info */
   background: #FFB13A;
   border-radius: 20px;
   padding: 44px 42px 44px 43px;
@@ -49,4 +49,27 @@
 .product-info p {
   font-size: 16px;
   font-weight: 400;
+}
+
+
+.product-image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo ảnh vừa khít và giữ tỷ lệ */
+}
+
+.product-info {
+  padding: 10px;
+  text-align: center;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #999;
+  margin-left: 5px;
+}
+
+.discount-percentage {
+  color: #e74c3c;
+  margin-left: 5px;
 }

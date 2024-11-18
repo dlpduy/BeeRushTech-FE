@@ -133,6 +133,9 @@
   aspect-ratio: 1;
   object-fit: contain;
 }
+.actionIcon:hover{
+  transform: scale(1.1);
+}
 
 /* Đảm bảo layout phù hợp trên màn hình nhỏ */
 @media (max-width: 991px) {
@@ -175,19 +178,21 @@
   display: block;
   margin-top: 16px;
   margin-left: 4px;
-  justify-items: center;
   text-align: center;
   border-radius: 20px;
   background: #F3F6F4;
   cursor: pointer;
   font-size: 20px;
   color: #333;
+  line-height: 42px; /* Căn giữa chữ theo chiều dọc */
+  transition: background-color 0.3s ease; /* Hiệu ứng hover mượt hơn */
 }
+
 .forget {
   font-size: 12px;
-  text-align: right;
+  text-align: right; /* Căn phải dòng "Forgot Password?" */
   margin-top: 10px;
-  margin-right: 10px;
+  margin-right: 10px; /* Khoảng cách phải hợp lý */
 }
 
 .forget button {
@@ -197,9 +202,14 @@
   cursor: pointer;
   font-size: 12px;
   padding: 0;
+  transition: color 0.5s ease; /* Hiệu ứng hover mượt hơn */
 }
 
+.forget button:hover {
+  color: #E0E0E0; /* Thay đổi màu chữ khi hover */
+}
 
 .dropdownItem:hover {
-  background-color: #f0f0f0;
+  background-color: #E0E0E0; /* Màu sáng hơn khi hover */
 }
+

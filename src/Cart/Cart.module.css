@@ -90,3 +90,54 @@
     flex: 1;
   }
 }
+
+.checkout {
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  font: 20px Lato, sans-serif;
+}
+
+.paymentIcons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.icon {
+  font-size: 2rem;
+  color: #333;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formTitle {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #666;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  background-color: #f8f8f8;
+  font-size: 1rem;
+  color: #333;
+}
+
+.input::placeholder {
+  color: #bbb;
+}

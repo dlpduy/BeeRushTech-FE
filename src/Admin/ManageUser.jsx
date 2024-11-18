@@ -9,21 +9,17 @@ const ManageUser = () => {
     { id: 4, name: 'User 4', email: 'user4@example.com', loyaltyLevel: 'Gold', rentedProduct: 'Product D', selected: false },
   ]);
 
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const [filterField, setFilterField] = useState('');
-  const [filterValue, setFilterValue] = useState('');
+  const [editingRow, setEditingRow] = useState(null);
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
-  const handleDeleteRows = () => {
-    setUsers(users.filter((user) => !user.selected));
-  };
+  const handleCheckboxChange = (index) => {
+    const updatedUsers = [...users];
+    updatedUsers[index].selected = !updatedUsers[index].selected;
+    setUsers(updatedUsers);
 
-  const toggleEditMode = () => {
-    setIsEditMode(!isEditMode);
-  };
-
-  const toggleDeleteMode = () => {
-    setIsDeleteMode(!isDeleteMode);
+    const selectedCount = updatedUsers.filter(user => user.selected).length;
+    setEditingRow(selectedCount === 1 ? index : null);
   };
 
   const handleInputChange = (e, index, field) => {
@@ -32,59 +28,29 @@ const ManageUser = () => {
     setUsers(updatedUsers);
   };
 
-  const handleCheckboxChange = (index) => {
-    const updatedUsers = [...users];
-    updatedUsers[index].selected = !updatedUsers[index].selected;
-    setUsers(updatedUsers);
+  const handleDeleteRows = () => {
+    setShowConfirmPopup(true);
   };
 
-  const handleFilterFieldChange = (e) => {
-    setFilterField(e.target.value);
-    setFilterValue('');
+  const confirmDelete = () => {
+    setUsers(users.filter(user => !user.selected));
+    setShowConfirmPopup(false);
+    setShowSuccessPopup(true);
+    setTimeout(() => setShowSuccessPopup(false), 500);
   };
 
-  const handleFilterValueChange = (e) => {
-    setFilterValue(e.target.value);
-  };
-
-  const filteredUsers = users.filter(user => {
-    if (!filterField || !filterValue) return true;
-    return String(user[filterField]).toLowerCase() === filterValue.toLowerCase();
-  });
-
-  const getUniqueFilterValues = (field) => {
-    const values = users.map(user => user[field]);
-    return [...new Set(values)];
+  const cancelDelete = () => {
+    setShowConfirmPopup(false);
+    setUsers(users.map(user => ({ ...user, selected: false })));
+    setEditingRow(null);
   };
 
   return (
     <div className={styles.manageContainer}>
-      <div className={styles.buttonContainer}>
-        <select value={filterField} onChange={handleFilterFieldChange} className={styles.filterSelect}>
-          <option value="">Filter</option>
-          <option value="id">ID</option>
-          <option value="name">Username</option>
-          <option value="email">Email</option>
-          <option value="loyaltyLevel">Rank</option>
-          <option value="rentedProduct">Rented</option>
-        </select>
-        <select value={filterValue} onChange={handleFilterValueChange} className={styles.filterSelect} disabled={!filterField}>
-          <option value="">Chọn giá trị</option>
-          {filterField && getUniqueFilterValues(filterField).map((value, index) => (
-            <option key={index} value={value}>{value}</option>
-          ))}
-        </select>
-        
-        <div className={styles.buttonContainer}>
-        <button onClick={toggleEditMode} className={styles.editButton}>Sửa</button>
-        <button onClick={toggleDeleteMode} className={styles.deleteButton}>Xóa</button>
-        </div>
-     
-      </div>
       <table className={styles.table}>
         <thead>
           <tr>
-            {isDeleteMode && <th>Chọn</th>}
+            <th>Chọn</th>
             <th>ID</th>
             <th>Username</th>
             <th>Email</th>
@@ -93,74 +59,59 @@ const ManageUser = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.map((user, index) => (
+          {users.map((user, index) => (
             <tr key={user.id}>
-              {isDeleteMode && (
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={user.selected}
-                    onChange={() => handleCheckboxChange(index)}
-                  />
-                </td>
-              )}
+              <td>
+                <input
+                  type="checkbox"
+                  checked={user.selected}
+                  onChange={() => handleCheckboxChange(index)}
+                />
+              </td>
               <td>{user.id}</td>
               <td>
-                {isEditMode ? (
+                {editingRow === index ? (
                   <input
                     type="text"
                     value={user.name}
                     onChange={(e) => handleInputChange(e, index, 'name')}
-                    className={styles.inputField}
                   />
                 ) : (
                   user.name
                 )}
               </td>
-              <td>
-                {isEditMode ? (
-                  <input
-                    type="email"
-                    value={user.email}
-                    onChange={(e) => handleInputChange(e, index, 'email')}
-                    className={styles.inputField}
-                  />
-                ) : (
-                  user.email
-                )}
-              </td>
-              <td>
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    value={user.loyaltyLevel}
-                    onChange={(e) => handleInputChange(e, index, 'loyaltyLevel')}
-                    className={styles.inputField}
-                  />
-                ) : (
-                  user.loyaltyLevel
-                )}
-              </td>
-              <td>
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    value={user.rentedProduct}
-                    onChange={(e) => handleInputChange(e, index, 'rentedProduct')}
-                    className={styles.inputField}
-                  />
-                ) : (
-                  user.rentedProduct
-                )}
-              </td>
+              <td>{user.email}</td>
+              <td>{user.loyaltyLevel}</td>
+              <td>{user.rentedProduct}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      {isDeleteMode && (
-        <button onClick={handleDeleteRows} className={styles.deleteButton}>
-          Xóa các hàng đã chọn
-        </button>
+
+      {users.some(user => user.selected) && (
+        <div className={styles.buttonContainer}>
+          {users.filter(user => user.selected).length > 1 ? (
+            <button onClick={handleDeleteRows} className={styles.deleteButton}>Xóa</button>
+          ) : null}
+        </div>
+      )}
+
+      {showConfirmPopup && (
+        <div className={styles.popup}>
+          <div className={styles.popupContent}>
+            <p>Bạn có chắc chắn muốn xóa tất cả các hàng đã chọn?</p>
+            <button onClick={confirmDelete} className={styles.confirmButton}>Yes</button>
+            <button onClick={cancelDelete} className={styles.cancelButton}>Cancel</button>
+          </div>
+        </div>
+      )}
+
+      {showSuccessPopup && (
+        <div className={styles.popup}>
+          <div className={styles.popupContent}>
+            <p>Xóa thành công!</p>
+          </div>
+        </div>
       )}
     </div>
   );

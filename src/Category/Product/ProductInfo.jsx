@@ -6,14 +6,14 @@ import ProductDetail from "./component/ProductDetail";
 import styles from './ProductInfo.module.css';
 
 const ProductInfo = () => {
-    // Updated sample product data to match the required format
+    // Updated product data format to match the previous mockData format
     const product = {
         name: "Apple iPhone 16 Pro Max",
-        category: "Electronics",
-        price: 15, // discounted price
-        originalPrice: 25, // original price before discount
-        rating: 5,
-        description: "This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.",
+        category: "Smartphone",
+        price: 25, // Original price
+        discountedPrice: 15, // Discounted price
+        rating: 5.0, // Rating out of 5
+        description: "The latest iPhone model with advanced features including better camera performance, A16 Bionic chip, and longer battery life.",
         colors: ["#555", "#8c8", "#333"], // Color options as hex codes
         storageOptions: [
             { size: "256GB", inStock: true },
@@ -21,8 +21,8 @@ const ProductInfo = () => {
             { size: "1TB", inStock: true }
         ],
         stock: 5, // Quantity remaining for the selected storage option
-        rentalCount: 5,
-        image: "https://example.com/sample-product-image.jpg"
+        rentalCount: 5, // Number of rentals
+        image: "https://cdn.builder.io/api/v1/image/assets/TEMP/d07bc4911a6420610641cd1d5c59b0319418027d239c31f5aa62a2bdb2e96ec1?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8"
     };
 
     return (

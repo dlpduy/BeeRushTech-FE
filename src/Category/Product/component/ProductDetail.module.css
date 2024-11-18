@@ -124,14 +124,25 @@ line-height: normal;
     gap: 16px;
 }
 
+
 .color_circle {
-    width: 37px;
-    height: 37px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     cursor: pointer;
-    border: 1px solid #ddd;
+    margin-right: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition for smooth effect */
+    border: 2px solid transparent; /* Default no border */
 }
 
+.color_circle:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.selected {
+    border: 2px solid #ff0000; /* Highlight selected color */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+}
 .select_storage {
     margin: 20px 0;
 }

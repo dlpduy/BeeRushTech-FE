@@ -115,6 +115,7 @@ padding-top: 40px;
     justify-items: center;
     align-items: center;
     padding: 17px;
+    cursor: pointer;
     }
     .logoContainer {
         display: flex;
@@ -128,4 +129,21 @@ padding-top: 40px;
         aspect-ratio: 1.2;
         object-fit: contain;
         cursor: pointer;
+    }
+
+    .forget {
+
+        font: 400 12px Lato, sans-serif;
+        text-align: right; /* Căn phải dòng "Forgot Password?" */
+        margin-top: 10px;
+        margin-right: 10px; /* Khoảng cách phải hợp lý */
+    }
+    .forget button {
+        background: none;
+        border: none;
+        color: #333;
+        cursor: pointer;
+        font-size: 12px;
+        padding: 0;
+        transition: color 0.5s ease; /* Hiệu ứng hover mượt hơn */
     }

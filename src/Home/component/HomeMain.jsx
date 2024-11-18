@@ -7,6 +7,11 @@ export const HomeMain = () => {
     const navigate = useNavigate();
 
     const handleRentNowClick = () => {
+        // Cuộn lên đầu trước khi điều hướng
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
         navigate("/category");
     };
 

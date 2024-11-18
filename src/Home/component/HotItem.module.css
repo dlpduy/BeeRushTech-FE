@@ -102,6 +102,7 @@
     width: 218px;
     height: 52px;
     margin-top: 20px; /* Add space above the button */
+    cursor: pointer;
 }
 
 
@@ -109,5 +110,8 @@
     padding: 16px 54px;
     align-items: center;
     gap: 12px;
-    flex-shrink: 0;
+
+}
+.viewAll:hover{
+    background-color: #f0f0f0;
 }

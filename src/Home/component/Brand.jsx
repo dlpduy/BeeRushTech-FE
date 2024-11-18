@@ -7,7 +7,11 @@ const Brand = () => {
     const navigate = useNavigate();
 
     const handleBrandClick = (brand) => {
-        // Navigate to Category page and pass brand data
+        // Scroll to the top before navigating
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
         navigate(`/category`, { state: { brand } });
     };
 

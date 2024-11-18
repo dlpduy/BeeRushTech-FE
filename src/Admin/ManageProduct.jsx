@@ -5,17 +5,20 @@ const ManageProduct = () => {
   const [products, setProducts] = useState([]);
   const [filterField, setFilterField] = useState('');
   const [filterValue, setFilterValue] = useState('');
-  const [isEditMode, setIsEditMode] = useState(false);
   const [isAddMode, setIsAddMode] = useState(false);
-  const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const [selectedProducts, setSelectedProducts] = useState([]);
   const [newProduct, setNewProduct] = useState({
     id: '',
     name: '',
     price: '',
-    image: '',
-    description: ''
+    thumbnail: '',
+    description: '',
+    created_at: '',
+    updated_at: '',
+    category_id: '',
+    available: false,
+    color: '',
   });
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     fetchProducts();
@@ -29,211 +32,104 @@ const ManageProduct = () => {
         setProducts(data.data);
       }
     } catch (error) {
-      console.error('Error fetching products:'+ error);
+      console.error('Error fetching products:', error);
     }
   };
 
-  const handleFilterFieldChange = (e) => {
-    setFilterField(e.target.value);
-    setFilterValue('');
-  };
-
-  const handleFilterValueChange = (e) => {
-    setFilterValue(e.target.value);
-  };
-
-  const filteredProducts = products.filter((product) => {
-    if (!filterField || !filterValue) return true;
-    return String(product[filterField]).toLowerCase() === filterValue.toLowerCase();
-  });
-
-  const getUniqueFilterValues = (field) => {
-    const values = products.map((product) => product[field]);
-    return [...new Set(values)];
-  };
-
-  const toggleEditMode = () => setIsEditMode(!isEditMode);
-  const toggleAddMode = () => setIsAddMode(!isAddMode);
-  const toggleDeleteMode = () => setIsDeleteMode(!isDeleteMode);
-
-  const handleInputChange = (e, index, field) => {
-    const updatedProducts = [...products];
-    updatedProducts[index][field] = e.target.value;
-    setProducts(updatedProducts);
-  };
-
   const handleNewProductChange = (e) => {
-    const { name, value } = e.target;
-    setNewProduct({ ...newProduct, [name]: value });
+    const { name, value, type, checked } = e.target;
+    setNewProduct({
+      ...newProduct,
+      [name]: type === 'checkbox' ? checked : value,
+    });
   };
 
   const addNewProduct = async () => {
     try {
       const response = await fetch('/products', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer <JWT_TOKEN>`
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newProduct),
       });
       const data = await response.json();
       if (data.statusCode === 201) {
         fetchProducts();
         setIsAddMode(false);
-        setNewProduct({ id: '', name: '', price: '', image: '', description: '' });
+        setNewProduct({
+          id: '',
+          name: '',
+          price: '',
+          thumbnail: '',
+          description: '',
+          created_at: '',
+          updated_at: '',
+          category_id: '',
+          available: false,
+          color: '',
+        });
+        setMessage('Thêm sản phẩm thành công!');
+        setTimeout(() => setMessage(''), 3000);
       }
     } catch (error) {
       console.error('Error adding product:', error);
     }
   };
 
-  const updateProduct = async (id) => {
-    const productToUpdate = products.find(product => product.id === id);
-    try {
-      const response = await fetch(`/products/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer <JWT_TOKEN>`
-        },
-        body: JSON.stringify(productToUpdate),
-      });
-      const data = await response.json();
-      if (data.statusCode === 200) {
-        fetchProducts();
-        setIsEditMode(false);
-      }
-    } catch (error) {
-      console.error('Error updating product:', error);
-    }
-  };
-
-  const deleteSelectedProducts = async () => {
-    try {
-      const deleteRequests = selectedProducts.map(id =>
-        fetch(`/products/${id}`, {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer <JWT_TOKEN>`
-          }
-        })
-      );
-      await Promise.all(deleteRequests);
-      fetchProducts();
-      setSelectedProducts([]);
-      setIsDeleteMode(false);
-    } catch (error) {
-      console.error('Error deleting products:', error);
-    }
-  };
-
-  const handleSelectProduct = (id) => {
-    setSelectedProducts((prev) =>
-      prev.includes(id) ? prev.filter((pid) => pid !== id) : [...prev, id]
-    );
-  };
-
   return (
     <div className={styles.manageContainer}>
-      <div className={styles.buttonContainer}>
-        <select value={filterField} onChange={handleFilterFieldChange} className={styles.filterSelect}>
-          <option value="">Filter</option>
+      <div className={styles.controls}>
+        <select value={filterField} onChange={(e) => setFilterField(e.target.value)} className={styles.filter}>
+          <option value="">Filter By</option>
           <option value="id">ID</option>
-          <option value="name">Product Name</option>
+          <option value="name">Name</option>
           <option value="price">Price</option>
+          <option value="category_id">Category ID</option>
+          <option value="available">Available</option>
+          <option value="color">Color</option>
         </select>
-        <select
+        <input
+          type="text"
           value={filterValue}
-          onChange={handleFilterValueChange}
-          className={styles.filterSelect}
+          onChange={(e) => setFilterValue(e.target.value)}
+          placeholder="Enter filter value"
+          className={styles.filter}
           disabled={!filterField}
-        >
-          <option value="">Select Value</option>
-          {filterField &&
-            getUniqueFilterValues(filterField).map((value, index) => (
-              <option key={index} value={value}>
-                {value}
-              </option>
-            ))}
-        </select>
-        <button onClick={toggleAddMode} className={styles.addButton}>Add</button>
-        <button onClick={toggleEditMode} className={styles.editButton}>Edit</button>
-        <button onClick={toggleDeleteMode} className={styles.deleteButton}>Delete</button>
+        />
+        <button onClick={() => setIsAddMode(true)} className={styles.addButton}>Add</button>
       </div>
 
       <table className={styles.table}>
         <thead>
           <tr>
-            {isDeleteMode && <th>Select</th>}
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
+            <th>Thumbnail</th>
             <th>Description</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th>Category ID</th>
+            <th>Available</th>
+            <th>Color</th>
           </tr>
         </thead>
         <tbody>
-          {filteredProducts.map((product, index) => (
+          {products.map((product) => (
             <tr key={product.id}>
-              {isDeleteMode && (
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={selectedProducts.includes(product.id)}
-                    onChange={() => handleSelectProduct(product.id)}
-                  />
-                </td>
-              )}
               <td>{product.id}</td>
-              <td>
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    value={product.name}
-                    onChange={(e) => handleInputChange(e, index, 'name')}
-                    className={styles.inputField}
-                  />
-                ) : (
-                  product.name
-                )}
-              </td>
-              <td>
-                {isEditMode ? (
-                  <input
-                    type="number"
-                    value={product.price}
-                    onChange={(e) => handleInputChange(e, index, 'price')}
-                    className={styles.inputField}
-                  />
-                ) : (
-                  product.price
-                )}
-              </td>
-              <td>
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    value={product.description}
-                    onChange={(e) => handleInputChange(e, index, 'description')}
-                    className={styles.inputField}
-                  />
-                ) : (
-                  product.description
-                )}
-              </td>
-              {isEditMode && (
-                <td>
-                  <button onClick={() => updateProduct(product.id)} className={styles.saveButton}>Save</button>
-                </td>
-              )}
+              <td>{product.name}</td>
+              <td>{product.price}</td>
+              <td>{product.thumbnail}</td>
+              <td>{product.description}</td>
+              <td>{product.created_at}</td>
+              <td>{product.updated_at}</td>
+              <td>{product.category_id}</td>
+              <td>{product.available ? 'Yes' : 'No'}</td>
+              <td>{product.color}</td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      {isDeleteMode && (
-        <button onClick={deleteSelectedProducts} className={styles.confirmDeleteButton}>Confirm Delete</button>
-      )}
 
       {isAddMode && (
         <div className={styles.popup}>
@@ -241,10 +137,18 @@ const ManageProduct = () => {
             <h3>Add Product</h3>
             <input
               type="text"
+              name="id"
+              value={newProduct.id}
+              onChange={handleNewProductChange}
+              placeholder="ID"
+              className={styles.popupInput}
+            />
+            <input
+              type="text"
               name="name"
               value={newProduct.name}
               onChange={handleNewProductChange}
-              placeholder="Product Name"
+              placeholder="Name"
               className={styles.popupInput}
             />
             <input
@@ -257,17 +161,70 @@ const ManageProduct = () => {
             />
             <input
               type="text"
+              name="thumbnail"
+              value={newProduct.thumbnail}
+              onChange={handleNewProductChange}
+              placeholder="Thumbnail URL"
+              className={styles.popupInput}
+            />
+            <input
+              type="text"
               name="description"
               value={newProduct.description}
               onChange={handleNewProductChange}
               placeholder="Description"
               className={styles.popupInput}
             />
-            <button onClick={addNewProduct} className={styles.saveButton}>Save</button>
-            <button onClick={toggleAddMode} className={styles.cancelButton}>Cancel</button>
+            <input
+              type="text"
+              name="created_at"
+              value={newProduct.created_at}
+              onChange={handleNewProductChange}
+              placeholder="Created At (YYYY-MM-DD)"
+              className={styles.popupInput}
+            />
+            <input
+              type="text"
+              name="updated_at"
+              value={newProduct.updated_at}
+              onChange={handleNewProductChange}
+              placeholder="Updated At (YYYY-MM-DD)"
+              className={styles.popupInput}
+            />
+            <input
+              type="number"
+              name="category_id"
+              value={newProduct.category_id}
+              onChange={handleNewProductChange}
+              placeholder="Category ID"
+              className={styles.popupInput}
+            />
+            <div>
+              <label>
+                Available:
+                <input
+                  type="checkbox"
+                  name="available"
+                  checked={newProduct.available}
+                  onChange={handleNewProductChange}
+                />
+              </label>
+            </div>
+            <input
+              type="text"
+              name="color"
+              value={newProduct.color}
+              onChange={handleNewProductChange}
+              placeholder="Color"
+              className={styles.popupInput}
+            />
+            <button onClick={addNewProduct} className={styles.saveButton}>Add</button>
+            <button onClick={() => setIsAddMode(false)} className={styles.cancelButton}>Cancel</button>
           </div>
         </div>
       )}
+
+      {message && <div className={styles.message}>{message}</div>}
     </div>
   );
 };

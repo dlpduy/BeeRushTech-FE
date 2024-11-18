@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { HeaderLog } from "../../LoginComponent/HeaderLog";
 import styles from "./SignUp.module.css";
@@ -6,22 +6,23 @@ import styles from "./SignUp.module.css";
 const Congratulation = () => {
     const navigate = useNavigate();
 
-    const handleSignIn = () => {
-        navigate("/signin"); // Điều hướng đến giao diện SignIn khi nhấn Sign In
-    };
+    useEffect(() => {
+        const timer = setTimeout(() => navigate("/signin"), 5000);
+        return () => clearTimeout(timer);
+    }, [navigate]);
 
     return (
         <div className={styles.signup}>
-            <HeaderLog/>
+            <HeaderLog />
             <nav className={styles.signup_container}>
                 <div className={styles.signup_title}>Congratulations</div>
                 <div className={styles.normal}>
-                    You have successfully registered to our system. 
-                    <span onClick={handleSignIn} className={styles.bold}> Sign in now!</span>
+                    You have successfully registered to our system.
+                    <span onClick={() => navigate("/signin")} className={styles.bold}> Sign in now!</span>
                 </div>
             </nav>
         </div>
     );
-}
+};
 
 export default Congratulation;

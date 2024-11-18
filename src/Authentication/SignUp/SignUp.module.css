@@ -39,6 +39,7 @@ font-size: 20px;
 font-style: normal;
 font-weight: 800;
 line-height: normal;
+cursor: pointer;
 }
 
 .container {
@@ -124,6 +125,7 @@ justify-content: center;
 justify-items: center;
 align-items: center;
 padding: 17px;
+cursor: pointer;
 }
 .logoContainer {
     display: flex;
@@ -136,6 +138,7 @@ padding: 17px;
     height: 163;
     aspect-ratio: 1.2;
     object-fit: contain;
+    cursor: pointer;
 }
 /* Verification*/
 .verification{

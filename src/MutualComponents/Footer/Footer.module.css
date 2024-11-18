@@ -17,9 +17,10 @@
 }
 
 .brandName {
-    font: 700 32px Lato, sans-serif;
     color: #000;
-    margin: 0;
+    font: 700 24px Lato, sans-serif; 
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .brandDescription {
@@ -83,11 +84,19 @@
     gap: 12px;
 }
 
+
 .paymentIcon {
     width: 60px; /* Tăng kích thước của hình ảnh phương thức thanh toán */
     aspect-ratio: 1.57;
     object-fit: contain;
+    transition: transform 0.3s ease; /* Thêm hiệu ứng mượt mà khi hover */
 }
+
+.paymentIcon:hover {
+    transform: scale(1.1); /* Phóng to nhẹ khi hover */
+    filter: brightness(1.2); /* Tăng độ sáng khi hover */
+}
+
 
 @media (max-width: 991px) {
     .footer {

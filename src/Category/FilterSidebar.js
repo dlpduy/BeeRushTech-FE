@@ -108,7 +108,6 @@ const FilterSidebar = ({ setFilterCriteria, applyFilter }) => {
 const styles = {
     sidebar: {
         fontFamily: 'Lato, sans-serif',
-        padding: '20px',
         h4: '20px',
     },
     title: {
@@ -139,11 +138,11 @@ const styles = {
     },
     arrow: {
         marginLeft: 'auto',
-        fontSize: '12px',
+        fontSize: '15px',
     },
     subcategoryList: {
         listStyleType: 'none',
-        padding: '8px 0 0 16px',
+        padding: '10px 0 0 20px',
         margin: 0,
     },
     subcategoryItem: {
@@ -177,8 +176,8 @@ const styles = {
         backgroundColor: 'black',
         color: 'white',
         border: 'none',
-        borderRadius: '5px',
-        fontSize: '16px',
+        borderRadius: '62px',
+        fontSize: '14px',
         cursor: 'pointer',
     },
 };
