@@ -2,36 +2,37 @@ import React from "react";
 import "./ProductCard.css";
 
 function ProductCard({ product }) {
+  // Function to calculate the discount percentage
   const calculateDiscountPercentage = (originalPrice, discountedPrice) => {
+    if (!originalPrice || originalPrice <= discountedPrice) return 0;
     return Math.round(((originalPrice - discountedPrice) / originalPrice) * 100);
   };
 
   return (
-    <div>
     <div className="product-card">
       {/* Image Section */}
       <div className="product-image">
         <img src={product.image} alt={product.name} className="product-image-img" />
       </div>
-    </div>
+
       {/* Product Info */}
       <div className="product-info">
-        {/* Name */}
+        {/* Product Name */}
         <h3 className="product-name">{product.name}</h3>
 
-        {/* Rating */}
+        {/* Product Rating */}
         <div className="product-rating">
           <span>⭐ {product.rating}/5</span>
         </div>
 
-        {/* Price */}
+        {/* Product Price */}
         <div className="product-pricing">
           <span className="discounted-price">${product.discountedPrice}</span>
-          {product.originalPrice && (
+          {product.price && product.discountedPrice && (
             <>
-              <span className="original-price">${product.originalPrice}</span>
+              <span className="original-price">${product.price}</span>
               <span className="discount-percentage">
-                -{calculateDiscountPercentage(product.originalPrice, product.discountedPrice)}%
+                -{calculateDiscountPercentage(product.price, product.discountedPrice)}%
               </span>
             </>
           )}

@@ -27,15 +27,18 @@ const SignIn = () => {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    username: formData.email, // 'username' is the key expected by the backend
+                    password: formData.password,
+                }),
             });
 
             if (response.ok) {
                 const data = await response.json();
-                const { token } = data;
+                const { access_token } = data;
 
                 // Store the token in localStorage and navigate to home
-                localStorage.setItem("token", token);
+                localStorage.setItem("access_token", access_token);
                 alert("Login successful!");
                 navigate("/");
             } else {
