@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { HeaderLog } from "../../LoginComponent/HeaderLog";
+import api from "../../api"; // Import API instance
 import styles from "./SignIn.module.css";
 
 const SignIn = () => {
@@ -24,31 +25,22 @@ const SignIn = () => {
         }
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username: formData.email, // 'username' is the key expected by the backend
-                    password: formData.password,
-                }),
+            const response = await api.post("/auth/login", {
+                username: formData.email, // Backend yêu cầu trường 'username'
+                password: formData.password,
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                const { access_token } = data;
+            const { accessToken } = response.data.data; // Trích xuất token từ API response
 
-                // Store the token in localStorage and navigate to home
-                localStorage.setItem("access_token", access_token);
-                alert("Login successful!");
-                navigate("/");
-            } else {
-                // If the response is not ok, handle the error
-                const errorData = await response.json();
-                setError(errorData.message || "Login failed. Please try again.");
-            }
+            // Lưu token vào localStorage
+            localStorage.setItem("accessToken", accessToken);
+
+            alert("Login successful!");
+            navigate("/"); // Chuyển hướng đến trang chủ hoặc dashboard
         } catch (err) {
+            // Xử lý lỗi và hiển thị thông báo
             console.error("Login error:", err);
-            setError("An error occurred while trying to log in. Please try again.");
+            setError(err.response?.data?.message || "Login failed. Please try again.");
         }
     };
 

@@ -18,29 +18,29 @@ import bg12 from "../../Background/12.png";
 
 export const HomeMain = () => {
     const navigate = useNavigate();
-
-    const [currentBackground, setCurrentBackground] = useState(bg1); // Bắt đầu với hình ảnh đầu tiên
     const backgrounds = [bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10, bg11, bg12]; // Mảng chứa các hình ảnh background
 
+    const [currentIndex, setCurrentIndex] = useState(0); // Quản lý chỉ số ảnh hiện tại
+    const [fade, setFade] = useState(true); // Trạng thái để điều khiển hiệu ứng mờ
+
     useEffect(() => {
-        // Tạo hiệu ứng chuyển ảnh background mỗi 2 giây
+        // Hàm thực hiện chuyển đổi ảnh
         const interval = setInterval(() => {
-            setCurrentBackground((prevBackground) => {
-                // Lấy chỉ số hiện tại của ảnh background và chuyển sang ảnh tiếp theo
-                const currentIndex = backgrounds.indexOf(prevBackground);
-                const nextIndex = (currentIndex + 1) % backgrounds.length;
-                return backgrounds[nextIndex];
-            });
-        }, 5000); // Chuyển đổi mỗi 4 giây
+            setFade(false); // Bắt đầu hiệu ứng mờ
+            setTimeout(() => {
+                setCurrentIndex((prevIndex) => (prevIndex + 1) % backgrounds.length); // Cập nhật chỉ số ảnh
+                setFade(true); // Kích hoạt mờ vào ảnh mới
+            }, 1000); // Hiệu ứng fade out diễn ra trong 1 giây
+        }, 10000); // Chuyển đổi ảnh mỗi 5 giây
 
         return () => clearInterval(interval); // Dọn dẹp khi component bị unmount
-    }, [backgrounds]);
+    }, [backgrounds.length]);
 
     const handleRentNowClick = () => {
         // Cuộn lên đầu trước khi điều hướng
         window.scrollTo({
             top: 0,
-            behavior: 'smooth'
+            behavior: 'smooth',
         });
         navigate("/category");
     };
@@ -49,10 +49,11 @@ export const HomeMain = () => {
         <div
             className={styles.homemain}
             style={{
-                backgroundImage: `url(${currentBackground})`, // Áp dụng background từ state
-                backgroundSize: 'cover', // Đảm bảo ảnh background bao phủ toàn bộ
+                backgroundImage: `url(${backgrounds[currentIndex]})`,
+                opacity: fade ? 1 : 0, // Điều chỉnh độ mờ
+                backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                transition: 'background-image 1s ease-in-out', // Thêm hiệu ứng chuyển ảnh mượt mà
+                transition: 'opacity 1s ease-in-out', // Hiệu ứng mờ mượt mà
             }}
         >
             <div className={styles.mainContent}>
@@ -97,6 +98,6 @@ export const HomeMain = () => {
             </div>
         </div>
     );
-}
+};
 
 export default HomeMain;

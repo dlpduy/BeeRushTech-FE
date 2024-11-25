@@ -1,57 +1,36 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, {  useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { HeaderLog } from "../../LoginComponent/HeaderLog";
+import api from "../../api"; // Import the configured API instance
 import styles from "./SignUp.module.css";
 
 const Verification = () => {
     const navigate = useNavigate();
     const userEmail = localStorage.getItem("userEmail");
-
-    useEffect(() => {
-        const sendOTP = async () => {
-            try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/resetpassword`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email: userEmail }),
-                });
-
-                if (!response.ok) {
-                    alert("Failed to send OTP. Please try again.");
-                }
-            } catch (error) {
-                console.error("Error sending OTP:", error);
-            }
-        };
-
-        sendOTP();
-    }, [userEmail]);
+    const [otp, setOtp] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleVerificationSubmit = async () => {
-        const otp = document.querySelector('input[name="OTP"]').value;
-
         if (!otp) {
             alert("Please enter the OTP.");
             return;
         }
 
+        setLoading(true);
+
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/resetpassword`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token: otp }),
+            await api.post("/auth/verify-otp", {
+                token: otp,
+                email: userEmail,
             });
 
-            if (response.ok) {
-                alert("Verification successful!");
-                navigate("/congratulation");
-            } else {
-                const data = await response.json();
-                alert(data.message || "Verification failed. Please try again.");
-            }
+            alert("Verification successful!");
+            navigate("/congratulation");
         } catch (error) {
+            alert(error.response?.data?.message || "Verification failed. Please try again.");
             console.error("Error during verification:", error);
-            alert("An error occurred during verification.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -63,14 +42,14 @@ const Verification = () => {
                 <div className={styles.verinormal}>
                     <div>We have sent you an email with an OTP code.</div>
                     <div>
-                        Enter code here <input type="text" name="OTP" />
+                        Enter code here <input type="text" value={otp} onChange={(e) => setOtp(e.target.value)} />
                     </div>
                 </div>
             </nav>
             <div className={styles.container}>
-                <div className={styles.signup_button} onClick={handleVerificationSubmit}>
-                    <div className={styles.signup_content}>Submit</div>
-                </div>
+                <button className={styles.signup_button} onClick={handleVerificationSubmit} disabled={loading}>
+                    {loading ? "Verifying..." : "Submit"}
+                </button>
             </div>
         </div>
     );

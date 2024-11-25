@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { HeaderLog } from "../../LoginComponent/HeaderLog";
 import Form from "./Form";
+import api from "../../api"; // Import the configured API instance
 import styles from "./SignUp.module.css";
 
 const SignUp = () => {
@@ -34,29 +35,20 @@ const SignUp = () => {
         }
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    firstName,
-                    lastName,
-                    email,
-                    password,
-                    phoneNumber,
-                }),
+            const response = await api.post("/auth/register", {
+                fullName: `${firstName} ${lastName}`,
+                email,
+                password,
+                address: "Default Address", // Placeholder address for now
+                phoneNumber,
             });
 
-            if (response.ok) {
-                alert("Registration successful! Check your email for verification.");
-                localStorage.setItem("userEmail", email); // Lưu email để dùng trong verification
-                navigate("/verification");
-            } else {
-                const data = await response.json();
-                alert(data.message || "Registration failed. Please try again.");
-            }
+            alert("Registration successful! Check your email for verification.");
+            localStorage.setItem("userEmail", email);
+            navigate("/verification");
         } catch (error) {
+            alert(error.response?.data?.message || "Registration failed. Please try again.");
             console.error("Error during registration:", error);
-            alert("An error occurred while registering.");
         }
     };
 

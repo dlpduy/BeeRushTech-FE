@@ -133,8 +133,9 @@ const ManageProduct = () => {
 
       {isAddMode && (
         <div className={styles.popup}>
-          <div className={styles.popupContent}>
-            <h3>Add Product</h3>
+        <div className={styles.popupContent}>
+          <h3>Add Product</h3>
+          <div className={styles.popupInputGroup}>
             <input
               type="text"
               name="id"
@@ -199,29 +200,28 @@ const ManageProduct = () => {
               placeholder="Category ID"
               className={styles.popupInput}
             />
-            <div>
-              <label>
-                Available:
-                <input
-                  type="checkbox"
-                  name="available"
-                  checked={newProduct.available}
-                  onChange={handleNewProductChange}
-                />
-              </label>
-            </div>
-            <input
-              type="text"
-              name="color"
-              value={newProduct.color}
-              onChange={handleNewProductChange}
-              placeholder="Color"
-              className={styles.popupInput}
-            />
-            <button onClick={addNewProduct} className={styles.saveButton}>Add</button>
-            <button onClick={() => setIsAddMode(false)} className={styles.cancelButton}>Cancel</button>
+          </div>
+          <div>
+            <label>
+              Available:
+              <input
+                type="checkbox"
+                name="available"
+                checked={newProduct.available}
+                onChange={handleNewProductChange}
+              />
+            </label>
+          </div>
+          <div className={styles.popupActions}>
+            <button onClick={addNewProduct} className={styles.saveButton}>
+              Add
+            </button>
+            <button onClick={() => setIsAddMode(false)} className={styles.cancelButton}>
+              Cancel
+            </button>
           </div>
         </div>
+      </div>
       )}
 
       {message && <div className={styles.message}>{message}</div>}

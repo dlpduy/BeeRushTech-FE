@@ -1,5 +1,7 @@
-import styles from './ResetPassword.module.css'
-const ResetVerification = ({ onNext, onChange, formData }) => {
+import React from "react";
+import styles from "./ResetPassword.module.css";
+
+const ResetVerification = ({ onChange, formData }) => {
     return (
         <div className={styles.form_container}>
             <div className={styles.verification}>

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './ResetPassword.module.css';
+import styles from "./ResetPassword.module.css";
 
 const NewPassword = ({ onChange, formData, onSubmit }) => {
     return (
@@ -7,7 +7,7 @@ const NewPassword = ({ onChange, formData, onSubmit }) => {
             <div className={styles.verification}>
                 <div className={styles.verification_title}>Enter New Password</div>
                 <div className={styles.form}>
-                    <label> New Password </label>
+                    <label>New Password</label>
                     <input
                         type="password"
                         name="password"
@@ -15,7 +15,7 @@ const NewPassword = ({ onChange, formData, onSubmit }) => {
                         onChange={onChange}
                         required
                     />
-                    <label> Re-enter Password </label>
+                    <label>Re-enter Password</label>
                     <input
                         type="password"
                         name="confirmPassword"
@@ -23,6 +23,9 @@ const NewPassword = ({ onChange, formData, onSubmit }) => {
                         onChange={onChange}
                         required
                     />
+                    <button type="submit" className={styles.submitButton}>
+                        Reset Password
+                    </button>
                 </div>
             </div>
         </form>
