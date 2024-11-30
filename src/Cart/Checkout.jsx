@@ -1,86 +1,95 @@
-import React from "react";
-import styles from "./Cart.module.css";
+import React, { useState } from "react";
+import axios from "axios"; // Thư viện axios để gửi yêu cầu HTTP
+import QRCode from "react-qr-code"; // Thư viện QR code React
+import styles from "./Checkout.module.css";
 
-const Checkout = ({ onPay }) => {
-  const handlePay = () => {
-    alert("Payment successful!");
-    onPay();
+const Checkout = ({ onPay, total }) => {
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [paymentLink, setPaymentLink] = useState(""); // Lưu URL thanh toán từ VNPay
+  const [toastMessage, setToastMessage] = useState(""); // Quản lý thông báo
+  const [loading, setLoading] = useState(false); // Quản lý trạng thái khi đang gửi yêu cầu thanh toán
+
+  const showToast = (message) => {
+    setToastMessage(message);
+    setTimeout(() => {
+      setToastMessage(""); // Ẩn thông báo sau 2 giây
+    }, 2000);
   };
-  
-const paymentMethods = [
-  {
-    src: 'https://cdn.builder.io/api/v1/image/assets/TEMP/07b579bdf16d79432ceb4492b7c9eab8bf0e23ba0cb53bef1a92e3dc335fbe77?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8',
-    alt: 'Visa'
-  },
-  {
-    src: 'https://cdn.builder.io/api/v1/image/assets/TEMP/f647c4c6f1e9113d1a89f0b9e2a1d9c6dd9169ad1e2991a0ff1efca51497b837?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8',
-    alt: 'MasterCard'
-  },
-  {
-    src: 'https://cdn.builder.io/api/v1/image/assets/TEMP/975a9846a987addae6fd2fc834a93542b096f7bd7b1c050b3f5b65e77ce75d15?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8',
-    alt: 'PayPal'
-  },
-  {
-    src: 'https://cdn.builder.io/api/v1/image/assets/TEMP/23f47b282720e699ac6dd8b954fcd817f414ad5602287b673bc5d61e7b210ae6?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8',
-    alt: 'Apple Pay'
-  },
-  {
-    src: 'https://cdn.builder.io/api/v1/image/assets/TEMP/8392bceddda7d3a1813b9209d1db738a4eda28b381755cc11ed098949747454d?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8',
-    alt: 'Google Pay'
-  }
-];
+
+  const handlePay = async () => {
+    if (paymentMethod === "direct") {
+      setLoading(true);
+      try {
+        // Gửi yêu cầu thanh toán tới backend API
+        const response = await axios.get(`/payment/vn-pay`);
+
+        // Giả sử API trả về URL thanh toán VNPay
+        setPaymentLink(response.data.data.paymentUrl);
+        showToast("Thanh toán thành công. Quét mã QR để hoàn tất.");
+      } catch (error) {
+        showToast("Đã có lỗi xảy ra trong quá trình thanh toán.");
+      } finally {
+        setLoading(false);
+      }
+    } else if (paymentMethod === "store") {
+      showToast("Bạn đã chọn thanh toán tại cửa hàng. Vui lòng đến cửa hàng.");
+      onPay();
+    } else {
+      showToast("Vui lòng chọn phương thức thanh toán.");
+    }
+  };
+
+  const paymentMethods = [
+    { method: "direct", label: "Thanh toán trực tiếp (VNPay)" },
+    { method: "store", label: "Thanh toán tại cửa hàng" }
+  ];
 
   return (
     <div className={styles.checkout}>
-      <div className={styles.payments}>
-          {paymentMethods.map((method, index) => (
-            <img
-              key={index}
-              src={method.src}
-              alt={method.alt}
-              className={styles.paymentIcon}
+      <h3>Chọn phương thức thanh toán</h3>
+      <div className={styles.paymentOptions}>
+        {paymentMethods.map((method) => (
+          <div key={method.method} className={styles.option}>
+            <input
+              type="radio"
+              id={method.method}
+              name="paymentMethod"
+              value={method.method}
+              onChange={() => setPaymentMethod(method.method)}
             />
-          ))}
+            <label htmlFor={method.method}>{method.label}</label>
+          </div>
+        ))}
+      </div>
+
+      {paymentMethod === "direct" && paymentLink && (
+        <div className={styles.qrContainer}>
+          <h4>Thanh toán qua VNPay</h4>
+          <QRCode
+            value={paymentLink}  // Dùng URL thanh toán VNPay để tạo mã QR
+            size={150}
+            fgColor="#000000"
+            bgColor="#ffffff"
+            level="H"
+          />
+          <p>Quét mã QR để thanh toán số tiền {total}</p>
         </div>
-      <form className={styles.form}>
-        <h3 className={styles.formTitle}>Enter your Card!</h3>
-        
-        <label htmlFor="cardNumber">Card Number</label>
-        <input
-          id="cardNumber"
-          type="text"
-          placeholder="XXXX XXXX XXXX XXXX"
-          className={styles.input}
-          required
-        />
-        
-        <label htmlFor="validDate">Valid Date</label>
-        <input
-          id="validDate"
-          type="text"
-          placeholder="MM/YY"
-          className={styles.input}
-          required
-        />
-        
-        <label htmlFor="cvv">CVV</label>
-        <input
-          id="cvv"
-          type="text"
-          placeholder="XXX"
-          className={styles.input}
-          required
-        />
-        
-        <label htmlFor="cardName">Name on Card</label>
-        <input
-          id="cardName"
-          type="text"
-          placeholder="Enter your Name"
-          className={styles.input}
-          required
-        />
-      </form>
+      )}
+
+      <button
+        className={styles.payButton}
+        onClick={handlePay}
+        disabled={loading}
+      >
+        {loading ? "Đang xử lý..." : "Thanh toán"}
+      </button>
+
+      {/* Hiển thị Toast Message */}
+      {toastMessage && (
+        <div className={styles.toast}>
+          {toastMessage}
+        </div>
+      )}
     </div>
   );
 };

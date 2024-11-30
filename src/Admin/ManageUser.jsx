@@ -88,24 +88,27 @@ const ManageUser = () => {
         </tbody>
       </table>
 
+      {/* Nút Xóa luôn hiển thị khi có ít nhất một hàng được chọn */}
       {users.some(user => user.selected) && (
         <div className={styles.buttonContainer}>
-          {users.filter(user => user.selected).length > 1 ? (
-            <button onClick={handleDeleteRows} className={styles.deleteButton}>Xóa</button>
-          ) : null}
+          <button onClick={handleDeleteRows} className={styles.deleteButton}>Xóa</button>
         </div>
       )}
 
+      {/* Popup xác nhận xóa */}
       {showConfirmPopup && (
         <div className={styles.popup}>
           <div className={styles.popupContent}>
             <p>Bạn có chắc chắn muốn xóa tất cả các hàng đã chọn?</p>
+            <div className={styles.flex}>
             <button onClick={confirmDelete} className={styles.confirmButton}>Yes</button>
             <button onClick={cancelDelete} className={styles.cancelButton}>Cancel</button>
+            </div>
           </div>
         </div>
       )}
 
+      {/* Popup thành công sau khi xóa */}
       {showSuccessPopup && (
         <div className={styles.popup}>
           <div className={styles.popupContent}>

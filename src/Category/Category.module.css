@@ -35,16 +35,14 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.side{
-    flex: 0 0 80%;
 
-}
 .title{
     display: flex;
 }
 .sidebar{
+    flex: 0 0 80%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 295px));
     padding-top:35px;
     padding-left: 35px;
     justify-content: center;

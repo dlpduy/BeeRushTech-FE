@@ -81,6 +81,9 @@ export const Header = () => {
       case "new":
         navigate(`/category?filter=new`);
         break;
+      case "shop":
+        navigate(`/category`);
+        break;
       default:
         break;
     }
@@ -104,7 +107,11 @@ export const Header = () => {
         <nav className={styles.navigation}>
           <ul className={styles.navLinks}>
             <li className={styles.navItem}>
-              <button className={styles.navLink} aria-label="Shop">Shop</button>
+              <button 
+                className={styles.navLink} 
+                aria-label="Shop"
+                onClick={() => handleCategoryNavigation("shop")
+                }>Shop</button>
             </li>
             <li className={styles.navItem}>
               <button

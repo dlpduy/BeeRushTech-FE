@@ -119,3 +119,21 @@
     background-color: #333;
   }
   
+
+/* Màu sắc khi mục được chọn */
+.filter-section li.selected {
+  background-color: #FFB13A;
+  color: #fff; /* Đổi màu chữ khi chọn */
+}
+
+/* Giữ màu chữ khi hover trên mục đã chọn */
+.filter-section li.selected:hover {
+  background-color: #FFB13A;
+  color: #fff;
+}
+
+/* Hover cho các mục không phải là mục đã chọn */
+.filter-section li:hover {
+  background-color: #f0f0f0;
+}
+

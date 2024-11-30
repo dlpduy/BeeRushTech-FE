@@ -1,0 +1,61 @@
+/* Checkout.module.css */
+.checkout {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .paymentOptions {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .option {
+    margin-bottom: 10px;
+  }
+  
+  .qrContainer {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .qrCode {
+    width: 200px;
+    height: 200px;
+    margin-top: 10px;
+  }
+  
+  .payButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .payButton:hover {
+    background-color: #45a049;
+  }
+  
+  .toast {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+  }
+  
+  /* Khi toast được ẩn sau 2 giây */
+  .toast {
+    opacity: 0;
+    transform: translateY(-20px);
+  }

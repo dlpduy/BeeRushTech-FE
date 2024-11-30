@@ -1,0 +1,52 @@
+/* Bao quanh toàn bộ phần loading */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px ;
+    flex-direction: column;
+  }
+  
+  /* Logo container */
+  .logo {
+    margin-bottom: 20px;
+    animation: rotate 1.5s infinite linear; /* Thêm hiệu ứng quay vòng cho logo */
+  }
+  
+  /* Hiệu ứng cho logo, giữ kích thước 50x50px */
+  .logoImage {
+    width: 50px;
+    height: 50px;
+    object-fit: contain; /* Giữ tỷ lệ ảnh */
+  }
+  
+  /* Hiệu ứng loading cho phần chữ */
+  h3 {
+    font-size: 24px;
+    color: #333;
+    animation: fadeIn 2s ease-in-out infinite; /* Thêm hiệu ứng mờ dần cho chữ "Loading..." */
+  }
+  
+  /* Hiệu ứng quay vòng logo */
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Hiệu ứng mờ dần cho chữ "Loading..." */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  

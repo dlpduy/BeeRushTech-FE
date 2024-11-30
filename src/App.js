@@ -21,6 +21,7 @@ import Checkout from './Cart/Checkout';
 import Qr from './Cart/Qr'
 
 
+
 function App() {
   useEffect(() => {
     // Add Google Fonts link to <head>

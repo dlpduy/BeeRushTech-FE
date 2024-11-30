@@ -1,27 +1,26 @@
 /* ProductCard.css */
 
-.product-card {
+.product_card {
   display: flex;
   flex-direction: column;
-  width: 295px;
-  height: 298px; /* Adjusted to fit additional info */
+  width: 295px !important;
+  height: 298px !important; 
   background: #FFB13A;
   border-radius: 20px;
   padding: 44px 42px 44px 43px;
   justify-content: center;
   align-items: center;
   text-align: center;
-  transition: transform 0.3s ease;
   cursor: pointer;
 }
 
 /* Hover effect for scaling the product image */
-.product-card:hover .product-image {
+.product_card:hover .product_image {
   transform: scale(1.1);
 }
 
 /* Style for the image container */
-.product-image {
+.product_image {
   width: 210px;
   height: 210px;
   background-size: cover;
@@ -31,45 +30,46 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  object-fit: cover;
 }
 
 /* Style for product info */
-.product-info {
+.product_info {
   text-align: center;
   color: #000;
   font-family: Lato, sans-serif;
 }
 
-.product-info h3 {
+.product_info h3 {
   font-size: 20px;
   font-weight: 700;
   margin: 10px 0 5px 0;
 }
 
-.product-info p {
+.product_info p {
   font-size: 16px;
   font-weight: 400;
 }
 
 
-.product-image-img {
-  width: 100%;
-  height: 100%;
+.product_image_img {
+  width: 100% !important;
+  height: 100% !important;
   object-fit: cover; /* Đảm bảo ảnh vừa khít và giữ tỷ lệ */
 }
 
-.product-info {
+.product_info {
   padding: 10px;
   text-align: center;
 }
 
-.original-price {
+.original_price {
   text-decoration: line-through;
   color: #999;
   margin-left: 5px;
 }
 
-.discount-percentage {
+.discount_percentage {
   color: #e74c3c;
   margin-left: 5px;
 }

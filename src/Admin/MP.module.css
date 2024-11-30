@@ -39,7 +39,7 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 800px;
+  width: 400px;
   transform: translate(-50%, -50%);
   background-color: #fff;
   padding: 20px;
@@ -87,6 +87,10 @@
   flex-wrap: nowrap;
 }
 
+.flex{
+  display: flex;
+  gap: 20px;
+}
 
 .buttonContainer {
   margin-top: 20px;

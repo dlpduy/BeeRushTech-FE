@@ -1,10 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import api from "../../../api"; // Sử dụng instance API
 import styles from "./ProductDetail.module.css";
+import { mockProducts } from "../../mockData"; // Import mock data
 
-const ProductDetail = ({ product, addToCart }) => {
+const ProductDetail = ({ addToCart }) => {
+  const { productId } = useParams(); // Lấy ID sản phẩm từ URL
+  const [product, setProduct] = useState(mockProducts[0]); // Hiển thị sản phẩm đầu tiên trong mock data mặc định
   const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]); // Mặc định chọn màu đầu tiên
-  const [selectedStorage, setSelectedStorage] = useState(product.storageOptions[0].size); // Mặc định chọn dung lượng đầu tiên
+  const [selectedColor, setSelectedColor] = useState(mockProducts[0].colors[0]);
+  const [selectedStorage, setSelectedStorage] = useState(mockProducts[0].storageOptions[0].size);
+  const [imageError, setImageError] = useState(false); // Trạng thái lỗi hình ảnh
+
+  useEffect(() => {
+    // Cuộn trang lên đầu khi component ProductDetail được mount
+    window.scrollTo(0, 0);
+
+    const fetchProduct = async () => {
+      try {
+        const response = await api.get(`/products/${productId}`);
+        if (response.data) {
+          setProduct(response.data);
+          setSelectedColor(response.data.colors[0]); // Mặc định chọn màu đầu tiên
+          setSelectedStorage(response.data.storageOptions[0].size); // Mặc định chọn dung lượng đầu tiên
+        }
+      } catch (err) {
+        console.error("Failed to fetch product:", err);
+        // Nếu có lỗi, giữ sản phẩm đầu tiên trong mock data
+        setProduct(mockProducts[0]); // Sử dụng sản phẩm đầu tiên trong mock data
+        setSelectedColor(mockProducts[0].colors[0]);
+        setSelectedStorage(mockProducts[0].storageOptions[0].size);
+      }
+    };
+
+    fetchProduct(); // Gọi API khi component mount
+  }, [productId]); // Mảng phụ thuộc để gọi lại khi `productId` thay đổi
 
   // Xử lý thay đổi số lượng
   const handleQuantityChange = (type) => {
@@ -40,14 +70,28 @@ const ProductDetail = ({ product, addToCart }) => {
   );
   const stock = selectedStorageOption ? selectedStorageOption.inStock : 0;
 
+  // Hàm xử lý lỗi khi tải hình ảnh
+  const handleImageError = () => {
+    setImageError(true); // Đánh dấu có lỗi khi tải hình ảnh
+  };
+
+  // Đường dẫn hình ảnh (nếu có lỗi thì sử dụng ảnh mặc định)
+  const imageUrl = imageError ? "/public/logo.png" : (product.image || "/public/logo.png");
+
+  if (!product) {
+    return <div>Loading...</div>; // Hiển thị loading khi chưa có dữ liệu
+  }
+
   return (
     <div className={styles.product_detail}>
       {/* Phần hình ảnh sản phẩm */}
       <section className={styles.pic}>
-        <div
+        <img
+          src={imageUrl}
+          alt={product.name}
+          onError={handleImageError} // Gọi handleImageError nếu không tải được hình ảnh
           className={styles.product_img}
-          style={{ backgroundImage: `url(${product.image})` }}
-        ></div>
+        />
       </section>
 
       {/* Phần chi tiết sản phẩm */}

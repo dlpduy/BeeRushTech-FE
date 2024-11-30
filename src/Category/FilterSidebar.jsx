@@ -2,18 +2,23 @@ import React, { useEffect, useState } from "react";
 import "./FilterSidebar.css";
 
 const FilterSidebar = ({ setFilterCriteria }) => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [expandedCategory, setExpandedCategory] = useState(null);
+  const [selectedCategories, setSelectedCategories] = useState([]); // Lưu trữ các lựa chọn
+  const [expandedCategories, setExpandedCategories] = useState({}); // Trạng thái mở/đóng cho từng danh mục
   const [priceRange, setPriceRange] = useState([10, 200]);
 
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-    setExpandedCategory(category === expandedCategory ? null : category);
+    setExpandedCategories(prevExpandedCategories => ({
+      ...prevExpandedCategories,
+      [category]: !prevExpandedCategories[category], // Đảo trạng thái mở/đóng của danh mục
+    }));
   };
 
   const handleSubcategorySelect = (subcategory) => {
-    setSelectedCategory(subcategory);
-    setExpandedCategory(null);
+    setSelectedCategories(prevSelectedCategories =>
+      prevSelectedCategories.includes(subcategory)
+        ? prevSelectedCategories.filter(item => item !== subcategory) // Nếu đã chọn, bỏ chọn
+        : [...prevSelectedCategories, subcategory] // Nếu chưa chọn, thêm vào
+    );
   };
 
   const handlePriceChange = (event, index) => {
@@ -23,8 +28,8 @@ const FilterSidebar = ({ setFilterCriteria }) => {
   };
 
   useEffect(() => {
-    setFilterCriteria({ category: selectedCategory, priceRange });
-  }, [selectedCategory, priceRange, setFilterCriteria]);
+    setFilterCriteria({ categories: selectedCategories, priceRange }); // Truyền danh sách các lựa chọn vào setFilterCriteria
+  }, [selectedCategories, priceRange, setFilterCriteria]);
 
   return (
     <div className="filter-sidebar">
@@ -34,23 +39,54 @@ const FilterSidebar = ({ setFilterCriteria }) => {
       <div className="filter-section">
         <h4>Category</h4>
         <ul>
-          <li onClick={() => handleCategorySelect("Cameras & Lenses")}>
-            Cameras & Lenses <span>{expandedCategory === "Cameras & Lenses" ? "▼" : "►"}</span>
+          <li 
+            onClick={() => handleCategorySelect("Cameras & Lenses")}
+            className={expandedCategories["Cameras & Lenses"] ? "expanded" : ""}
+          >
+            Cameras & Lenses <span>{expandedCategories["Cameras & Lenses"] ? "▼" : "►"}</span>
           </li>
-          {expandedCategory === "Cameras & Lenses" && (
+          {expandedCategories["Cameras & Lenses"] && (
             <ul className="subcategory">
-              <li onClick={() => handleSubcategorySelect("Sony")}>Sony</li>
-              <li onClick={() => handleSubcategorySelect("Fujifilm")}>Fujifilm</li>
-              <li onClick={() => handleSubcategorySelect("Nikon")}>Nikon</li>
+              <li 
+                onClick={() => handleSubcategorySelect("Sony")}
+                className={selectedCategories.includes("Sony") ? "selected" : ""}
+              >
+                Sony
+              </li>
+              <li 
+                onClick={() => handleSubcategorySelect("Fujifilm")}
+                className={selectedCategories.includes("Fujifilm") ? "selected" : ""}
+              >
+                Fujifilm
+              </li>
+              <li 
+                onClick={() => handleSubcategorySelect("Nikon")}
+                className={selectedCategories.includes("Nikon") ? "selected" : ""}
+              >
+                Nikon
+              </li>
             </ul>
           )}
-          <li onClick={() => handleCategorySelect("Smartphones")}>
-            Smartphones <span>{expandedCategory === "Smartphones" ? "▼" : "►"}</span>
+          <li 
+            onClick={() => handleCategorySelect("Smartphones")}
+            className={expandedCategories["Smartphones"] ? "expanded" : ""}
+          >
+            Smartphones <span>{expandedCategories["Smartphones"] ? "▼" : "►"}</span>
           </li>
-          {expandedCategory === "Smartphones" && (
+          {expandedCategories["Smartphones"] && (
             <ul className="subcategory">
-              <li onClick={() => handleSubcategorySelect("Apple")}>Apple</li>
-              <li onClick={() => handleSubcategorySelect("Samsung")}>Samsung</li>
+              <li 
+                onClick={() => handleSubcategorySelect("iPhone")}
+                className={selectedCategories.includes("iPhone") ? "selected" : ""}
+              >
+                iPhone
+              </li>
+              <li 
+                onClick={() => handleSubcategorySelect("Samsung")}
+                className={selectedCategories.includes("Samsung") ? "selected" : ""}
+              >
+                Samsung
+              </li>
             </ul>
           )}
         </ul>
