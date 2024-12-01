@@ -13,6 +13,9 @@ const EmailForm = ({ onChange, formData }) => {
                     onChange={onChange}
                     required
                 />
+                <button onClick={onChange} className={styles.submitButton}>
+                    Send OTP
+                </button>
             </div>
         </div>
     );

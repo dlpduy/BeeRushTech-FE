@@ -4,34 +4,56 @@ import api from "../../api"; // Axios instance
 import styles from "./Header.module.css";
 
 export const Header = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // Trạng thái tìm kiếm
   const [suggestions, setSuggestions] = useState([]); // Gợi ý tìm kiếm
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Dropdown state
   const dropdownRef = useRef(null); // Ref cho menu dropdown
+  const [userRole, setUserRole] = useState(null);
   const navigate = useNavigate();
 
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const token = localStorage.getItem("authToken"); // Giả sử bạn lưu token trong localStorage
+        if (token) {
+          const response = await api.get("/auth/role", { headers: { Authorization: `Bearer ${token}` } });
+          setUserRole(response.data.role); // Lấy role từ API
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+        setUserRole(null); // Nếu có lỗi, coi như chưa đăng nhập
+      }
+    };
+
+    fetchUserRole(); // Gọi API khi component mount
+  }, []);
   // Lấy danh sách gợi ý khi người dùng nhập vào thanh tìm kiếm
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (searchQuery.trim()) {
         try {
-          const response = await api.get(`/products?search=${encodeURIComponent(searchQuery)}`);
+          // Gọi API tìm kiếm sản phẩm
+          const response = await api.get(`/products/search`, {
+            params: { query: searchQuery }, // Thêm query vào tham số
+          });
           setSuggestions(response.data.products || []);
         } catch (error) {
           console.error("Failed to fetch suggestions:", error);
-          setSuggestions([]);
+          setSuggestions([]); // Nếu có lỗi, xóa gợi ý
         }
       } else {
-        setSuggestions([]);
+        setSuggestions([]); // Nếu không có từ khóa tìm kiếm, xóa gợi ý
       }
     };
 
-    fetchSuggestions();
+    fetchSuggestions(); // Gọi API mỗi khi searchQuery thay đổi
   }, [searchQuery]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      // Điều hướng tới trang tìm kiếm kết quả
       navigate(`/category?search=${encodeURIComponent(searchQuery)}`);
     }
   };
@@ -57,6 +79,12 @@ export const Header = () => {
   const handleForgotPassword = () => {
     navigate("/resetpassword");
     closeDropdown(); // Đóng dropdown khi chuyển hướng
+  };
+  const handleSignOut = () => {
+    // Xóa token khỏi localStorage hoặc làm bất kỳ thao tác nào liên quan đến đăng xuất
+    localStorage.removeItem("authToken"); // Giả sử bạn lưu token trong localStorage
+    setUserRole(null); // Reset vai trò người dùng
+    navigate("/"); // Điều hướng về trang chủ hoặc trang khác sau khi đăng xuất
   };
 
   // Đóng dropdown khi nhấp ngoài
@@ -110,8 +138,10 @@ export const Header = () => {
               <button 
                 className={styles.navLink} 
                 aria-label="Shop"
-                onClick={() => handleCategoryNavigation("shop")
-                }>Shop</button>
+                onClick={() => handleCategoryNavigation("shop")}
+              >
+                Shop
+              </button>
             </li>
             <li className={styles.navItem}>
               <button
@@ -131,11 +161,6 @@ export const Header = () => {
                 New Arrivals
               </button>
             </li>
-            <li className={styles.navItem}>
-              <Link to="/category" className={styles.navLink} aria-label="Brands">
-                Brands
-              </Link>
-            </li>
           </ul>
           <form className={styles.searchForm} onSubmit={handleSearchSubmit}>
             <img
@@ -149,7 +174,7 @@ export const Header = () => {
               className={styles.searchInput}
               aria-label="Search for products"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)} // Cập nhật searchQuery
             />
             {/* Hiển thị gợi ý tìm kiếm */}
             {suggestions.length > 0 && (
@@ -158,7 +183,7 @@ export const Header = () => {
                   <li
                     key={item.id}
                     className={styles.suggestionItem}
-                    onClick={() => navigate(`/product-info/${item.id}`)}
+                    onClick={() => navigate(`/product-info/${item.id}`)} // Điều hướng tới sản phẩm khi nhấp
                   >
                     {item.name}
                   </li>
@@ -188,21 +213,43 @@ export const Header = () => {
             </Link>
           </div>
           {/* Dropdown Menu */}
-          {isDropdownOpen && (
-            <div ref={dropdownRef} className={styles.dropdownMenu}>
-              <div className={styles.authButton}>
-              <button onClick={handleSignIn} className={styles.dropdownItem}>
-                Sign In
-              </button>
-              <button onClick={handleSignUp} className={styles.dropdownItem}>
-                Sign Up
-              </button>
-              </div>
-              <button onClick={handleForgotPassword} className={styles.forget}>
-                Forgot Password?
-              </button>
-            </div>
-          )}
+{isDropdownOpen && (
+  <div ref={dropdownRef} className={styles.dropdownMenu}>
+    {/* Nếu người dùng đã đăng nhập */}
+    {userRole ? (
+      <>
+        {userRole === "admin" ? (
+          // Nếu người dùng là admin
+          <button onClick={() => navigate("/admin")} className={styles.dropdownItem}>
+            Admin Dashboard
+          </button>
+        ) : (
+          // Nếu người dùng là customer
+          <button onClick={() => navigate("/user")} className={styles.dropdownItem}>
+            User Profile
+          </button>
+        )}
+        <button onClick={handleSignOut} className={styles.dropdownItem}>
+          Sign Out
+        </button>
+      </>
+    ) : (
+      // Nếu người dùng chưa đăng nhập
+      <div className={styles.authButton}>
+        <button onClick={handleSignIn} className={styles.dropdownItem}>
+          Sign In
+        </button>
+        <button onClick={handleSignUp} className={styles.dropdownItem}>
+          Sign Up
+        </button>
+      </div>
+    )}
+    <button onClick={handleForgotPassword} className={styles.forget}>
+      Forgot Password?
+    </button>
+  </div>
+)}
+
         </nav>
       </div>
     </header>

@@ -30,8 +30,8 @@ export const HomeMain = () => {
             setTimeout(() => {
                 setCurrentIndex((prevIndex) => (prevIndex + 1) % backgrounds.length); // Cập nhật chỉ số ảnh
                 setFade(true); // Kích hoạt mờ vào ảnh mới
-            }, 1000); // Hiệu ứng fade out diễn ra trong 1 giây
-        }, 10000); // Chuyển đổi ảnh mỗi 5 giây
+            }, 2000); // Hiệu ứng fade out diễn ra trong 2 giây
+        }, 5000); // Chuyển đổi ảnh mỗi 5 giây
 
         return () => clearInterval(interval); // Dọn dẹp khi component bị unmount
     }, [backgrounds.length]);
@@ -46,16 +46,20 @@ export const HomeMain = () => {
     };
 
     return (
-        <div
-            className={styles.homemain}
-            style={{
-                backgroundImage: `url(${backgrounds[currentIndex]})`,
-                opacity: fade ? 1 : 0, // Điều chỉnh độ mờ
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                transition: 'opacity 1s ease-in-out', // Hiệu ứng mờ mượt mà
-            }}
-        >
+        <div className={styles.homemain}>
+            {/* Phần tử nền với hiệu ứng mờ */}
+            <div
+                className={styles.backgroundLayer}
+                style={{
+                    backgroundImage: `url(${backgrounds[currentIndex]})`,
+                    opacity: fade ? 1 : 0, // Điều chỉnh độ mờ cho nền
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    transition: 'opacity 2s ease-in-out', // Hiệu ứng mờ mượt mà
+                }}
+            ></div>
+
+            {/* Nội dung chính */}
             <div className={styles.mainContent}>
                 <div>
                     EVERYTHING 
@@ -68,18 +72,20 @@ export const HomeMain = () => {
                     </div>
                 </div>
             </div>
+
             <div className={styles.content}>
                 <div>
                     Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.
                 </div>
                 <div className={styles.paddingButton}>
-                    <div className={styles.rentButton} onClick={handleRentNowClick}> 
+                    <div className={styles.rentButton} onClick={handleRentNowClick}>
                         <div className={styles.rentContent}>
                             Rent Now
                         </div>
                     </div>
                 </div>
             </div>
+
             <div className={styles.statistic}>
                 <div className={styles.column}>
                     <div className={styles.data}>200+</div>
@@ -87,17 +93,10 @@ export const HomeMain = () => {
                 </div>
                 <div className={styles.divider}></div>
                 <div className={styles.column}>
-                    <div className={styles.data}>2000+</div>
-                    <div className={styles.dataContent}> High-Quality Products</div>
-                </div>
-                <div className={styles.divider}></div>
-                <div className={styles.column}>
-                    <div className={styles.data}>30,000+</div>
+                    <div className={styles.data}>10k+</div>
                     <div className={styles.dataContent}> Happy Customers</div>
                 </div>
             </div>
         </div>
     );
 };
-
-export default HomeMain;

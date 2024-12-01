@@ -19,20 +19,20 @@ const OrderSummary = ({ subtotal, discount, deliveryFee, total, isCheckout }) =>
       <div className={styles.details}>
         <div className={styles.row}>
           <span className={styles.label}>Subtotal</span>
-          <span className={styles.value}>${subtotal.toFixed(2)}</span>
+          <span className={styles.value}>${subtotal}</span>
         </div>
         <div className={styles.row}>
           <span className={styles.label}>Discount (-20%)</span>
-          <span className={styles.discount}>-${discount.toFixed(2)}</span>
+          <span className={styles.discount}>-${discount}</span>
         </div>
         <div className={styles.row}>
           <span className={styles.label}>Delivery Fee</span>
-          <span className={styles.value}>${deliveryFee.toFixed(2)}</span>
+          <span className={styles.value}>${deliveryFee}</span>
         </div>
         <div className={styles.divider} />
         <div className={styles.row}>
           <span className={styles.totalLabel}>Total</span>
-          <span className={styles.totalValue}>${total.toFixed(2)}</span>
+          <span className={styles.totalValue}>${total}</span>
         </div>
       </div>
       <button className={styles.checkoutButton} onClick={handleAction}>

@@ -1,14 +1,51 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styles from './CartItem.module.css';
+import api from '../../../api'; // Import API instance từ api.js
 
-export const CartItem = ({ image, title, size, color, price, quantity, onQuantityChange, onRemove }) => {
+export const CartItem = ({ image, title, size, color, price, quantity, id, onRemove }) => {
+  
+  // Cập nhật số lượng sản phẩm trong giỏ hàng
+  const updateQuantity = useCallback(
+    async (newQuantity) => {
+      try {
+        const response = await api.put('/customer/cart', {
+          productId: id,  // Dùng productId để cập nhật số lượng
+          quantity: newQuantity
+        });
+        
+        if (response.status === 200) {
+          // Nếu API trả về thành công, cập nhật số lượng
+          onRemove();  // Đảm bảo sau khi update, gọi lại callback để cập nhật giỏ hàng
+        }
+      } catch (error) {
+        console.error("Error updating product quantity:", error);
+      }
+    },
+    [id, onRemove]
+  );
+
+  // Xóa sản phẩm khỏi giỏ hàng
+  const handleRemove = useCallback(async () => {
+    try {
+      const response = await api.delete(`/customer/cart?productId=${id}`);
+      if (response.status === 200) {
+        // Nếu xóa thành công, gọi onRemove để cập nhật giỏ hàng
+        onRemove(id);
+      }
+    } catch (error) {
+      console.error("Error removing product from cart:", error);
+    }
+  }, [id, onRemove]);
+
+  // Tăng số lượng sản phẩm
   const handleIncrease = () => {
-    onQuantityChange(quantity + 1);
+    updateQuantity(quantity + 1);
   };
 
+  // Giảm số lượng sản phẩm
   const handleDecrease = () => {
     if (quantity > 1) {
-      onQuantityChange(quantity - 1);
+      updateQuantity(quantity - 1);
     }
   };
 
@@ -31,7 +68,7 @@ export const CartItem = ({ image, title, size, color, price, quantity, onQuantit
           <p className={styles.price}>${price}</p>
         </div>
         <div className={styles.actions}>
-          <button className={styles.removeButton} onClick={onRemove} aria-label="Remove item">
+          <button className={styles.removeButton} onClick={handleRemove} aria-label="Remove item">
             <img
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/240d83a678a51d7ab08c63d5ef3db69c794418755b11f1132ce4e7974054d36a?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8"
               alt="Trash Bin Icon"

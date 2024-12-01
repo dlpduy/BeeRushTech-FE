@@ -5,6 +5,9 @@ import { Header } from "../../MutualComponents/Header/Header";
 import { Footer } from "../../MutualComponents/Footer/Footer";
 import NewsletterSection from "../../MutualComponents/Newsletter/Newsletter";
 import ProductDetail from "./component/ProductDetail";
+import Terms from "./component/Terms";
+import Loading from "../../MutualComponents/Loading/Loading";
+import { mockProducts } from "../mockData";
 import styles from "./ProductInfo.module.css";
 
 const ProductInfo = () => {
@@ -17,10 +20,11 @@ const ProductInfo = () => {
         const fetchProduct = async () => {
             try {
                 const response = await api.get(`/products/${productId}`);
-                setProduct(response.data); // Gán sản phẩm vào state
+                setProduct(response.data); // Gán sản phẩm từ API vào state
             } catch (err) {
                 console.error("Error fetching product details:", err);
                 setError(true); // Đặt trạng thái lỗi
+                setProduct(mockProducts); // Sử dụng mock data khi có lỗi
             } finally {
                 setLoading(false); // Tắt trạng thái loading
             }
@@ -33,7 +37,7 @@ const ProductInfo = () => {
         return (
             <main className={styles.ProductInfo}>
                 <Header />
-                <div className={styles.loadingContainer}>Loading...</div>
+                <Loading />
                 <Footer />
             </main>
         );
@@ -43,13 +47,10 @@ const ProductInfo = () => {
         <main className={styles.ProductInfo}>
             <Header />
             <div className={styles.container}>
-                {error || !product ? (
-                    <div className={styles.errorMessage}>
-                        Product not found. Please check the product ID.
-                    </div>
-                ) : (
+                
                     <ProductDetail product={product} />
-                )}
+                
+                <Terms/>
                 <NewsletterSection />
             </div>
             <Footer />

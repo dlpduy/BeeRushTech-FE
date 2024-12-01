@@ -6,6 +6,20 @@ const FilterSidebar = ({ setFilterCriteria }) => {
   const [expandedCategories, setExpandedCategories] = useState({}); // Trạng thái mở/đóng cho từng danh mục
   const [priceRange, setPriceRange] = useState([10, 200]);
 
+  const handlePriceChange = (event, index) => {
+    const newPriceRange = [...priceRange];
+    newPriceRange[index] = Number(event.target.value);
+
+    // Đảm bảo giá trị bên dưới luôn lớn hơn hoặc bằng giá trị bên trên
+    if (index === 0 && newPriceRange[0] > newPriceRange[1]) {
+      newPriceRange[1] = newPriceRange[0];
+    } else if (index === 1 && newPriceRange[1] < newPriceRange[0]) {
+      newPriceRange[0] = newPriceRange[1];
+    }
+
+    setPriceRange(newPriceRange);
+  };
+
   const handleCategorySelect = (category) => {
     setExpandedCategories(prevExpandedCategories => ({
       ...prevExpandedCategories,
@@ -21,11 +35,6 @@ const FilterSidebar = ({ setFilterCriteria }) => {
     );
   };
 
-  const handlePriceChange = (event, index) => {
-    const newPriceRange = [...priceRange];
-    newPriceRange[index] = Number(event.target.value);
-    setPriceRange(newPriceRange);
-  };
 
   useEffect(() => {
     setFilterCriteria({ categories: selectedCategories, priceRange }); // Truyền danh sách các lựa chọn vào setFilterCriteria
@@ -67,60 +76,62 @@ const FilterSidebar = ({ setFilterCriteria }) => {
               </li>
             </ul>
           )}
+
           <li 
-            onClick={() => handleCategorySelect("Smartphones")}
-            className={expandedCategories["Smartphones"] ? "expanded" : ""}
+            onClick={() => handleCategorySelect("Speaker")}
+            className={expandedCategories["Speaker"] ? "expanded" : ""}
           >
-            Smartphones <span>{expandedCategories["Smartphones"] ? "▼" : "►"}</span>
+            Speaker <span>{expandedCategories["Speaker"] ? "▼" : "►"}</span>
           </li>
-          {expandedCategories["Smartphones"] && (
+          {expandedCategories["Speaker"] && (
             <ul className="subcategory">
               <li 
-                onClick={() => handleSubcategorySelect("iPhone")}
-                className={selectedCategories.includes("iPhone") ? "selected" : ""}
+                onClick={() => handleSubcategorySelect("Sony")}
+                className={selectedCategories.includes("Sony") ? "selected" : ""}
               >
-                iPhone
+                Sony
               </li>
               <li 
-                onClick={() => handleSubcategorySelect("Samsung")}
-                className={selectedCategories.includes("Samsung") ? "selected" : ""}
+                onClick={() => handleSubcategorySelect("JBL")}
+                className={selectedCategories.includes("JBL") ? "selected" : ""}
               >
-                Samsung
+                JBL
               </li>
             </ul>
           )}
         </ul>
       </div>
 
-      {/* Price Filter */}
-      <div className="filter-section">
-        <h4>Price</h4>
-        <div className="price-slider-container">
-          <div className="price-slider">
-            <input
-              type="range"
-              min="10"
-              max="200"
-              value={priceRange[0]}
-              onChange={(e) => handlePriceChange(e, 0)}
-            />
-            <input
-              type="range"
-              min="10"
-              max="200"
-              value={priceRange[1]}
-              onChange={(e) => handlePriceChange(e, 1)}
-            />
-          </div>
-          <div className="price-range">
-            <span>${priceRange[0]}</span>
-            <span>${priceRange[1]}</span>
-          </div>
+      {/* Price Range Filter */}
+      <div className="price-slider-container">
+        <div className="price-slider">
+          <input
+            type="range"
+            className="top"
+            min="0"
+            max="500"
+            step="1"
+            value={priceRange[0]}
+            onChange={(e) => handlePriceChange(e, 0)}
+          />
+          <input
+            type="range"
+            className="bottom"
+            min="0"
+            max="500"
+            step="1"
+            value={priceRange[1]}
+            onChange={(e) => handlePriceChange(e, 1)}
+          />
+        </div>
+        <div className="price-range">
+          <span>${priceRange[0]}</span>
+          <span>${priceRange[1]}</span>
         </div>
       </div>
 
-      {/* Apply Filter Button */}
-      <button className="apply-filter-button">Apply Filter</button>
+      {/* Apply Filters Button */}
+      <button className="apply-filter-button">Apply Filters</button>
     </div>
   );
 };

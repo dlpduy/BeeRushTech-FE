@@ -8,7 +8,6 @@ import PaymentTerms from './FAQ/PaymentTerms';
 import CompensationTerms from './FAQ/CompensationTerms';
 import  Admin  from './Admin/Admin';
 import  ManageProduct from './Admin/ManageProduct'
-import  ManageUser from './Admin/ManageUser'
 import HomePage from './Home/Homepage';
 import ProductInfo from './Category/Product/ProductInfo'
 import Category from './Category/Category';
@@ -18,7 +17,8 @@ import SignIn from './Authentication/SignIn/SignIn';
 import Verification from './Authentication/SignUp/Verification';
 import ResetPassword from './Authentication/ResetPassword/ResetPassword';
 import Checkout from './Cart/Checkout';
-import Qr from './Cart/Qr'
+
+import User from './Authentication/User/User'
 
 
 
@@ -42,18 +42,17 @@ function App() {
       <Route path='/signin' element={<SignIn/>}/>
       <Route path='/resetpassword' element={<ResetPassword/>}/>
       <Route path='/congratulation' element={<Congratulation/>}/>
-      <Route path="/product-info/:productId" element={<ProductInfo />} />
+      <Route path="/product-info" element={<ProductInfo />} />
       <Route path="/cart" element={<Cart/>} >
         <Route path='checkout' element={<Checkout/>}/>
-        <Route path='qr' element={<Qr/>}/>
       </Route>
+      <Route path="/user" element={<User/>}/>
       <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
       <Route path="/rental-terms" element={<RentalTerms/>} />
       <Route path="/payment-terms" element={<PaymentTerms/>} />
       <Route path="/compensation-terms" element={<CompensationTerms/>} />
       <Route path="/admin" element={<Admin/>} >
         <Route path="product" element={<ManageProduct/>} />
-        <Route path="user" element={<ManageUser/>} />
       </Route>
       </Routes>
     </Router>

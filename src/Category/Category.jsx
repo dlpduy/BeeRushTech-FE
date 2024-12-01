@@ -113,7 +113,15 @@ const Category = () => {
               <Loading /> // Hiển thị loading khi đang tải sản phẩm
             ) : currentProducts.length > 0 ? (
               currentProducts.map((product) => (
-                <ProductCard key={product.id} {...product} />
+                <ProductCard
+                id={product.id}
+                name={product.name}
+                category={product.category}
+                price={product.price}
+                
+                
+                rating={product.rating}
+                 />
               ))
             ) : (
               <p>No products found</p>

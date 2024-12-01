@@ -1,0 +1,199 @@
+.user {
+    background: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    align-self: center;
+    display: flex;
+    width: 100%;
+    max-width: 1242px;
+    flex-direction: column;
+}
+
+@media (max-width: 991px) {
+    .content {
+    max-width: 100%;
+    }
+}
+
+
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 1442;
+}
+
+@media (max-width: 991px) {
+    .mainContent {
+    width: 100%;
+    }
+}
+.divider {
+    margin-top: 23px;
+    width: 100%;
+    height: 1px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 1242px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    font: 400 16px Lato, sans-serif;
+}
+
+.breadcrumbLink {
+    color: rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    background: none; /* Xóa nền */
+    border: none; /* Xóa khung viền */
+    padding: 0; /* Xóa padding */
+    font: 400 16px Lato, sans-serif;
+    cursor: pointer; /* Thêm con trỏ chuột để chỉ định có thể click */
+}
+
+.breadcrumbLink:hover {
+    text-decoration: underline; /* Thêm gạch chân khi hover */
+}
+
+.breadcrumbIcon {
+    width: 16px;
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+
+.breadcrumbCurrent {
+    color: #000;
+}
+
+
+@media (max-width: 991px) {
+    .container {
+        max-width: 100%;
+    }
+}
+
+.pageTitle {
+    color: #000;
+    align-self: start;
+    margin-top: 20px;
+    font: 700 40px Lato, sans-serif;
+}
+
+.manageContent{
+    margin-top: 5px;
+}
+
+@media (max-width: 991px) {
+    .manageContent {
+    max-width: 100%;
+    margin: 5px 5px 0 0;
+    }
+}
+
+.manageLayout{
+    display: flex;
+}
+
+@media (max-width: 991px) {
+    .manageLayout {
+    flex-direction: column;
+    }
+}
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 30%;
+    margin-left: 0px;
+}
+
+@media (max-width: 991px) {
+    .sidebar {
+    width: 100%;
+    }
+}
+
+.sidebarContent{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    color: #000;
+    font: 700 24px Lato, sans-serif;
+}
+
+
+@media (max-width: 400px) {
+    .sidebarContent {
+    margin-top: 15px;
+    }
+}
+
+.sidebarItem {
+    align-self: stretch;
+}
+.active {
+    color: #ffb13a;
+    text-transform: uppercase;
+    font-size: 30px;
+}
+
+.sidebarItem + .sidebarItem {
+    margin-top: 32px;
+}
+
+@media (max-width: 991px) {
+    .sidebarItem + .sidebarItem {
+    margin-top: 40px;
+    }
+}
+
+.productSection {
+    margin-top: 30px;
+}
+
+@media (max-width: 991px) {
+    .productSection {
+    max-width: 100%;
+    }
+}
+.manageDetails{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    color: #000;
+    font: 400 12px Lato, sans-serif;
+    margin-left: 25px;
+}
+
+@media (max-width: 1200px) {
+    .manageDetails {
+    max-width: 100%;
+    margin-top: 25px;
+    }
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+}
+
+nav a:hover {
+    color: #ff9800;
+}

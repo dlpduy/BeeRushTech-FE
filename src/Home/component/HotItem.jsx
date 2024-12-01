@@ -36,7 +36,7 @@ const HotItem = () => {
     }, []); // Mảng phụ thuộc rỗng để gọi API một lần duy nhất khi component mount
 
     const handleProductClick = (productId) => {
-        navigate(`/product-info/${productId}`); // Chuyển hướng đến trang chi tiết sản phẩm
+        navigate(`/product-info`); // Chuyển hướng đến trang chi tiết sản phẩm
     };
 
     if (loading) return <div><Loading/></div>;

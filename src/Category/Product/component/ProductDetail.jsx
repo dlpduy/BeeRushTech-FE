@@ -11,10 +11,39 @@ const ProductDetail = ({ addToCart }) => {
   const [selectedColor, setSelectedColor] = useState(mockProducts[0].colors[0]);
   const [selectedStorage, setSelectedStorage] = useState(mockProducts[0].storageOptions[0].size);
   const [imageError, setImageError] = useState(false); // Trạng thái lỗi hình ảnh
+  const [isLoading, setIsLoading] = useState(false); // Trạng thái loading khi gửi request API
+  const [error, setError] = useState(null); // Để lưu lỗi nếu có
 
   useEffect(() => {
     // Cuộn trang lên đầu khi component ProductDetail được mount
     window.scrollTo(0, 0);
+    const handleAddToCart = async () => {
+      try {
+        setIsLoading(true); // Bắt đầu loading khi API gọi
+        const response = await api.post('/api/v1/customer/cart', {
+          productId: product.id,
+          quantity,
+        });
+    
+        if (response.data.statusCode === 200) {
+          // Nếu API gọi thành công
+          addToCart({
+            id: response.data.data.cartId,
+            productId: response.data.data.productId,
+            quantity: response.data.data.quantity,
+          });
+          console.log('Product added to cart successfully');
+        } else {
+          console.error('Error adding product to cart:', response.data.message);
+          setError(response.data.message); // Lưu lại thông báo lỗi nếu có
+        }
+      } catch (err) {
+        console.error('Failed to add product to cart:', err);
+        setError('Failed to add product to cart');
+      } finally {
+        setIsLoading(false); // Kết thúc loading
+      }
+    };
 
     const fetchProduct = async () => {
       try {
@@ -185,13 +214,17 @@ const ProductDetail = ({ addToCart }) => {
                 +
               </button>
             </div>
-            <button
-              className={styles.add_to_rent}
-              onClick={handleAddToCart}
-              disabled={stock === 0}
-            >
-              {stock > 0 ? "Add to Rent" : "Out of Stock"}
-            </button>
+            {/* Hiển thị thông báo lỗi nếu có */}
+{error && <div className="error-message">{error}</div>}
+
+{/* Hiển thị nút "Add to Cart" với trạng thái loading */}
+<button
+  onClick={handleAddToCart}
+  disabled={isLoading}
+  className={styles.add_to_rent}
+>
+  {isLoading ? "Adding..." : "Add to Cart"}
+</button>
           </div>
         </div>
       </aside>

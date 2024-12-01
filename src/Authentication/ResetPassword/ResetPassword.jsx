@@ -9,7 +9,7 @@ import NewPassword from "./NewPassword";
 import Congratulations from "./Congratulations";
 
 const ResetPassword = () => {
-    const [step, setStep] = useState("emailForm");
+    const [step, setStep] = useState("emailForm");  // Trạng thái bước hiện tại
     const [formData, setFormData] = useState({
         email: "",
         otp: "",
@@ -17,22 +17,28 @@ const ResetPassword = () => {
         confirmPassword: "",
     });
 
+    // Hàm để xử lý khi người dùng chuyển sang bước tiếp theo
     const handleNextStep = async () => {
         try {
             if (step === "emailForm") {
-                const response = await axios.post("/auth/resetpassword", { email: formData.email });
-                alert("A reset link has been sent to your email.");
-                setStep("verification");
+                const response = await axios.post("/api/v1/auth/reset-password", { email: formData.email });
+                if (response.status === 200) {
+                    alert("A reset link has been sent to your email.");
+                    setStep("verification"); // Chuyển sang bước nhập mã OTP
+                }
             } else if (step === "verification") {
-                const response = await axios.post("/auth/verify-otp", { token: formData.otp });
-                alert("OTP verified successfully.");
-                setStep("newPassword");
+                const response = await axios.post("/api/v1/auth/reset-password", { email: formData.email });
+                if (response.status === 200) {
+                    alert("OTP verified successfully.");
+                    setStep("newPassword"); // Chuyển sang bước nhập mật khẩu mới
+                }
             }
         } catch (error) {
             alert(error.response?.data?.message || "An error occurred. Please try again.");
         }
     };
 
+    // Hàm xử lý khi người dùng nhập mật khẩu mới
     const handleSubmitNewPassword = async (e) => {
         e.preventDefault();
         if (formData.password !== formData.confirmPassword) {
@@ -40,16 +46,20 @@ const ResetPassword = () => {
             return;
         }
         try {
-            await axios.put("/auth/resetpassword", {
+            const response = await axios.put("/api/v1/auth/reset-password", {
+                email: formData.email,
                 password: formData.password,
-                token: formData.otp,
+                otp: formData.otp,
             });
-            setStep("congratulations");
+            if (response.status === 200) {
+                setStep("congratulations"); // Hiển thị thông báo thành công
+            }
         } catch (error) {
             alert(error.response?.data?.message || "An error occurred while resetting the password.");
         }
     };
 
+    // Hàm để cập nhật giá trị các trường trong form
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -76,16 +86,10 @@ const ResetPassword = () => {
                             <Link to="/">
                                 <img
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/bcc09774b4dd341bcb6a90cb4b35b19922586f4028b83c62a4e7d616d3addb3e?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8"
-                                    alt="Bee RushTech Logo"
-                                    className={styles.logo}
+                                    alt="Logo"
                                 />
                             </Link>
                         </div>
-                        {step !== "congratulations" && (
-                            <div className={styles.signup_button} onClick={handleNextStep}>
-                                <div className={styles.signup_content}>Submit</div>
-                            </div>
-                        )}
                     </aside>
                 </div>
             </div>

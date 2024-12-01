@@ -58,10 +58,6 @@ export const Cart = () => {
   const discount = subtotal * 0.2;
   const deliveryFee = subtotal > 0 ? 15 : 0; // Delivery fee only applies if cart is not empty
   const total = subtotal - discount + deliveryFee;
-  const formattedAmount = (typeof total === 'number' && !isNaN(total))
-    ? total.toFixed(2) // Làm tròn đến 2 chữ số thập phân
-    : '1.00';
-
 
   const handleCheckout = () => {
     navigate("/cart/checkout");

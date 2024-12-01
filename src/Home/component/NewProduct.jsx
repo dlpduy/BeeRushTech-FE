@@ -35,7 +35,7 @@ const NewProduct = () => {
     }, []);
 
     const handleProductClick = (product) => {
-        navigate(`/product-info/${product.id}`, { state: { product } });
+        navigate(`/product-info`, { state: { product } });
     };
 
     if (loading) return <div><Loading/></div>;

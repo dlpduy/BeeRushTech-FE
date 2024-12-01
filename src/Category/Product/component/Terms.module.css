@@ -1,0 +1,11 @@
+.mainLayout{
+    display: flex;
+    gap:50px;
+    margin:50px;
+}
+.left{
+    flex: 0 0 50%;
+}
+.right{
+    flex: 0 0 50%;
+}

@@ -15,6 +15,9 @@ const ResetVerification = ({ onChange, formData }) => {
                         onChange={onChange}
                         required
                     />
+                    <button onClick={onChange} className={styles.submitButton}>
+                        Verify OTP
+                    </button>
                 </div>
             </div>
         </div>

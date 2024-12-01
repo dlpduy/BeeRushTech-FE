@@ -25,7 +25,6 @@ export const mockProducts = [
       description: "This is a mock product for testing purposes.",
       colors: ["#FF5733", "#33FF57", "#3357FF"],
       discountedPrice: 150,
-      image: "../../public/logo.png",
       rating: 4.2,
       rents:6000,
       storageOptions: [
@@ -42,7 +41,6 @@ export const mockProducts = [
       description: "This is a mock product for testing purposes.",
       colors: ["#FF5733", "#33FF57", "#3357FF"],
       discountedPrice: 0, // Không có giá giảm
-      image: "../../public/logo.png",
       rating: 4.0,
       rents:7000,
       storageOptions: [
@@ -59,7 +57,6 @@ export const mockProducts = [
       description: "This is a mock product for testing purposes.",
       colors: ["#FF5733", "#33FF57", "#3357FF"],
       discountedPrice: null, // Không có giá giảm
-      image: '../../public/logo.png',
       rating: 4.0,
       rents:8000,
       storageOptions: [

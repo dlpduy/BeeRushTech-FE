@@ -80,11 +80,6 @@ export const HeaderLog = () => {
                 New Arrivals
               </Link>
             </li>
-            <li className={styles.navItem}>
-              <Link to="/category" className={styles.navLink} aria-label="Brands">
-                Brands
-              </Link>
-            </li>
           </ul>
           <form className={styles.searchForm} onSubmit={handleSearchSubmit}>
             <img 

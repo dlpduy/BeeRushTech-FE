@@ -11,9 +11,13 @@
     align-items: flex-start;
     gap: 40px 100px;
 }
+.contact{
+    display: flex;
+    gap: 20px;
+}
 
 .brand {
-    max-width: 200px; /* Giảm chiều rộng của khung chứa phần mô tả */
+    max-width: 250px; /* Giảm chiều rộng của khung chứa phần mô tả */
 }
 
 .brandName {
@@ -27,7 +31,7 @@
     color: rgba(0, 0, 0, 0.6);
     font: 400 14px Lato, sans-serif;
     line-height: 22px;
-    margin: 25px 0;
+    margin: 20px 0;
 }
 
 .linksContainer {
@@ -80,7 +84,6 @@
 }
 
 .payments {
-    display: flex;
     gap: 12px;
 }
 

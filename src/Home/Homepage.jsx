@@ -1,7 +1,7 @@
 import React from "react";
 import { Footer } from "../MutualComponents/Footer/Footer";
 import { Header } from "../MutualComponents/Header/Header";
-import HomeMain from "./component/HomeMain";
+import {HomeMain} from "./component/HomeMain";
 import Brand from "./component/Brand";
 import NewProduct from "./component/NewProduct";
 import HotItem from "./component/HotItem";
