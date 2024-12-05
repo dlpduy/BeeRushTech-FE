@@ -34,13 +34,12 @@ const CV = () => {
         </section>
 
         <section className={styles.skills}>
-          <h2>Kỹ Năng</h2>
+        
           
         </section>
 
         <section className={styles.education}>
-          <h2>Học Vấn</h2>
-          <p><strong>Đại học Bách Khoa</strong></p>
+          
         </section>
       </main>
       </div>

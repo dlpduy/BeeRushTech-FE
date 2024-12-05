@@ -57,8 +57,8 @@ const Orders = () => {
         orderId: orderId,
         status: status,
       });
-
-      if (response.statusCode === 200) {
+        
+      if (response === "Order handled successfully") {
         // Cập nhật trạng thái đơn hàng sau khi cập nhật thành công
         const updatedOrders = orders.map(order => 
           order.id === orderId ? { ...order, status: status } : order
