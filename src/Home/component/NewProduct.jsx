@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import api from "../../api"; // Sử dụng instance API
 import styles from "./NewProduct.module.css";
 import Loading from "../../MutualComponents/Loading/Loading";
-import { mockProducts } from "../../Category/mockData"; // Import dữ liệu giả lập
 
 const NewProduct = () => {
     const [products, setProducts] = useState([]); // Dữ liệu sản phẩm
@@ -13,33 +12,45 @@ const NewProduct = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            try {
-                setLoading(true); // Đặt trạng thái tải
-                const response = await api.get("/products");
-                // Kiểm tra nếu response.data tồn tại và là mảng hợp lệ
-                if (response.data && Array.isArray(response.data) && response.data.length > 0) {
-                    setProducts(response.data);
-                } else {
-                    setProducts(mockProducts); // Nếu không có sản phẩm từ API, dùng mock data
-                }
-            } catch (err) {
-                console.error("Failed to fetch new products:", err);
-                
-                setProducts(mockProducts); // Khi có lỗi, sử dụng mock data
-            } finally {
-                setLoading(false); // Đặt lại trạng thái tải
+          try {
+            setLoading(true); // Đặt trạng thái tải
+            const response = await api.get("/products", {
+              params: {
+                page: 0,   // Ví dụ, bạn có thể truyền các tham số trang
+                limit: 10   // Lấy tối đa 10 sản phẩm để chắc chắn có đủ sản phẩm
+              }
+            });
+            
+
+      
+            // Kiểm tra nếu response thành công và có dữ liệu sản phẩm
+            if (response.statusCode === 200 && response.data && Array.isArray(response.data.products)) {
+                console.log(response);
+              const sortedProducts = response.data.products.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      
+              // Lấy 4 sản phẩm mới nhất
+              const latestProducts = sortedProducts.slice(0, 4); // Lấy 4 sản phẩm đầu tiên
+              setProducts(latestProducts); // Cập nhật danh sách sản phẩm mới nhất
+            } else {
+              setError(true); // Nếu không có sản phẩm, đánh dấu lỗi
             }
+          } catch (err) {
+            console.error("Failed to fetch new products:", err);
+            setError(true); // Nếu có lỗi trong quá trình gọi API
+          } finally {
+            setLoading(false); // Đặt lại trạng thái tải
+          }
         };
+      
+        fetchProducts(); // Gọi hàm lấy dữ liệu
+      }, []);
+      
 
-        fetchProducts();
-    }, []);
-
-    const handleProductClick = (product) => {
-        navigate(`/product-info`, { state: { product } });
-    };
+      const handleProductClick = (productId) => {
+        navigate(`/product-info/${productId}`); // Chuyển hướng đến trang chi tiết sản phẩm
+      };
 
     if (loading) return <div><Loading/></div>;
-   
 
     return (
         <div className={styles.container}>
@@ -55,13 +66,13 @@ const NewProduct = () => {
                             onClick={() => handleProductClick(product)}
                         >
                             <img
-                                src={product.image || "/logo.png"} // Thêm ảnh mặc định nếu không có ảnh
+                                src={product.thumbnail || "/logo.png"} // Thêm ảnh mặc định nếu không có ảnh
                                 alt={product.name}
                                 className={styles.productImage}
                             />
                             <div className={styles.productInfoOverlay}>
                                 <h3>{product.name}</h3>
-                                <p>{product.category}</p>
+                                <p>{product.category.name}</p>
                                 <p>
                                     From{" "}
                                     <span className={styles.originalPrice}>

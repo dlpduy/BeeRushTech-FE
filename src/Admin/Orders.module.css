@@ -1,0 +1,142 @@
+/* Container for orders */
+.ordersContainer {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+     align-items: center; /* Căn giữa theo chiều dọc */
+     margin-left: 50px;
+  }
+  
+  /* Table styling */
+  .ordersTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .ordersTable th,
+  .ordersTable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .ordersTable th {
+    background-color: #ffb13a;
+    color: #000;
+  }
+  
+  .ordersTable tr:hover {
+    background-color: #ffb13a;
+  }
+  
+  .ordersTable button {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 150px;
+    color: #000;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .ordersTable button:hover {
+    background-color: #fff;
+  }
+  
+  .ordersContainer h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  
+  .modalContent {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    font-size: 16px;
+  }
+  .modalContent h3 {
+    text-align: center; /* Căn giữa tiêu đề */
+    margin-bottom: 20px; /* Thêm khoảng cách dưới tiêu đề */
+  }
+  
+  .modalContent button {
+    margin-top: 20px;
+    width: 100%; /* Căn giữa nút bằng cách cho nút chiếm toàn bộ chiều rộng */
+    padding: 10px;
+    background-color: #ffb13a;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .modalContent button {
+    margin-top: 20px;
+  }
+
+  /* Container cho bộ lọc */
+
+  
+  /* Input tìm kiếm */
+  .filterContainer input[type="text"] {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 300px; /* Chỉnh chiều rộng của input */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border 0.3s ease;
+  }
+  
+  .filterContainer input[type="text"]:focus {
+    border-color: #ffb13a; /* Màu khi input được focus */
+    outline: none;
+  }
+  
+  /* Select Dropdown */
+  .filterContainer select {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #fff;
+    cursor: pointer;
+    width: 200px; /* Chỉnh chiều rộng của select */
+    transition: border 0.3s ease;
+  }
+  
+  .filterContainer select:hover {
+    border-color: #ffb13a; /* Màu khi input được focus */
+    ; /* Màu khi hover */
+  }
+  
+  /* Nhóm bộ lọc ở dạng responsive */
+  @media (max-width: 768px) {
+    .filterContainer {
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+  
+    .filterContainer input[type="text"], .filterContainer select {
+      width: 100%;
+    }
+  }
+  

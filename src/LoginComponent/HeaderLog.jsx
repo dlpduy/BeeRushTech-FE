@@ -17,6 +17,10 @@ export const HeaderLog = () => {
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
+  const closeDropdown = () => {
+    setIsDropdownOpen(false); // Đóng dropdown
+  };
+
   const handleSignIn = () => {
     navigate('/signin');
     setIsDropdownOpen(false);
@@ -25,6 +29,23 @@ export const HeaderLog = () => {
   const handleSignUp = () => {
     navigate('/signup');
     setIsDropdownOpen(false);
+  };
+
+  const handleCategoryNavigation = (type) => {
+    closeDropdown(); // Đóng dropdown trước khi chuyển hướng
+    switch (type) {
+      case "onsale":
+        navigate(`/category?filter=onsale`);
+        break;
+      case "new":
+        navigate(`/category?filter=new`);
+        break;
+      case "shop":
+        navigate(`/category`);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleForgotPassword = () => {
@@ -63,13 +84,12 @@ export const HeaderLog = () => {
         <nav className={styles.navigation}>
           <ul className={styles.navLinks}>
             <li className={styles.navItem}>
-              <button className={styles.navLink} aria-label="Shop">
+            <button 
+                className={styles.navLink} 
+                aria-label="Shop"
+                onClick={() => handleCategoryNavigation("shop")}
+              >
                 Shop
-                <img 
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/da12b8eefe15ff5bc4f7a73f8781800b28d6f8ef9aebf5606225c547d050f871?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8" 
-                  alt="" 
-                  className={styles.navIcon} 
-                />
               </button>
             </li>
             <li className={styles.navItem}>

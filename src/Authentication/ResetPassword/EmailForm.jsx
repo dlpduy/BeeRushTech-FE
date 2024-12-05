@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./ResetPassword.module.css";
 
-const EmailForm = ({ onChange, formData }) => {
+const EmailForm = ({ onSendOTP, onChange, formData }) => {
     return (
         <div className={styles.form_container}>
             <div className={styles.form}>
@@ -13,7 +13,7 @@ const EmailForm = ({ onChange, formData }) => {
                     onChange={onChange}
                     required
                 />
-                <button onClick={onChange} className={styles.submitButton}>
+                <button onClick={onSendOTP} className={styles.submitButton}>
                     Send OTP
                 </button>
             </div>

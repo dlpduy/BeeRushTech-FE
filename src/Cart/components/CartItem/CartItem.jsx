@@ -1,48 +1,47 @@
 import React, { useCallback } from 'react';
+import api from '../../../api'; // Import API instance from api.js
 import styles from './CartItem.module.css';
-import api from '../../../api'; // Import API instance từ api.js
 
-export const CartItem = ({ image, title, size, color, price, quantity, id, onRemove }) => {
-  
-  // Cập nhật số lượng sản phẩm trong giỏ hàng
+export const CartItem = ({ image, name, priceProduct, quantity, id, onRemove }) => {
+  // Update product quantity
   const updateQuantity = useCallback(
     async (newQuantity) => {
       try {
-        const response = await api.put('/customer/cart', {
-          productId: id,  // Dùng productId để cập nhật số lượng
-          quantity: newQuantity
+        const response = await api.put('/customer/cart', 
+          {
+          productId: id, // Use productId to update quantity
+          quantity: newQuantity,
         });
-        
+        console.log(response);
         if (response.status === 200) {
-          // Nếu API trả về thành công, cập nhật số lượng
-          onRemove();  // Đảm bảo sau khi update, gọi lại callback để cập nhật giỏ hàng
+          onRemove(); // Ensure that after update, callback is called to update cart
         }
       } catch (error) {
-        console.error("Error updating product quantity:", error);
+        console.error('Error updating product quantity:', error);
       }
     },
     [id, onRemove]
   );
 
-  // Xóa sản phẩm khỏi giỏ hàng
+  // Remove product from cart
   const handleRemove = useCallback(async () => {
     try {
       const response = await api.delete(`/customer/cart?productId=${id}`);
-      if (response.status === 200) {
-        // Nếu xóa thành công, gọi onRemove để cập nhật giỏ hàng
-        onRemove(id);
+      console.log(response);
+      if (response.statusCode === 200) {
+        onRemove(id); // Update cart state after removal
       }
     } catch (error) {
-      console.error("Error removing product from cart:", error);
+      console.error('Error removing product from cart:', error);
     }
   }, [id, onRemove]);
 
-  // Tăng số lượng sản phẩm
+  // Increase product quantity
   const handleIncrease = () => {
     updateQuantity(quantity + 1);
   };
 
-  // Giảm số lượng sản phẩm
+  // Decrease product quantity
   const handleDecrease = () => {
     if (quantity > 1) {
       updateQuantity(quantity - 1);
@@ -51,21 +50,24 @@ export const CartItem = ({ image, title, size, color, price, quantity, id, onRem
 
   return (
     <article className={styles.cartItem}>
-      <img src={image} alt={title} className={styles.productImage} />
+      <img src={image} alt={name} className={styles.productImage} />
       <div className={styles.productDetails}>
         <div className={styles.mainDetails}>
           <div className={styles.productInfo}>
-            <h3 className={styles.productTitle}>{title}</h3>
+            <h3 className={styles.productTitle}>{name}</h3>
             <div className={styles.productSpecs}>
               <p className={styles.specText}>
-                Size: <span className={styles.specValue}>{size}</span>
+                ID: <span className={styles.specValue}>{id}</span>
               </p>
               <p className={styles.specText}>
-                Color: <span className={styles.specValue}>{color}</span>
+                Quantity: <span className={styles.specValue}>{quantity}</span>
+              </p>
+              <p className={styles.specText}>
+                Price: <span className={styles.specValue}>{priceProduct}</span>
               </p>
             </div>
           </div>
-          <p className={styles.price}>${price}</p>
+          <p className={styles.price}>{priceProduct*quantity} VND</p>
         </div>
         <div className={styles.actions}>
           <button className={styles.removeButton} onClick={handleRemove} aria-label="Remove item">

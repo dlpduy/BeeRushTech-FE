@@ -57,121 +57,40 @@ line-height: normal;
 }
 
 
-.product_name {
-    font-size: 24px;
+.name {
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
-}
-
-.rating {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 16px;
-    color: #FFD700;
-}
-
-.stars {
-    font-size: 18px;
-}
-
-.rating_value {
-    color: #555;
-    font-size: 14px;
-}
-
-.price_section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 10px 0;
+    margin-bottom: 15px;
 }
 
 .price {
     font-size: 24px;
-    font-weight: bold;
-    color: #333;
+    margin-top: 12px;
 }
 
-.original_price {
+.price {
     font-size: 20px;
-    color: #888;
-    text-decoration: line-through;
-}
-
-.discount {
-    background-color: #FFD6D6;
-    color: #FF4A4A;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 14px;
+    text-decoration:wavy;
 }
 
 .description {
     margin: 10px 0;
-    font-size: 14px;
-    color: #555;
+    font-size: 20px;
 }
 
-.select_colors p,
-.select_storage p {
-    font-weight: bold;
-    margin-bottom: 5px;
+p{
+    margin-top:15px;
 }
 
-.colors {
+.color{
     display: flex;
-    gap: 16px;
-}
-
-
-.color_circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    margin-right: 8px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition for smooth effect */
-    border: 2px solid transparent; /* Default no border */
-}
-
-.color_circle:hover {
-    transform: scale(1.1); /* Slightly enlarge on hover */
-}
-
-.selected {
-    border: 2px solid #ff0000; /* Highlight selected color */
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
-}
-.select_storage {
-    margin: 20px 0;
-}
-
-.storage_options {
-    display: flex;
+    gap: 15px;
     align-items: center;
-    gap: 10px;
+    margin-bottom: 15px ;
+    font-size: 20px;
 }
 
-.storage_button {
-    padding: 8px 12px;
-    border-radius: 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.selected {
-    background-color: #FFB13A;
-    color: #fff;
-    font-weight: bold;
-}
-
-.stock {
-    font-size: 12px;
-    color: #555;
-}
 
 .quantity_section {
     display: flex;
@@ -217,3 +136,19 @@ line-height: normal;
     display: flex;
     gap:25px;
 }
+.message {
+    position: fixed; /* Đặt vị trí cố định ở giữa màn hình */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    left: 50%; /* Căn giữa theo chiều ngang */
+    transform: translate(-50%, -50%); /* Dịch chuyển để căn giữa chính xác */
+    background-color: #FFB13A; /* Màu nền xanh với độ trong suốt */
+    color: #fff; /* Màu chữ trắng */
+    padding: 1rem 2rem; /* Khoảng cách bên trong */
+    border-radius: 10px; /* Bo góc */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
+    font-size: 1.2rem; /* Kích thước chữ */
+    font-weight: bold; /* Chữ in đậm */
+    opacity: 0; /* Ẩn thông báo ban đầu */
+    animation: fadeInOut 3s ease-in-out; /* Hiệu ứng xuất hiện và biến mất */
+    z-index: 1000; /* Hiển thị trên cùng */
+  }

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import axios from "axios"; // Thêm thư viện axios
+import React, { useEffect, useState, useMemo } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import api from "../api";
 import FilterSidebar from "./FilterSidebar";
 import ProductCard from "./Product/component/ProductCard";
 import NewsletterSection from "../MutualComponents/Newsletter/Newsletter";
@@ -9,119 +9,125 @@ import { Footer } from "../MutualComponents/Footer/Footer";
 import Loading from "../MutualComponents/Loading/Loading";
 import styles from "./Category.module.css";
 
-// Import mock data từ file JSON
-import { mockProducts } from "../Category/mockData";
-
 const Category = () => {
-  const [products, setProducts] = useState([]); // Các sản phẩm hiển thị
-  const [filterCriteria, setFilterCriteria] = useState({}); // Các tiêu chí lọc
-  const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
-  const productsPerPage = 10; // Số sản phẩm hiển thị trên mỗi trang
-  const [searchParams] = useSearchParams(); // Lấy tham số từ URL
-  const [loading, setLoading] = useState(true); // Quản lý trạng thái loading
+  const [allProducts, setAllProducts] = useState([]); // All products from API
+  const [filteredProducts, setFilteredProducts] = useState([]); // Filtered products to display
+  const [filterCriteria, setFilterCriteria] = useState({}); // Filter criteria state
+  const [currentPage, setCurrentPage] = useState(1); // Current page number
+  const [totalPages, setTotalPages] = useState(1); // Total pages from API
+  const [loading, setLoading] = useState(true); // Loading state
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  // Lấy các sản phẩm từ backend hoặc mock data
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        // Gọi API từ backend để lấy sản phẩm
-        const response = await axios.get("/api/products"); // Thay URL với API endpoint thực tế
-        setProducts(response.data); // Cập nhật sản phẩm từ API
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        // Nếu có lỗi, sử dụng mock data
-        setProducts(mockProducts);
-      } finally {
-        setLoading(false); // Kết thúc loading
+  const productsPerPage = 10;
+
+  // Fetch all products from API
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get("/products", {
+        params: {
+          page:0,
+          limit: 10, // Fetch all products to enable client-side filtering
+          ...Object.fromEntries(searchParams),
+        },
+      });
+        console.log(response);
+      if (response?.data) {
+        const { products, total_pages } = response.data;
+        setAllProducts(products || []);
+        setFilteredProducts(products || []);
+        setTotalPages(total_pages || 1);
+      } else {
+        console.error("Invalid response format", response);
+        setAllProducts([]);
+        setFilteredProducts([]);
+        setTotalPages(1);
       }
-    };
-
-    fetchProducts();
-  }, []); // Chỉ chạy một lần khi component mount
-
-  // Lọc sản phẩm theo các tiêu chí
-  useEffect(() => {
-    const applyFilters = () => {
-      let filteredProducts = [...products];
-
-      // Lọc sản phẩm theo URL params (nếu có)
-      if (searchParams.get("filter") === "onsale") {
-        filteredProducts = filteredProducts.filter((product) => product.onsale);
-      } else if (searchParams.get("filter") === "new") {
-        filteredProducts = filteredProducts.filter((product) => product.new);
-      } else if (searchParams.get("filter") === "hotitem") {
-        filteredProducts = filteredProducts.filter((product) => product.hotitem);
-      }
-
-      // Áp dụng các filter criteria (nếu có)
-      if (filterCriteria.sort === "priceAsc") {
-        filteredProducts.sort((a, b) => a.price - b.price); // Sắp xếp theo giá tăng dần
-      } else if (filterCriteria.sort === "priceDesc") {
-        filteredProducts.sort((a, b) => b.price - a.price); // Sắp xếp theo giá giảm dần
-      }
-
-      setProducts(filteredProducts);
-    };
-
-    applyFilters();
-  }, [filterCriteria, searchParams, products]); // Re-run khi có thay đổi trong filterCriteria hoặc searchParams
-
-  // Phân trang
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
-
-  // Điều hướng phân trang
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+      setAllProducts([]);
+      setFilteredProducts([]);
+      setTotalPages(1);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // Filter products based on price range and other criteria
+  const filterProducts = () => {
+    const { priceRange = [0, Infinity], categories = [] } = filterCriteria;
+
+    const filtered = allProducts.filter((product) => {
+      const inPriceRange =
+        product.price >= priceRange[0] && product.price <= priceRange[1];
+      const inCategory =
+        categories.length === 0 || categories.includes(product.category);
+      return inPriceRange && inCategory;
+    });
+
+    setFilteredProducts(filtered);
+    setTotalPages(Math.ceil(filtered.length / productsPerPage));
+  };
+
+  // Apply filters whenever criteria change
+  useEffect(() => {
+    filterProducts();
+  }, [filterCriteria, allProducts]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [searchParams]);
+
+  const handlePageChange = (page) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const handleProductClick = (productId) => {
+    navigate(`/product-info/${productId}`);
+  };
+
+  const displayedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * productsPerPage;
+    return filteredProducts.slice(startIndex, startIndex + productsPerPage);
+  }, [currentPage, filteredProducts]);
 
   return (
     <main className={styles.category}>
-      {/* Header */}
       <Header />
-
       <div className={styles.container}>
-        {/* Top Bar */}
         <div className={styles.topBar}>
           <div className={styles.productCount}>
-            Showing {currentProducts.length} of {products.length} Products
-          </div>
-          <div className={styles.sortOptions}>
-            <label>Sort by:</label>
-            <select
-              onChange={(e) =>
-                setFilterCriteria({ ...filterCriteria, sort: e.target.value })
-              }
-            >
-              <option value="popular">Most Popular</option>
-              <option value="priceAsc">Price: Low to High</option>
-              <option value="priceDesc">Price: High to Low</option>
-            </select>
+            Showing {displayedProducts.length} of {filteredProducts.length} Products
           </div>
         </div>
 
         <div className={styles.content}>
-          {/* Sidebar */}
           <aside className={styles.filter_container}>
-            <FilterSidebar setFilterCriteria={setFilterCriteria} />
+            <FilterSidebar
+              allProducts={allProducts}
+              setFilterCriteria={setFilterCriteria}
+            />
           </aside>
 
-          {/* Product Listing */}
           <section className={styles.sidebar}>
             {loading ? (
-              <Loading /> // Hiển thị loading khi đang tải sản phẩm
-            ) : currentProducts.length > 0 ? (
-              currentProducts.map((product) => (
+              <Loading />
+            ) : displayedProducts.length > 0 ? (
+              displayedProducts.map((product) => (
                 <ProductCard
-                id={product.id}
-                name={product.name}
-                category={product.category}
-                price={product.price}
-                
-                
-                rating={product.rating}
-                 />
+                  key={product.id}
+                  brand={product.brand}
+                  id={product.id}
+                  name={product.name}
+                  price={product.price}
+                  thumbnail={product.thumbnail}
+                  category={product.category.name}
+                  rent_quantity={product.rented_quantity}
+                  onClick={() => handleProductClick(product.id)}
+                />
               ))
             ) : (
               <p>No products found</p>
@@ -129,29 +135,35 @@ const Category = () => {
           </section>
         </div>
 
-        {/* Pagination */}
         <div className={styles.pagination}>
-          {Array.from(
-            { length: Math.ceil(products.length / productsPerPage) },
-            (_, index) => (
-              <button
-                key={index + 1}
-                className={`${styles.paginationButton} ${
-                  currentPage === index + 1 ? styles.active : ""
-                }`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            )
-          )}
+          <button
+            className={styles.paginationButton}
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            Prev
+          </button>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              className={`${styles.paginationButton} ${
+                currentPage === index + 1 ? styles.active : ""
+              }`}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            className={styles.paginationButton}
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            Next
+          </button>
         </div>
+        <NewsletterSection />
       </div>
-
-      {/* Newsletter Section */}
-      <NewsletterSection />
-
-      {/* Footer */}
       <Footer />
     </main>
   );

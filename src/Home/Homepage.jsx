@@ -5,7 +5,7 @@ import {HomeMain} from "./component/HomeMain";
 import Brand from "./component/Brand";
 import NewProduct from "./component/NewProduct";
 import HotItem from "./component/HotItem";
-import Review from "./component/Review"
+
 import NewsletterSection from "../MutualComponents/Newsletter/Newsletter";
 
 
@@ -24,7 +24,6 @@ export const HomePage = () => {
         <NewProduct/>
         <div className={styles.divider}></div>
         <HotItem/>
-        <Review/>
         <NewsletterSection/>
         </div>
         <Footer/>

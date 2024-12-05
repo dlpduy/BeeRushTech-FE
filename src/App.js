@@ -8,17 +8,19 @@ import PaymentTerms from './FAQ/PaymentTerms';
 import CompensationTerms from './FAQ/CompensationTerms';
 import  Admin  from './Admin/Admin';
 import  ManageProduct from './Admin/ManageProduct'
+import ManageOrder from './Admin/ManageOrder'
 import HomePage from './Home/Homepage';
 import ProductInfo from './Category/Product/ProductInfo'
 import Category from './Category/Category';
 import Congratulation from './Authentication/SignUp/Congratulation';
 import SignUp from './Authentication/SignUp/SignUp';
 import SignIn from './Authentication/SignIn/SignIn';
-import Verification from './Authentication/SignUp/Verification';
+import ResetVerification from './Authentication/ResetPassword/ResetVerification';
 import ResetPassword from './Authentication/ResetPassword/ResetPassword';
+import Company from './FAQ/Company'
 import Checkout from './Cart/Checkout';
 
-import User from './Authentication/User/User'
+import {User} from './Authentication/User/User'
 
 
 
@@ -36,16 +38,17 @@ function App() {
     <Router>
       <Routes>
       <Route path="/" element={<HomePage/>} />
-      <Route path="/verification" element={<Verification/>}/>
+      <Route path="/verification" element={<ResetVerification/>}/>
       <Route path="/category" element={<Category/>}/>
       <Route path='/signup' element={<SignUp/>}/>
       <Route path='/signin' element={<SignIn/>}/>
       <Route path='/resetpassword' element={<ResetPassword/>}/>
       <Route path='/congratulation' element={<Congratulation/>}/>
-      <Route path="/product-info" element={<ProductInfo />} />
+      <Route path="/product-info/:productId" element={<ProductInfo />} />
       <Route path="/cart" element={<Cart/>} >
         <Route path='checkout' element={<Checkout/>}/>
       </Route>
+      <Route path="/company" element={<Company/>}/>
       <Route path="/user" element={<User/>}/>
       <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
       <Route path="/rental-terms" element={<RentalTerms/>} />
@@ -53,6 +56,7 @@ function App() {
       <Route path="/compensation-terms" element={<CompensationTerms/>} />
       <Route path="/admin" element={<Admin/>} >
         <Route path="product" element={<ManageProduct/>} />
+        <Route path="order" element={<ManageOrder/>} />
       </Route>
       </Routes>
     </Router>

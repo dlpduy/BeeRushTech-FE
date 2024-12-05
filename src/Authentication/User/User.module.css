@@ -4,7 +4,160 @@
     display: flex;
     flex-direction: column;
 }
+.userContainer{
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+}
+.userContainer button{
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.userContainer button:hover {
+  background-color: #ffb13a;
+  color: #fff;
+}
 
+.profileActions button{
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.profileActions button:hover {
+  background-color: #ffb13a;
+  color: #fff;
+}
+/* Modal container */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+/* Modal content */
+.modalContent {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Heading */
+.modalContent h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Input group styling */
+.inputGroup {
+  margin-bottom: 15px;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.inputGroup input:focus {
+  outline: none;
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Error message */
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+/* Modal actions */
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.modalActions button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modalActions button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.modalActions button:not(:disabled):hover {
+  background-color: #ffb13a;
+  color: #fff;
+}
+
+/* Cancel button */
+.modalActions button:nth-child(2) {
+  background-color:#ffb13a;
+  color: #fff;
+}
+
+.modalActions button:nth-child(2):hover {
+  background-color: #ffb13a;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+  button {
+    margin-top: 30px;      /* Cách giữa các button */
+    padding: 5px 10px;    /* Padding cho button */
+    cursor: pointer;
+    margin:5px;
+  }
+  
+  button:disabled {
+    background-color: #ccc; /* Màu nền khi nút bị disabled */
+  }
+  
 .content {
     align-self: center;
     display: flex;
@@ -81,7 +234,28 @@
 .breadcrumbCurrent {
     color: #000;
 }
+.profileInfo {          /* Nền trắng */
+margin-top: 30px;
+margin-left:40px;
+  }
+  .profileInfo button{
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .profileInfo button:hover {
+    background-color: #ffb13a;
+    color: #fff;
+  }
 
+.profileInfo p {
+    font-size: 16px;                   /* Kích thước chữ */
+    margin-bottom: 10px;               /* Khoảng cách giữa các dòng */
+    line-height: 1.5;                  /* Khoảng cách dòng */
+  }
 
 @media (max-width: 991px) {
     .container {
@@ -120,8 +294,12 @@
     display: flex;
     flex-direction: column;
     line-height: normal;
-    width: 30%;
+    width: 35%;
     margin-left: 0px;
+    margin-top:15px;
+}
+.sidebar button{
+  margin-top: 25px;
 }
 
 @media (max-width: 991px) {
@@ -138,6 +316,11 @@
     font: 700 24px Lato, sans-serif;
 }
 
+.sidebarContent button{
+    width: 200px;
+    height: 50px;
+    border-radius: 15px;
+  }
 
 @media (max-width: 400px) {
     .sidebarContent {
@@ -197,3 +380,82 @@ nav a {
 nav a:hover {
     color: #ff9800;
 }
+
+/* Định dạng tổng thể cho form chỉnh sửa */
+.editForm {
+    background-color: #fff;          /* Nền trắng cho form */
+    padding: 20px;                   /* Padding bên trong */
+    border-radius: 10px;             /* Bo góc cho form */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Shadow nhẹ */
+    width: 100%;
+    max-width: 500px;                /* Đảm bảo form không quá rộng */
+    margin: 20px auto;               /* Căn giữa form */
+  }
+  
+  /* Định dạng các trường input */
+  .editForm div {
+    margin-bottom: 15px;             /* Khoảng cách giữa các trường */
+  }
+  
+  .editForm label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;              /* Khoảng cách giữa label và input */
+  }
+  
+  .editForm input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;         /* Border màu xám nhẹ */
+    border-radius: 5px;             /* Bo góc cho input */
+    font-size: 14px;
+    outline: none;                  /* Loại bỏ viền focus */
+    transition: border-color 0.3s;  /* Thêm hiệu ứng khi focus */
+  }
+  
+  .editForm input:focus {
+    border-color: #4CAF50;          /* Thay đổi màu khi input được focus */
+  }
+  
+  /* Định dạng các nút */
+  .editForm button {
+    background-color: #FFB13A;      /* Màu nền nút */
+    color: white;                   /* Màu chữ trắng */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;             /* Bo góc cho nút */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Thêm hiệu ứng khi hover */
+    margin-right: 25px;              /* Khoảng cách giữa các nút */
+    justify-content: space-between;
+
+  }
+
+  .editForm .buttonContainer {
+    display: flex;
+    justify-content: space-between;  /* Căn đều hai nút ở hai bên */
+    margin-top: 20px;
+  }
+  
+  .editForm button:hover {
+    background-color: #faaa20;      /* Đổi màu khi hover */
+  }
+  
+  .editForm button:disabled {
+    background-color: #ccc;         /* Màu xám khi nút bị disabled */
+    cursor: not-allowed;            /* Con trỏ khi nút bị vô hiệu hóa */
+  }
+  
+  /* Định dạng nút Cancel */
+  .editForm button:nth-child(2) {
+    background-color: #FFB13A;      /* Màu nền đỏ cho nút Cancel */
+  }
+  
+  .editForm button:nth-child(2):hover {
+    background-color: #FFB13A;      /* Đổi màu khi hover */
+  }
+  
+  

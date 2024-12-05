@@ -2,63 +2,61 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../../api"; // Sử dụng instance API
 import styles from "./ProductDetail.module.css";
-import { mockProducts } from "../../mockData"; // Import mock data
+import Loading from "../../../MutualComponents/Loading/Loading";
+
+function getColorFromString(color) {
+  switch (color.toLowerCase()) {
+      case "red":
+          return "#FF0000";  // Mã màu đỏ
+      case "blue":
+          return "#0000FF";  // Mã màu xanh dương
+      case "green":
+          return "#008000";  // Mã màu xanh lá
+      case "yellow":
+          return "#FFFF00";  // Mã màu vàng
+      // Thêm các màu khác tùy vào yêu cầu
+      default:
+          return "#000000";  // Mặc định là màu đen nếu không tìm thấy
+  }
+}
 
 const ProductDetail = ({ addToCart }) => {
   const { productId } = useParams(); // Lấy ID sản phẩm từ URL
-  const [product, setProduct] = useState(mockProducts[0]); // Hiển thị sản phẩm đầu tiên trong mock data mặc định
+  const [product, setProduct] = useState(null); // Trạng thái sản phẩm
   const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState(mockProducts[0].colors[0]);
-  const [selectedStorage, setSelectedStorage] = useState(mockProducts[0].storageOptions[0].size);
+  const [selectedColor, setSelectedColor] = useState(null); // Trạng thái màu sắc
+  const [selectedStorage, setSelectedStorage] = useState(null); // Trạng thái dung lượng
   const [imageError, setImageError] = useState(false); // Trạng thái lỗi hình ảnh
   const [isLoading, setIsLoading] = useState(false); // Trạng thái loading khi gửi request API
   const [error, setError] = useState(null); // Để lưu lỗi nếu có
+  const [isAdded, setIsAdded] = useState(false); // Trạng thái đã thêm sản phẩm vào giỏ hàng
+  const [message, setMessage] = useState(""); // Thông báo khi thêm vào giỏ hàng
 
   useEffect(() => {
     // Cuộn trang lên đầu khi component ProductDetail được mount
     window.scrollTo(0, 0);
-    const handleAddToCart = async () => {
-      try {
-        setIsLoading(true); // Bắt đầu loading khi API gọi
-        const response = await api.post('/api/v1/customer/cart', {
-          productId: product.id,
-          quantity,
-        });
-    
-        if (response.data.statusCode === 200) {
-          // Nếu API gọi thành công
-          addToCart({
-            id: response.data.data.cartId,
-            productId: response.data.data.productId,
-            quantity: response.data.data.quantity,
-          });
-          console.log('Product added to cart successfully');
-        } else {
-          console.error('Error adding product to cart:', response.data.message);
-          setError(response.data.message); // Lưu lại thông báo lỗi nếu có
-        }
-      } catch (err) {
-        console.error('Failed to add product to cart:', err);
-        setError('Failed to add product to cart');
-      } finally {
-        setIsLoading(false); // Kết thúc loading
-      }
-    };
 
     const fetchProduct = async () => {
       try {
+        setIsLoading(true); // Bắt đầu loading khi API gọi
         const response = await api.get(`/products/${productId}`);
         if (response.data) {
-          setProduct(response.data);
-          setSelectedColor(response.data.colors[0]); // Mặc định chọn màu đầu tiên
-          setSelectedStorage(response.data.storageOptions[0].size); // Mặc định chọn dung lượng đầu tiên
+          const fetchedProduct = response.data;
+
+          // Kiểm tra dữ liệu trả về từ API
+          if (fetchedProduct && fetchedProduct.colors && fetchedProduct.colors.length > 0) {
+            setSelectedColor(fetchedProduct.colors[0]); // Mặc định chọn màu đầu tiên
+          }
+          if (fetchedProduct && fetchedProduct.storageOptions && fetchedProduct.storageOptions.length > 0) {
+            setSelectedStorage(fetchedProduct.storageOptions[0].size); // Mặc định chọn dung lượng đầu tiên
+          }
+          setProduct(fetchedProduct); // Cập nhật state với dữ liệu sản phẩm
         }
       } catch (err) {
-        console.error("Failed to fetch product:", err);
-        // Nếu có lỗi, giữ sản phẩm đầu tiên trong mock data
-        setProduct(mockProducts[0]); // Sử dụng sản phẩm đầu tiên trong mock data
-        setSelectedColor(mockProducts[0].colors[0]);
-        setSelectedStorage(mockProducts[0].storageOptions[0].size);
+        console.error("Error fetching product details:", err);
+        setError(true); // Đặt trạng thái lỗi nếu có lỗi
+      } finally {
+        setIsLoading(false); // Kết thúc trạng thái loading
       }
     };
 
@@ -70,34 +68,32 @@ const ProductDetail = ({ addToCart }) => {
     setQuantity((prev) => (type === "increase" ? prev + 1 : Math.max(1, prev - 1)));
   };
 
-  // Xử lý chọn màu
-  const handleColorChange = (color) => {
-    setSelectedColor(color);
-  };
+  
 
-  // Xử lý chọn dung lượng lưu trữ
-  const handleStorageChange = (storage) => {
-    setSelectedStorage(storage);
-  };
+  // Hàm gọi API để thêm sản phẩm vào giỏ hàng
+  const handleAddToCart = async () => {
 
-  // Thêm sản phẩm vào giỏ hàng
-  const handleAddToCart = () => {
-    const cartItem = {
-      id: product.id,
-      name: product.name,
-      price: product.discountedPrice || product.price,
-      quantity,
-      color: selectedColor,
-      storage: selectedStorage,
-    };
-    addToCart(cartItem);
+    try {
+      // Gửi yêu cầu API để thêm sản phẩm vào giỏ hàng
+      const response = await api.post("/customer/cart", {
+        productId: product.id,
+        quantity: quantity,
+      });
+        console.log(response);
+      if (response.statusCode === 200) {
+        setIsAdded(true); // Đánh dấu sản phẩm đã được thêm vào giỏ
+        setMessage("Product added to cart successfully!");
+        
+      } else {
+        setIsAdded(false); // Nếu có lỗi, đảm bảo trạng thái không bị thay đổi
+      }
+    } catch (err) {
+      console.error("Error adding product to cart:", err);
+      setIsAdded(false); // Đánh dấu lỗi nếu có
+    } finally {
+      setIsLoading(false); // Kết thúc trạng thái loading
+    }
   };
-
-  // Lấy số lượng trong kho cho dung lượng được chọn
-  const selectedStorageOption = product.storageOptions.find(
-    (option) => option.size === selectedStorage
-  );
-  const stock = selectedStorageOption ? selectedStorageOption.inStock : 0;
 
   // Hàm xử lý lỗi khi tải hình ảnh
   const handleImageError = () => {
@@ -105,10 +101,14 @@ const ProductDetail = ({ addToCart }) => {
   };
 
   // Đường dẫn hình ảnh (nếu có lỗi thì sử dụng ảnh mặc định)
-  const imageUrl = imageError ? "/public/logo.png" : (product.image || "/public/logo.png");
+  const imageUrl = imageError ? "/public/logo.png" : (product?.image || "/public/logo.png");
+
+  if (isLoading) {
+    return <div><Loading/></div>; 
+  }
 
   if (!product) {
-    return <div>Loading...</div>; // Hiển thị loading khi chưa có dữ liệu
+    return <div>Product not found</div>; // Nếu không tìm thấy sản phẩm
   }
 
   return (
@@ -126,78 +126,30 @@ const ProductDetail = ({ addToCart }) => {
       {/* Phần chi tiết sản phẩm */}
       <aside className={styles.detail}>
         <div className={styles.product_detail_info}>
-          {/* Tên sản phẩm */}
-          <h1 className={styles.product_name}>{product.name}</h1>
+            <h1 className={styles.name}>{product.name}</h1>
 
-          {/* Xếp hạng */}
-          <div className={styles.rating}>
-            <span className={styles.stars}>
-              {"★".repeat(Math.floor(product.rating))}
-            </span>
-            <span className={styles.rating_value}>{product.rating}/5</span>
-          </div>
+            <h3 className={styles.brand}>Brand: {product.brand}</h3>
 
-          {/* Giá sản phẩm */}
-          <div className={styles.price_section}>
-            <span className={styles.price}>${product.discountedPrice}</span>
-            {product.discountedPrice < product.price && (
-              <>
-                <span className={styles.original_price}>${product.price}</span>
-                <span className={styles.discount}>
-                  -{Math.round(
-                    ((product.price - product.discountedPrice) / product.price) * 100
-                  )}
-                  %
-                </span>
-              </>
-            )}
-          </div>
+            <p className={styles.price}>Price : {product.price}</p>
 
-          {/* Mô tả sản phẩm */}
-          <p className={styles.description}>{product.description}</p>
+            <p className={styles.description}>Description: {product.description}</p>
 
-          {/* Lựa chọn màu sắc */}
-          <div className={styles.divider}></div>
-          <div className={styles.select_colors}>
-            <p>Select Colors</p>
-            <div className={styles.colors}>
-              {product.colors.map((color) => (
-                <span
-                  key={color}
-                  className={`${styles.color_circle} ${
-                    selectedColor === color ? styles.selected : ""
-                  }`}
-                  style={{ backgroundColor: color }}
-                  onClick={() => handleColorChange(color)}
-                ></span>
-              ))}
+            <div className={styles.color}>
+              <p>Color: </p>
+            <div 
+              style={{
+                width: '50px',
+                height: '50px',
+                backgroundColor: getColorFromString(product.color), // Lấy màu từ hàm ánh xạ
+                marginTop: '10px',
+                borderRadius: '5px',
+                }}
+              />
             </div>
-          </div>
 
-          {/* Lựa chọn dung lượng lưu trữ */}
-          <div className={styles.divider}></div>
-          <div className={styles.select_storage}>
-            <p>Choose Storage</p>
-            <div className={styles.storage_options}>
-              {product.storageOptions.map((storage) => (
-                <button
-                  key={storage.size}
-                  className={`${styles.storage_button} ${
-                    selectedStorage === storage.size ? styles.selected : ""
-                  }`}
-                  onClick={() => handleStorageChange(storage.size)}
-                >
-                  {storage.size}
-                </button>
-              ))}
-            </div>
-            <span className={styles.stock}>
-              {stock > 0 ? `${stock} left in stock` : "Out of stock"}
-            </span>
-          </div>
+            <p className={styles.quantity}>Quantity: {product.quantity}</p>
 
           {/* Lựa chọn số lượng và nút "Add to Rent" */}
-          <div className={styles.divider}></div>
           <div className={styles.Rent}>
             <div className={styles.quantity_section}>
               <button
@@ -215,19 +167,21 @@ const ProductDetail = ({ addToCart }) => {
               </button>
             </div>
             {/* Hiển thị thông báo lỗi nếu có */}
-{error && <div className="error-message">{error}</div>}
+            {error && <div className="error-message">{error}</div>}
 
-{/* Hiển thị nút "Add to Cart" với trạng thái loading */}
-<button
-  onClick={handleAddToCart}
-  disabled={isLoading}
-  className={styles.add_to_rent}
->
-  {isLoading ? "Adding..." : "Add to Cart"}
-</button>
+            {/* Hiển thị nút "Add to Cart" với trạng thái loading */}
+            <button
+              onClick={handleAddToCart}
+              disabled={isLoading}
+              className={styles.add_to_rent}
+            >
+              {isLoading ? "Adding..." : isAdded ? "Added to Cart" : "Add to Cart"}
+              {message && <div className={styles.message}>{message}</div>}
+            </button>
           </div>
         </div>
       </aside>
+      
     </div>
   );
 };

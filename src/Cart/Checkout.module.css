@@ -1,41 +1,102 @@
-/* Checkout.module.css */
 .checkout {
-    padding: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .paymentOptions {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .option {
-    margin-bottom: 10px;
-  }
-  
-  .qrContainer {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .qrCode {
-    width: 200px;
-    height: 200px;
-    margin-top: 10px;
-  }
-  
-  .payButton {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .payButton:hover {
-    background-color: #45a049;
-  }
-  
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+h3 {
+
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.formGroup input,
+.formGroup textarea,
+.formGroup select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus,
+.formGroup select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+.payButton {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.payButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.payButton:hover {
+  background-color: #0056b3;
+}
+
+.toast {
+  margin-top: 20px;
+  padding: 10px;
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.qrContainer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.qrContainer h4 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.qrContainer p {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}

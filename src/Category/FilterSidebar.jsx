@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./FilterSidebar.css";
 
 const FilterSidebar = ({ setFilterCriteria }) => {
-  const [selectedCategories, setSelectedCategories] = useState([]); // Lưu trữ các lựa chọn
-  const [expandedCategories, setExpandedCategories] = useState({}); // Trạng thái mở/đóng cho từng danh mục
-  const [priceRange, setPriceRange] = useState([10, 200]);
+  const [selectedCategories, setSelectedCategories] = useState([]); // Selected categories
+  const [expandedCategories, setExpandedCategories] = useState({}); // Categories expansion state
+  const [priceRange, setPriceRange] = useState([10, 200]); // Price range
 
+  // Handle price change
   const handlePriceChange = (event, index) => {
     const newPriceRange = [...priceRange];
     newPriceRange[index] = Number(event.target.value);
 
-    // Đảm bảo giá trị bên dưới luôn lớn hơn hoặc bằng giá trị bên trên
+    // Ensure the price range is valid
     if (index === 0 && newPriceRange[0] > newPriceRange[1]) {
       newPriceRange[1] = newPriceRange[0];
     } else if (index === 1 && newPriceRange[1] < newPriceRange[0]) {
@@ -20,25 +21,27 @@ const FilterSidebar = ({ setFilterCriteria }) => {
     setPriceRange(newPriceRange);
   };
 
-  const handleCategorySelect = (category) => {
-    setExpandedCategories(prevExpandedCategories => ({
+  // Toggle category selection (expand/collapse)
+  const handleCategorySelect = (brand) => {
+    setExpandedCategories((prevExpandedCategories) => ({
       ...prevExpandedCategories,
-      [category]: !prevExpandedCategories[category], // Đảo trạng thái mở/đóng của danh mục
+      [brand]: !prevExpandedCategories[brand],
     }));
   };
 
+  // Handle subcategory selection (add or remove from selected categories)
   const handleSubcategorySelect = (subcategory) => {
-    setSelectedCategories(prevSelectedCategories =>
+    setSelectedCategories((prevSelectedCategories) =>
       prevSelectedCategories.includes(subcategory)
-        ? prevSelectedCategories.filter(item => item !== subcategory) // Nếu đã chọn, bỏ chọn
-        : [...prevSelectedCategories, subcategory] // Nếu chưa chọn, thêm vào
+        ? prevSelectedCategories.filter((item) => item !== subcategory)
+        : [...prevSelectedCategories, subcategory]
     );
   };
 
-
+  // Update the filter criteria whenever selected categories or price range changes
   useEffect(() => {
-    setFilterCriteria({ categories: selectedCategories, priceRange }); // Truyền danh sách các lựa chọn vào setFilterCriteria
-  }, [selectedCategories, priceRange, setFilterCriteria]);
+    setFilterCriteria({ categories: selectedCategories, priceRange });
+  }, [selectedCategories, priceRange, setFilterCriteria]); // Trigger every time categories or price range changes
 
   return (
     <div className="filter-sidebar">
@@ -48,7 +51,7 @@ const FilterSidebar = ({ setFilterCriteria }) => {
       <div className="filter-section">
         <h4>Category</h4>
         <ul>
-          <li 
+          <li
             onClick={() => handleCategorySelect("Cameras & Lenses")}
             className={expandedCategories["Cameras & Lenses"] ? "expanded" : ""}
           >
@@ -56,19 +59,19 @@ const FilterSidebar = ({ setFilterCriteria }) => {
           </li>
           {expandedCategories["Cameras & Lenses"] && (
             <ul className="subcategory">
-              <li 
+              <li
                 onClick={() => handleSubcategorySelect("Sony")}
                 className={selectedCategories.includes("Sony") ? "selected" : ""}
               >
                 Sony
               </li>
-              <li 
+              <li
                 onClick={() => handleSubcategorySelect("Fujifilm")}
                 className={selectedCategories.includes("Fujifilm") ? "selected" : ""}
               >
                 Fujifilm
               </li>
-              <li 
+              <li
                 onClick={() => handleSubcategorySelect("Nikon")}
                 className={selectedCategories.includes("Nikon") ? "selected" : ""}
               >
@@ -77,7 +80,7 @@ const FilterSidebar = ({ setFilterCriteria }) => {
             </ul>
           )}
 
-          <li 
+          <li
             onClick={() => handleCategorySelect("Speaker")}
             className={expandedCategories["Speaker"] ? "expanded" : ""}
           >
@@ -85,13 +88,13 @@ const FilterSidebar = ({ setFilterCriteria }) => {
           </li>
           {expandedCategories["Speaker"] && (
             <ul className="subcategory">
-              <li 
+              <li
                 onClick={() => handleSubcategorySelect("Sony")}
                 className={selectedCategories.includes("Sony") ? "selected" : ""}
               >
                 Sony
               </li>
-              <li 
+              <li
                 onClick={() => handleSubcategorySelect("JBL")}
                 className={selectedCategories.includes("JBL") ? "selected" : ""}
               >
@@ -109,17 +112,17 @@ const FilterSidebar = ({ setFilterCriteria }) => {
             type="range"
             className="top"
             min="0"
-            max="500"
-            step="1"
+            max="1000000"
+            step="10"
             value={priceRange[0]}
             onChange={(e) => handlePriceChange(e, 0)}
           />
           <input
             type="range"
             className="bottom"
-            min="0"
-            max="500"
-            step="1"
+            min="10000"
+            max="100000000"
+            step="10000"
             value={priceRange[1]}
             onChange={(e) => handlePriceChange(e, 1)}
           />
@@ -129,9 +132,6 @@ const FilterSidebar = ({ setFilterCriteria }) => {
           <span>${priceRange[1]}</span>
         </div>
       </div>
-
-      {/* Apply Filters Button */}
-      <button className="apply-filter-button">Apply Filters</button>
     </div>
   );
 };

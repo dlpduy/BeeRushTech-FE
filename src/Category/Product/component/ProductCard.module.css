@@ -1,28 +1,26 @@
-/* ProductCard.css */
-
 .product_card {
-  display: flex;
   flex-direction: column;
-  width: 295px ;
-  height: 298px ; 
+  width: 100%;  /* Use percentage width for flexibility */
+  max-width: 295px; /* Limit max width */
+  height: auto; /* Let the height adjust based on content */
   background: #FFB13A;
   border-radius: 20px;
-  padding: 44px 42px 44px 43px;
-  justify-content: center;
-  align-items: center;
+  padding: 20px;  /* Reduce padding for better content fit */
+  justify-content: space-between; /* Distribute content better */
   text-align: center;
   cursor: pointer;
+  transition: transform 0.2s ease; /* Smooth transform */
 }
 
 /* Hover effect for scaling the product image */
-.product_card:hover .product_image {
-  transform: scale(1.1);
+.product_card:hover {
+  transform: scale(1.05); /* Slightly smaller scale to avoid overflow */
 }
 
 /* Style for the image container */
 .product_image {
-  width: 210px;
-  height: 210px;
+  width: 100%;
+  height: 180px; /* Fixed height for consistency */
   background-size: cover;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -33,15 +31,23 @@
   object-fit: cover;
 }
 
-/* Style for product info */
+/* Ensure the image fits nicely */
+.product_image_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Product info styling */
 .product_info {
-  text-align: center;
-  color:#000;
+  color: #000;
   font-family: Lato, sans-serif;
+  padding: 10px;
+  text-align: center;
 }
 
 .product_info h3 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   margin: 10px 0 5px 0;
 }
@@ -49,24 +55,12 @@
 .product_info p {
   font-size: 16px;
   font-weight: 400;
-}
-
-
-.product_image_img {
-  width: 100% ;
-  height: 100% ;
-  object-fit: cover; /* Đảm bảo ảnh vừa khít và giữ tỷ lệ */
-}
-
-.product_info {
-  padding: 10px;
-  text-align: center;
+  margin: 5px 0;
 }
 
 .original_price {
   text-decoration: line-through;
   color: #999;
-  margin-left: 5px;
 }
 
 .discount_percentage {

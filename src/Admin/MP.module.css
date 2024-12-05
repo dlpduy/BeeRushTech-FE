@@ -13,14 +13,15 @@
   padding: 5px; /* Khoảng cách nội dung */
   overflow: hidden; /* Ẩn nội dung tràn */
   white-space: nowrap; /* Không xuống dòng */
-  text-overflow: ellipsis; /* Hiển thị dấu "..." nếu nội dung quá dài */
+  gap:5px;
 }
 
 .table th {
-  background-color: #f4f4f4; /* Màu nền header */
+  background-color: #ffb13a; /* Màu nền header */
   position: sticky; /* Header cố định khi cuộn */
   top: 0;
   z-index: 1;
+  gap:5px;
 }
 
 .table td input[type="text"] {
@@ -29,10 +30,28 @@
   border: none; /* Loại bỏ viền mặc định */
   padding: 0;
 }
+.table tr:hover{
+  background-color:  #ffb13a;
+}
 
 .table td input[type="checkbox"] {
   margin: 0 auto; /* Canh giữa checkbox */
   display: block; /* Đảm bảo checkbox hiển thị ở giữa */
+}
+
+.table button{
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  
+}
+.table button:hover {
+  background-color: #ffb13a;
+  color: #fff;
 }
 
 .popup {
@@ -100,26 +119,37 @@
 }
 
 
-.editButton,
-.deleteButton,
-.confirmButton,
-.addButton,
-.saveButton,
-.cancelButton {
-  padding: 10px 20px;
-  border: none;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+
+
+.message {
+  position: fixed; /* Đặt vị trí cố định ở giữa màn hình */
+  top: 50%; /* Căn giữa theo chiều dọc */
+  left: 50%; /* Căn giữa theo chiều ngang */
+  transform: translate(-50%, -50%); /* Dịch chuyển để căn giữa chính xác */
+  background-color: #FFB13A; /* Màu nền xanh với độ trong suốt */
+  color: #fff; /* Màu chữ trắng */
+  padding: 1rem 2rem; /* Khoảng cách bên trong */
+  border-radius: 10px; /* Bo góc */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
+  font-size: 1.2rem; /* Kích thước chữ */
+  font-weight: bold; /* Chữ in đậm */
+  opacity: 0; /* Ẩn thông báo ban đầu */
+  animation: fadeInOut 3s ease-in-out; /* Hiệu ứng xuất hiện và biến mất */
+  z-index: 1000; /* Hiển thị trên cùng */
 }
 
-.editButton:hover,
-.deleteButton:hover,
-.confirmButton:hover,
-.cancelButton:hover,
-.saveButton:hover,
-.addButton:hover {
-  background-color: #0056b3;
+/* Hiệu ứng chuyển động */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0; /* Bắt đầu ẩn */
+  }
+  10% {
+    opacity: 1; /* Hiển thị */
+  }
+  90% {
+    opacity: 1; /* Giữ nguyên hiển thị */
+  }
+  100% {
+    opacity: 0; /* Biến mất */
+  }
 }

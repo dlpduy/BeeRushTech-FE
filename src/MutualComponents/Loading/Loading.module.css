@@ -20,13 +20,6 @@
     object-fit: contain; /* Giữ tỷ lệ ảnh */
   }
   
-  /* Hiệu ứng loading cho phần chữ */
-  h3 {
-    font-size: 24px;
-    color: #333;
-    animation: fadeIn 2s ease-in-out infinite; /* Thêm hiệu ứng mờ dần cho chữ "Loading..." */
-  }
-  
   /* Hiệu ứng quay vòng logo */
   @keyframes rotate {
     0% {

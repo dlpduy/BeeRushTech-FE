@@ -1,95 +1,185 @@
-import React, { useState } from "react";
-import axios from "axios"; // Thư viện axios để gửi yêu cầu HTTP
-import QRCode from "react-qr-code"; // Thư viện QR code React
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import QRCode from "react-qr-code";
 import styles from "./Checkout.module.css";
 
-const Checkout = ({ onPay, total }) => {
-  const [paymentMethod, setPaymentMethod] = useState(null);
-  const [paymentLink, setPaymentLink] = useState(""); // Lưu URL thanh toán từ VNPay
-  const [toastMessage, setToastMessage] = useState(""); // Quản lý thông báo
-  const [loading, setLoading] = useState(false); // Quản lý trạng thái khi đang gửi yêu cầu thanh toán
+const Checkout = ({ cartItems }) => {
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    phone_number: "",
+    address: "",
+    note: "",
+    payment_method: "CREDIT",
+    order_method: "home",
+    shipping_address: "",
+    time_renting: 1, // Default time for renting
+  });
+  const [paymentLink, setPaymentLink] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const showToast = (message) => {
     setToastMessage(message);
-    setTimeout(() => {
-      setToastMessage(""); // Ẩn thông báo sau 2 giây
-    }, 2000);
+    setTimeout(() => setToastMessage(""), 2000);
   };
 
-  const handlePay = async () => {
-    if (paymentMethod === "direct") {
-      setLoading(true);
-      try {
-        // Gửi yêu cầu thanh toán tới backend API
-        const response = await axios.get(`/payment/vn-pay`);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-        // Giả sử API trả về URL thanh toán VNPay
-        setPaymentLink(response.data.data.paymentUrl);
-        showToast("Thanh toán thành công. Quét mã QR để hoàn tất.");
-      } catch (error) {
-        showToast("Đã có lỗi xảy ra trong quá trình thanh toán.");
-      } finally {
-        setLoading(false);
+  // Lấy thông tin người dùng từ localStorage
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user_info"));
+    if (user) {
+      setFormData({
+        ...formData,
+        full_name: user.fullname,
+        email: user.email,
+        phone_number: user.phone_number,
+        address: user.address,
+        shipping_address: user.address,
+      });
+    }
+  }, []);
+
+  const handleCreateOrder = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // Tạo payload cho API từ giỏ hàng và thông tin người dùng
+    const orderPayload = {
+      full_name: formData.full_name,
+      email: formData.email,
+      phone_number: formData.phone_number,
+      address: formData.address,
+      note: formData.note,
+      payment_method: formData.payment_method,
+      shipping_address: formData.shipping_address,
+      time_renting: formData.time_renting, // Thêm time_renting vào payload
+      list_order_detail: cartItems.map(item => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        price: item.priceProduct
+      })),
+      total_money: cartItems.reduce((acc, item) => acc + item.priceProduct * item.quantity, 0),
+    };
+
+    try {
+      const response = await axios.post(`/api/v1/orders`, orderPayload);
+      if (response.data.payment_url) {
+        setPaymentLink(response.data.payment_url); // Lưu URL thanh toán
+        showToast("Tạo đơn hàng thành công.");
+      } else {
+        showToast("Không thể tạo đơn hàng, vui lòng thử lại.");
       }
-    } else if (paymentMethod === "store") {
-      showToast("Bạn đã chọn thanh toán tại cửa hàng. Vui lòng đến cửa hàng.");
-      onPay();
-    } else {
-      showToast("Vui lòng chọn phương thức thanh toán.");
+    } catch (error) {
+      showToast("Đã có lỗi xảy ra khi tạo đơn hàng.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const paymentMethods = [
-    { method: "direct", label: "Thanh toán trực tiếp (VNPay)" },
-    { method: "store", label: "Thanh toán tại cửa hàng" }
-  ];
-
   return (
     <div className={styles.checkout}>
-      <h3>Chọn phương thức thanh toán</h3>
-      <div className={styles.paymentOptions}>
-        {paymentMethods.map((method) => (
-          <div key={method.method} className={styles.option}>
-            <input
-              type="radio"
-              id={method.method}
-              name="paymentMethod"
-              value={method.method}
-              onChange={() => setPaymentMethod(method.method)}
-            />
-            <label htmlFor={method.method}>{method.label}</label>
-          </div>
-        ))}
-      </div>
+      <h3>Nhập thông tin đặt hàng</h3>
+      <form onSubmit={handleCreateOrder} className={styles.form}>
+        <div className={styles.formGroup}>
+          <label>Full Name:</label>
+          <input
+            type="text"
+            name="full_name"
+            value={formData.full_name}
+            onChange={handleChange}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Phone:</label>
+          <input
+            type="tel"
+            name="phone_number"
+            value={formData.phone_number}
+            onChange={handleChange}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Address:</label>
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Note:</label>
+          <textarea
+            name="note"
+            value={formData.note}
+            onChange={handleChange}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Shipping Address:</label>
+          <input
+            type="text"
+            name="shipping_address"
+            value={formData.shipping_address}
+            onChange={handleChange}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Time Renting (Days):</label>
+          <input
+            type="number"
+            name="time_renting"
+            min="1"
+            value={formData.time_renting}
+            onChange={handleChange}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Payment Method:</label>
+          <select
+            name="payment_method"
+            value={formData.payment_method}
+            onChange={handleChange}
+          >
+            <option value="CREDIT">CREDIT</option>
+            <option value="CASH">CASH</option>
+          </select>
+        </div>
+        <button
+          type="submit"
+          className={styles.payButton}
+          disabled={loading}
+        >
+          {loading ? "Đang xử lý..." : "Tạo đơn hàng"}
+        </button>
+      </form>
 
-      {paymentMethod === "direct" && paymentLink && (
+      {paymentLink && (
         <div className={styles.qrContainer}>
           <h4>Thanh toán qua VNPay</h4>
-          <QRCode
-            value={paymentLink}  // Dùng URL thanh toán VNPay để tạo mã QR
-            size={150}
-            fgColor="#000000"
-            bgColor="#ffffff"
-            level="H"
-          />
-          <p>Quét mã QR để thanh toán số tiền {total}</p>
+          <QRCode value={paymentLink} size={150} />
+          <p>Quét mã QR để thanh toán.</p>
         </div>
       )}
 
-      <button
-        className={styles.payButton}
-        onClick={handlePay}
-        disabled={loading}
-      >
-        {loading ? "Đang xử lý..." : "Thanh toán"}
-      </button>
-
-      {/* Hiển thị Toast Message */}
-      {toastMessage && (
-        <div className={styles.toast}>
-          {toastMessage}
-        </div>
-      )}
+      {toastMessage && <div className={styles.toast}>{toastMessage}</div>}
     </div>
   );
 };

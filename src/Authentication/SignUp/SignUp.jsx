@@ -43,9 +43,9 @@ const SignUp = () => {
                 phoneNumber,
             });
 
-            alert("Registration successful! Check your email for verification.");
+            alert("Registration successful! ");
             localStorage.setItem("userEmail", email);
-            navigate("/verification");
+            navigate("/congratulation");
         } catch (error) {
             alert(error.response?.data?.message || "Registration failed. Please try again.");
             console.error("Error during registration:", error);

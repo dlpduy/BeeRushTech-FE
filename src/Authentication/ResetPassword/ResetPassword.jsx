@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "../../api"; // Sử dụng API instance đã cấu hình
+import api from "../../api"; // Sử dụng API instance đã cấu hình
 import styles from "./ResetPassword.module.css";
 import { HeaderLog } from "../../LoginComponent/HeaderLog";
 import EmailForm from "./EmailForm";
 import ResetVerification from "./ResetVerification";
 import NewPassword from "./NewPassword";
 import Congratulations from "./Congratulations";
+import { useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
+
     const [step, setStep] = useState("emailForm");  // Trạng thái bước hiện tại
     const [formData, setFormData] = useState({
         email: "",
@@ -21,14 +23,15 @@ const ResetPassword = () => {
     const handleNextStep = async () => {
         try {
             if (step === "emailForm") {
-                const response = await axios.post("/api/v1/auth/reset-password", { email: formData.email });
-                if (response.status === 200) {
+                const response = await api.post("/auth/reset-password", { email: formData.email });
+                console.log(response);
+                if (response.statusCode === 200) {
                     alert("A reset link has been sent to your email.");
                     setStep("verification"); // Chuyển sang bước nhập mã OTP
                 }
             } else if (step === "verification") {
-                const response = await axios.post("/api/v1/auth/reset-password", { email: formData.email });
-                if (response.status === 200) {
+                const response = await api.post("/auth/reset-password", { email: formData.email });
+                if (response.statusCode === 200) {
                     alert("OTP verified successfully.");
                     setStep("newPassword"); // Chuyển sang bước nhập mật khẩu mới
                 }
@@ -46,12 +49,12 @@ const ResetPassword = () => {
             return;
         }
         try {
-            const response = await axios.put("/api/v1/auth/reset-password", {
+            const response = await api.put("/auth/reset-password", {
                 email: formData.email,
                 password: formData.password,
                 otp: formData.otp,
             });
-            if (response.status === 200) {
+            if (response.statusCode === 200) {
                 setStep("congratulations"); // Hiển thị thông báo thành công
             }
         } catch (error) {
@@ -80,6 +83,9 @@ const ResetPassword = () => {
                         {step === "verification" && <ResetVerification onChange={handleChange} formData={formData} />}
                         {step === "newPassword" && <NewPassword onChange={handleChange} formData={formData} onSubmit={handleSubmitNewPassword} />}
                         {step === "congratulations" && <Congratulations />}
+                        <button onClick={handleNextStep}>
+                {step === "emailForm" ? "Next" : step === "verification" ? "Verify OTP" : "Reset Password"}
+            </button>
                     </section>
                     <aside className={styles.sidebar}>
                         <div className={styles.logoContainer}>
