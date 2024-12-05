@@ -157,9 +157,10 @@ const ManageProduct = () => {
   // Nhóm các sản phẩm có cùng tên và tính tổng số lượng cho mỗi sản phẩm
   
 
-  const handleEditProduct = (product) => {
-    setIsEditMode(true);
+  const handleEditProduct = (productId) => {
+    const product = products.find((item) => item.id === productId); // Lấy thông tin sản phẩm cần chỉnh sửa
     setProductToEdit(product);
+    setIsEditMode(true); // Mở pop-up khi chọn sản phẩm
   };
 
   // Hàm lưu thông tin sản phẩm sau khi chỉnh sửa
@@ -220,6 +221,84 @@ const ManageProduct = () => {
           ))}
         </tbody>
         
+        {isEditMode && productToEdit && (
+        <div className={styles.popupOverlay}>
+          <div className={styles.editForm}>
+            <h2>Edit Product</h2>
+
+            <label>
+              Name:
+              <input
+                type="text"
+                value={productToEdit.name}
+                onChange={(e) =>
+                  setProductToEdit({ ...productToEdit, name: e.target.value })
+                }
+              />
+            </label>
+
+            <label>
+              Price:
+              <input
+                type="number"
+                value={productToEdit.price}
+                onChange={(e) =>
+                  setProductToEdit({ ...productToEdit, price: e.target.value })
+                }
+              />
+            </label>
+
+            <label>
+              Brand:
+              <input
+                type="text"
+                value={productToEdit.brand}
+                onChange={(e) =>
+                  setProductToEdit({ ...productToEdit, brand: e.target.value })
+                }
+              />
+            </label>
+
+            <label>
+              Import Price:
+              <input
+                type="number"
+                value={productToEdit.import_price}
+                onChange={(e) =>
+                  setProductToEdit({ ...productToEdit, import_price: e.target.value })
+                }
+              />
+            </label>
+
+            <label>
+              Category ID:
+              <input
+                type="text"
+                value={productToEdit.category_id}
+                onChange={(e) =>
+                  setProductToEdit({ ...productToEdit, category_id: e.target.value })
+                }
+              />
+            </label>
+
+            <label>
+              Description:
+              <textarea
+                value={productToEdit.description}
+                onChange={(e) =>
+                  setProductToEdit({ ...productToEdit, description: e.target.value })
+                }
+              />
+            </label>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <button onClick={handleSaveChanges}>Save</button>
+              <button onClick={handleCancelEdit}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+
 
         {showDeletePopup && (
         <div className={styles.popup}>
@@ -232,47 +311,6 @@ const ManageProduct = () => {
               No
             </button>
           </div>
-          {isEditMode && productToEdit && (
-        <div className={styles.editForm}>
-          <h2>Edit Product</h2>
-          <label>
-            Name:
-            <input
-              type="text"
-              value={productToEdit.name}
-              onChange={(e) => setProductToEdit({ ...productToEdit, name: e.target.value })}
-            />
-          </label>
-          <label>
-            Price:
-            <input
-              type="number"
-              value={productToEdit.price}
-              onChange={(e) => setProductToEdit({ ...productToEdit, price: e.target.value })}
-            />
-          </label>
-          <label>
-            Category:
-            <input
-              type="text"
-              value={productToEdit.category_id}
-              onChange={(e) => setProductToEdit({ ...productToEdit, category_id: e.target.value })}
-            />
-          </label>
-          <label>
-            Description:
-            <textarea
-              value={productToEdit.description}
-              onChange={(e) => setProductToEdit({ ...productToEdit, description: e.target.value })}
-            />
-          </label>
-          <div>
-            <button onClick={handleSaveChanges}>Save</button>
-            <button onClick={handleCancelEdit}>Cancel</button>
-          </div>
-        </div>
-      )}
-
         </div>
       )}
 

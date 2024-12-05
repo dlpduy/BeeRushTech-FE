@@ -153,3 +153,104 @@
     opacity: 0; /* Biến mất */
   }
 }
+/* Overlay mờ cho nền khi pop-up hiển thị */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Đảm bảo overlay luôn hiển thị trên các phần tử khác */
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Form chỉnh sửa */
+.editForm {
+  background-color: #fff; /* Màu nền trắng cho form */
+  padding: 15px 20px;
+  border-radius: 12px; /* Bo góc form đẹp hơn */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Đổ bóng mềm cho form */
+  width: 450px; /* Chiều rộng cho form */
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1000;
+}
+
+/* Tiêu đề */
+.editForm h2 {
+  margin: 0 0 20px 0;
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  border-bottom: 2px solid #007bff; /* Thêm đường gạch chân */
+
+}
+
+/* Các trường input */
+.editForm label {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.editForm input,
+.editForm textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Kích thước cho textarea */
+.editForm textarea {
+  resize: vertical;
+  min-height: 100px;
+  height: auto;
+}
+
+/* Các nút Save và Cancel */
+.editForm button {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 48%; /* Đảm bảo hai nút không chiếm quá nhiều không gian */
+  margin: 0 5px;
+}
+
+.editForm button:hover {
+  transform: scale(1.05);
+}
+
+.editForm button:nth-child(1) {
+  background-color:#ffb13a;
+}
+
+.editForm button:nth-child(1):hover {
+  background-color: #ffb13a;
+}
+
+.editForm button:nth-child(2) {
+  background-color: #ffb13a;
+}
+
+.editForm button:nth-child(2):hover {
+  background-color: #ffb13a;
+}

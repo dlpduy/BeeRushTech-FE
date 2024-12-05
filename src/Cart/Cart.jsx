@@ -1,185 +1,158 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Header } from "../MutualComponents/Header/Header";
-import { CartItem } from "./components/CartItem/CartItem";
-import Checkout from "./Checkout";
 import OrderSummary from "./components/OrderSummary/OrderSummary";
 import NewsletterSection from "../MutualComponents/Newsletter/Newsletter";
 import Loading from "../MutualComponents/Loading/Loading";
 import { Footer } from "../MutualComponents/Footer/Footer";
-import { useLocation, useNavigate } from "react-router-dom";
-import api from "../api"; // Import api.js để gọi API
+import { useNavigate } from "react-router-dom";
+import api from "../api";
 import styles from "./Cart.module.css";
 
 export const Cart = () => {
-  const [cartItems, setCartItems] = useState([]); // Giỏ hàng mặc định trống
-  const [loading, setLoading] = useState(true); // Quản lý trạng thái loading khi đang lấy dữ liệu
-  const [error, setError] = useState(null); // Quản lý trạng thái lỗi
-  const [userInfo, setUserInfo] = useState(null); // Thông tin người dùng
-  const location = useLocation();
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
 
-  // Lấy sản phẩm trong giỏ hàng từ API
+  // Fetch cart items
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await api.get('/customer/cart'); // Gọi API để lấy dữ liệu giỏ hàng
+        const response = await api.get('/customer/cart');
         if (response.statusCode === 200) {
-          console.log(response);
-          setCartItems(response.data); // Cập nhật giỏ hàng nếu lấy dữ liệu thành công
+          setCartItems(response.data);
         } else {
-          setError('Không thể lấy dữ liệu giỏ hàng, vui lòng thử lại.');
+          setError('Không thể lấy dữ liệu giỏ hàng.');
         }
-      } catch (error) {
-        console.error("Lỗi khi lấy dữ liệu giỏ hàng:", error);
-        setError("Lỗi không xác định khi gọi API.");
+      } catch (err) {
+        setError("Error fetching cart items.");
       } finally {
-        setLoading(false); // Đặt lại trạng thái loading sau khi lấy dữ liệu xong
+        setLoading(false);
       }
     };
 
     fetchCartItems();
-  }, []); // Chỉ gọi API một lần khi component được mount
+  }, []);
 
-  // Lấy thông tin người dùng (có thể từ localStorage hoặc API)
+  // Fetch user info
   useEffect(() => {
     const fetchUserInfo = async () => {
-      // Giả sử thông tin người dùng đã được lưu trong localStorage (ví dụ: user_info)
-      const user = JSON.parse(localStorage.getItem("user_info"));
-      if (user) {
-        setUserInfo(user); // Nếu có, lưu thông tin vào state
+      try {
+        const response = await api.get('/user/profile');
+        if (response.statusCode === 200) {
+          setUserInfo(response.data);
+        } else {
+          setError("Không thể lấy thông tin người dùng.");
+        }
+      } catch (err) {
+        setError("Error fetching user info.");
       }
     };
-
     fetchUserInfo();
   }, []);
 
-
-  // Cập nhật số lượng sản phẩm trong giỏ hàng
-  const updateQuantity = useCallback(
-    async (id, newQuantity) => {
-      try {
-        const response = await api.put('/customer/cart', { productId: id, quantity: newQuantity });
-        if (response.statusCode === 200) {
-          setCartItems((prevItems) =>
-            prevItems.map((item) =>
-              item.productId === id ? { ...item, quantity: newQuantity } : item
-            )
-          );
-        }
-      } catch (error) {
-        console.error("Lỗi khi cập nhật số lượng sản phẩm:", error);
-      }
-    },
-    [setCartItems]
-  );
-
-  // Xóa sản phẩm khỏi giỏ hàng
-  const removeItem = useCallback(
-    async (id) => {
-      try {
-        const response = await api.delete(`/customer/cart?productId=${id}`);
-        console.log(response);
-        if (response.statusCode === 200) {
-          setCartItems((prevItems) => prevItems.filter((item) => item.productId !== id));
-        }
-      } catch (error) {
-        console.error("Lỗi khi xóa sản phẩm khỏi giỏ hàng:", error);
-      }
-    },
-    [setCartItems]
-  );
-
-  // Tính toán tổng tiền giỏ hàng
-  const subtotal = cartItems.reduce((acc, item) => acc + item.priceProduct * item.quantity, 0);
-  const discount = subtotal * 0.2;
-  const deliveryFee = subtotal > 0 ? 50000 : 0;
-  const total = subtotal - discount + deliveryFee;
-
-  // API tạo đơn hàng
-  const createOrder = async () => {
-    if (!userInfo) {
-      setError("Không có thông tin người dùng, vui lòng đăng nhập.");
-      return;
-    }
-
+  // Handle checkout
+  const handleCheckout = async () => {
     const orderData = {
-      user_id: userInfo.user_id, // ID người dùng
-      fullname: userInfo.fullname, // Tên đầy đủ
-      email: userInfo.email, // Email
-      phone_number: userInfo.phone_number, // Số điện thoại
-      address: userInfo.address, // Địa chỉ
-      note: "Cảm ơn bạn đã mua sắm!", // Ghi chú
-      total_money: total, // Tổng tiền
-      shipping_method: "Giao hàng nhanh", // Phương thức giao hàng
-      payment_method: "Thanh toán qua thẻ tín dụng", // Phương thức thanh toán
-      shipping_address: userInfo.address, // Địa chỉ giao hàng
+      full_name: userInfo.fullName,
+      email: userInfo.email,
+      phone_number: userInfo.phoneNumber || "",
+      address: userInfo.address || "",
+      note: 'hàng dễ vỡ', // Customize this if needed
+      payment_method: 'CREDIT',
+      order_method: 'home',
+      shipping_address: userInfo.address || "",
+      list_order_detail: cartItems.map(item => ({
+        cart_item_id: item.productId,
+        time_renting: item.quantity,
+      }))
     };
 
     try {
-      const response = await api.post("/orders", orderData);
-      if (response.status === 200) {
-        alert("Đơn hàng của bạn đã được tạo thành công!");
-        navigate("/order-success"); // Chuyển hướng đến trang thành công
+      setLoading(true);
+      const response = await api.post('/orders', orderData);
+      if (response.statusCode === 200) {
+        setLoading(false);
+        navigate(response.data.payment_url);
       } else {
-        setError("Không thể tạo đơn hàng. Vui lòng thử lại.");
+        setError('Không thể tạo đơn hàng, vui lòng thử lại!');
       }
-    } catch (error) {
-      console.error("Lỗi khi tạo đơn hàng:", error);
-      setError("Lỗi khi tạo đơn hàng. Vui lòng thử lại.");
+    } catch (err) {
+      setLoading(false);
+      setError('Đã xảy ra lỗi khi tạo đơn hàng!');
+      console.error('Error creating order:', err);
     }
   };
 
-  const handleCheckout = () => {
-    navigate("/cart/checkout");
+  // Update product quantity in cart
+  const handleQuantityChange = async (productId, newQuantity) => {
+    try {
+      setLoading(true);
+      const response = await api.put('/customer/cart', { productId, quantity: newQuantity });
+
+      if (response.statusCode === 200) {
+        // Update the cart item in the local state after successful update
+        const updatedCartItems = cartItems.map(item =>
+          item.productId === productId ? { ...item, quantity: newQuantity } : item
+        );
+        setCartItems(updatedCartItems);
+      } else {
+        setError("Không thể cập nhật số lượng sản phẩm.");
+      }
+    } catch (err) {
+      setError("Đã xảy ra lỗi khi cập nhật số lượng sản phẩm.");
+      console.error('Error updating product quantity:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handlePayment = () => {
-    createOrder(); // Gọi API tạo đơn hàng khi người dùng nhấn "Pay"
+  // Remove product from cart
+  const handleRemoveProduct = async (productId) => {
+    try {
+      setLoading(true);
+      const response = await api.delete(`/customer/cart?productId=${productId}`);
+
+      if (response.statusCode === 200) {
+        // Remove the product from the local cart state after successful deletion
+        const updatedCartItems = cartItems.filter(item => item.productId !== productId);
+        setCartItems(updatedCartItems);
+      } else {
+        setError("Không thể xóa sản phẩm khỏi giỏ hàng.");
+      }
+    } catch (err) {
+      setError("Đã xảy ra lỗi khi xóa sản phẩm.");
+      console.error('Error deleting product:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <main className={styles.cart}>
       <Header />
-
       <div className={styles.container}>
         <div className={styles.divider}></div>
 
-        <h1 className={styles.title}>
-          {location.pathname === "/cart/checkout" ? "Payment Methods" : "Your Cart"}
-        </h1>
+        <h1 className={styles.title}>Order Summary</h1>
 
         <div className={styles.content}>
-          <section className={styles.cartItems}>
-            {location.pathname === "/cart/checkout" ? (
-              <Checkout onPay={handlePayment} /> // Gọi hàm handlePayment khi nhấn "Pay"
-            ) : loading ? (
-              <div><Loading/></div>
+          <div className={styles.sidebar}>
+            {loading ? (
+              <Loading />
             ) : error ? (
               <p className={styles.error}>{error}</p>
-            ) : cartItems.length ? (
-              cartItems.map((item) => (
-                <CartItem
-                  key={item.productId}
-                  {...item}
-                  onQuantityChange={(newQuantity) => updateQuantity(item.productId, newQuantity)}
-                  onRemove={() => removeItem(item.productId)}
-                />
-              ))
             ) : (
-              <p>Your cart is empty!</p>
+              <OrderSummary
+                cartItems={cartItems}
+                userInfo={userInfo}
+                onCheckout={handleCheckout}
+                onQuantityChange={handleQuantityChange} // Pass down to OrderSummary
+                onRemoveProduct={handleRemoveProduct} // Pass down to OrderSummary
+              />
             )}
-          </section>
-
-          <aside className={styles.sidebar}>
-            <OrderSummary
-              subtotal={subtotal}
-              discount={discount}
-              deliveryFee={deliveryFee}
-              total={total}
-              isCheckout={location.pathname === "/cart/checkout"}
-              onCheckout={handleCheckout}
-            />
-          </aside>
+          </div>
         </div>
 
         <NewsletterSection />

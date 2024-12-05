@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 const footerLinks = {
   company: [
-    { name: 'About Us', path: '/company' }
+    { name: 'About Us', path: '/company' },
+    { name: 'Owner', path: '/owner' }
   ],
   faq: [
     { name: 'Privacy Policy', path: '/privacy-policy' },

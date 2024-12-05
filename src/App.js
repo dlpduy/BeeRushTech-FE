@@ -18,7 +18,8 @@ import SignIn from './Authentication/SignIn/SignIn';
 import ResetVerification from './Authentication/ResetPassword/ResetVerification';
 import ResetPassword from './Authentication/ResetPassword/ResetPassword';
 import Company from './FAQ/Company'
-import Checkout from './Cart/Checkout';
+import Owner from './FAQ/Owner'
+
 
 import {User} from './Authentication/User/User'
 
@@ -45,11 +46,10 @@ function App() {
       <Route path='/resetpassword' element={<ResetPassword/>}/>
       <Route path='/congratulation' element={<Congratulation/>}/>
       <Route path="/product-info/:productId" element={<ProductInfo />} />
-      <Route path="/cart" element={<Cart/>} >
-        <Route path='checkout' element={<Checkout/>}/>
-      </Route>
+      <Route path="/cart" element={<Cart/>} />
       <Route path="/company" element={<Company/>}/>
       <Route path="/user" element={<User/>}/>
+      <Route path="/owner" element={<Owner/>}/>
       <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
       <Route path="/rental-terms" element={<RentalTerms/>} />
       <Route path="/payment-terms" element={<PaymentTerms/>} />
