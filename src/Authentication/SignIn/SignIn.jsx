@@ -33,6 +33,7 @@ const SignIn = () => {
 
             const { accessToken, user } = response.data;
             const {role, email} = user;
+            
 
 
             localStorage.setItem("accessToken", accessToken);

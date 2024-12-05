@@ -33,6 +33,7 @@ api.interceptors.response.use(
     // Xử lý lỗi từ phản hồi của server
     if (error.response) {
       // Nếu lỗi có response từ server
+      console.error(error.response);
       console.error("API Error:", error.response.data.message || "Unknown error");
       return Promise.reject(error.response.data); // Trả về lỗi chuẩn hóa
     } else if (error.request) {

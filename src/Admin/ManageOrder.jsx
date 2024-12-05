@@ -134,7 +134,7 @@ const Orders = () => {
             <option value="">All Statuses</option>
             <option value="received">Received</option>
             <option value="pending">Pending</option>
-            <option value="shipped">Shipped</option>
+            <option value="confirm">Confirmed</option>
           </select>
           </div>
 
