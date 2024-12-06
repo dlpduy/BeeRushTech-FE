@@ -178,15 +178,26 @@ const Orders = () => {
       {/* Hiển thị nút dựa trên trạng thái hiện tại */}
       {selectedOrder.status === 'received' && (
         <>
-          <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'confirmed')}>
+          <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'received')}>
             Confirm
           </button>
         </>
       )}
 
       {selectedOrder.status === 'confirmed'}
+        
+      { selectedOrder.status === 'paid' && (
+        <>
+          <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'confirmed')}>
+            Confirm
+          </button>
+          <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'received')}>
+            Receive
+          </button>
+        </>
+      )}
 
-      {selectedOrder.status === 'pending' || selectedOrder.status === 'paid' && (
+      {selectedOrder.status === 'pending'  && (
         <>
           <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'confirmed')}>
             Confirm
