@@ -147,8 +147,8 @@ export const User = () => {
         confirmPassword
       });
 
-      if (response.data.statusCode === 200) {
-        alert(response.data.message);
+      if (response.statusCode === 200) {
+        alert(response.message);
         handleCloseChangePassword(); // Đóng pop-up nếu thành công
       }
       setLoading(false);
@@ -211,7 +211,7 @@ export const User = () => {
               alt="" 
               className={styles.breadcrumbIcon} 
             />
-            <span className={styles.breadcrumbCurrent}>Customer</span>
+            
           </nav>
         </div>
 
@@ -322,23 +322,26 @@ export const User = () => {
             </aside>
 
             <main className={styles.mainContent}>
+                
               <div className={styles.manageInfo}>
                 <h2>Your Orders</h2>
-                
+                <div className={styles.sideBar}>
                 {/* Hiển thị danh sách đơn hàng */}
                 {loadingOrders ? (
                   <p>Loading orders...</p>
                 ) : orders.length > 0 ? (
-                  <ul >
+                  
                     
-                    {orders.map((order) => (
-                      console.log('Order data:', order),
-                      <OrderCard key={order.id} {...order}/>
-                    ))}
-                  </ul>
+                    <div className={styles.ordersContainer}> {/* Sử dụng ordersContainer */}
+          {orders.map((order) => (
+            <OrderCard key={order.id} {...order} />
+          ))}
+        </div>
+
                 ) : (
                   <p>You have no orders yet.</p>
                 )}
+                </div>
               </div>
             </main>
           </div>

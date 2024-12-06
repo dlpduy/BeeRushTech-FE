@@ -19,6 +19,7 @@ import ResetVerification from './Authentication/ResetPassword/ResetVerification'
 import ResetPassword from './Authentication/ResetPassword/ResetPassword';
 import Company from './FAQ/Company'
 import Owner from './FAQ/Owner'
+import Success from './LoginComponent/Success';
 
 
 import {User} from './Authentication/User/User'
@@ -50,6 +51,7 @@ function App() {
       <Route path="/company" element={<Company/>}/>
       <Route path="/user" element={<User/>}/>
       <Route path="/owner" element={<Owner/>}/>
+      <Route path="/success" element={<Success/>}/>
       <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
       <Route path="/rental-terms" element={<RentalTerms/>} />
       <Route path="/payment-terms" element={<PaymentTerms/>} />

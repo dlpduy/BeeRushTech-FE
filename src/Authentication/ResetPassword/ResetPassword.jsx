@@ -54,6 +54,7 @@ const ResetPassword = () => {
                 password: formData.password,
                 otp: formData.otp,
             });
+            
             if (response.statusCode === 200) {
                 setStep("congratulations"); // Hiển thị thông báo thành công
             }

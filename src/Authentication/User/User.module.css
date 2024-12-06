@@ -172,12 +172,18 @@
     }
 }
 
-
 .mainContent {
-    display: flex;
-    flex-direction: column;
-    line-height: normal;
-    width: 1442;
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 1242px;
+  box-sizing: border-box;
+}
+.ordersContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Tạo lưới tự động với các thẻ có độ rộng tối thiểu là 250px */
+  gap: 20px; /* Khoảng cách giữa các thẻ */
+  width: 100%;
 }
 
 @media (max-width: 991px) {
