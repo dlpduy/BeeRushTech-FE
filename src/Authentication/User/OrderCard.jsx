@@ -45,6 +45,11 @@ const OrderCard = ({
       alert("Please select a status and method return if applicable.");
       return;
     }
+    console.log("Payload Sent:", {
+      orderId: id,
+      status: newStatus,
+      methodReturn: newStatus === "return" ? methodReturn : undefined,
+    });
 
     try {
       const response = await api.put(`/orders/customer/handle`, {
@@ -53,13 +58,8 @@ const OrderCard = ({
       methodReturn: newStatus === "return" ? methodReturn : undefined,
     });
 
-    console.log("Payload Sent:", {
-      orderId: id,
-      status: newStatus,
-      methodReturn: newStatus === "return" ? methodReturn : undefined,
-    });
       console.log(response);
-      if (response === "successfully") {
+      if (response === "Order handled successfully") {
         console.log(`Order ${id} status updated to ${newStatus}`);
         alert(`Order status updated to ${newStatus}`);
         handleCloseUpdateModal(); // Đóng pop-up sau khi cập nhật
@@ -158,7 +158,7 @@ const OrderCard = ({
                 <option value="return">Return</option>
               </select>
             </div>
-            {newStatus === "return" && (
+           
               <div>
                 <label>
                   <strong>Method Return:</strong>
@@ -172,7 +172,7 @@ const OrderCard = ({
                   <option value="store">Store</option>
                 </select>
               </div>
-            )}
+
             <button
               onClick={handleUpdateStatus}
               className={styles.updateButton}

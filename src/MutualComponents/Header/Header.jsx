@@ -99,7 +99,7 @@ export const Header = () => {
   const handleUserAction = () => {
     if (userRole === "ADMIN") {
       navigate("/admin");
-    } else if (userRole === "CUSTOMER") {
+    } else if (userRole === "CUSTOMER" || userRole === "STUDENT") {
       navigate("/user");
     } else {
       setIsDropdownOpen((prevState) => !prevState);

@@ -116,7 +116,7 @@ const ProductDetail = ({ addToCart }) => {
       {/* Phần hình ảnh sản phẩm */}
       <section className={styles.pic}>
         <img
-          src={imageUrl}
+          src={product.thumbnail}
           alt={product.name}
           onError={handleImageError} // Gọi handleImageError nếu không tải được hình ảnh
           className={styles.product_img}
