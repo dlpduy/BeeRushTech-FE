@@ -181,7 +181,7 @@ const Orders = () => {
       {selectedOrder.status === 'confirmed'&& (
         <>
           <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'received')}>
-            Confirm
+            Received
           </button>
         </>
       )}
