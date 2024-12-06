@@ -176,15 +176,15 @@ const Orders = () => {
       <p><strong>Customer:</strong> {selectedOrder.full_name}</p>
 
       {/* Hiển thị nút dựa trên trạng thái hiện tại */}
-      {selectedOrder.status === 'received' && (
+      {selectedOrder.status === 'received'}
+
+      {selectedOrder.status === 'confirmed'&& (
         <>
           <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'received')}>
             Confirm
           </button>
         </>
       )}
-
-      {selectedOrder.status === 'confirmed'}
         
       { selectedOrder.status === 'paid' && (
         <>
