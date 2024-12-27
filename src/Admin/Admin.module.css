@@ -19,6 +19,50 @@
     }
 }
 
+/* Cấu trúc của Main Content */
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 100%; /* Đảm bảo chiều rộng chiếm hết không gian */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Sidebar chứa danh sách đơn hàng */
+.sideBar {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Tạo lưới tự động với các thẻ có độ rộng tối thiểu là 250px */
+    gap: 20px; /* Khoảng cách giữa các thẻ */
+    padding-top: 20px; /* Khoảng cách từ trên xuống */
+    padding-left: 20px; /* Khoảng cách từ trái sang */
+    justify-content: center; /* Căn giữa các thẻ trong container */
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+/* Điều chỉnh giao diện cho các thẻ OrderCard */
+.card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease; /* Thêm hiệu ứng khi hover */
+}
+
+/* Thêm hiệu ứng hover cho thẻ */
+.card:hover {
+    transform: translateY(-5px); /* Di chuyển nhẹ khi hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Media query cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .sideBar {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Giảm độ rộng các thẻ khi trên màn hình nhỏ */
+    }
+}
+
 
 .mainContent {
     display: flex;

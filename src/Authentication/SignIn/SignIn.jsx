@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { HeaderLog } from "../../LoginComponent/HeaderLog";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import api from "../../api"; // Import API instance
 import styles from "./SignIn.module.css";
 
@@ -33,6 +33,7 @@ const SignIn = () => {
 
             const { accessToken, user } = response.data;
             const {role, email} = user;
+            
 
 
             localStorage.setItem("accessToken", accessToken);
@@ -54,26 +55,26 @@ const SignIn = () => {
         }
     };
 
-    const handleGoogleLogin = async (response) => {
-        try {
-            const apiResponse = await api.get("/auth/login-with-google");
-            console.log(apiResponse);
-            const { accessToken} = apiResponse.data;
-            const {role} = apiResponse.data.role;
- 
-            localStorage.setItem("accessToken", accessToken);
-            localStorage.setItem("role", role);
+    const handleGoogleLogin = async (googleResponse) => {
+    try {
+        const idToken = googleResponse.credential; // Lấy token từ Google response
+        const apiResponse = await api.post("/auth/login-with-google", { token: idToken });
 
-            alert("Google login successful!");
-            navigate("/user");
-        } catch (err) {
-            console.error(err);
-            setError("Google login failed. Please try again.");
-        }
-    };
+        const { accessToken, role } = apiResponse.data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("role", role);
+
+        alert("Google login successful!");
+        navigate("/user");
+    } catch (err) {
+        console.error(err);
+        setError("Google login failed. Please try again.");
+    }
+};
+
 
     return (
-        <GoogleOAuthProvider clientId="810739097684-tq9kai0bshuforbl90koui2ej8p0qcn0.apps.googleusercontent.com">
+
             <div className={styles.signin}>
                 <HeaderLog />
                 <nav className={styles.signin_container}>
@@ -135,7 +136,6 @@ const SignIn = () => {
                     </div>
                 </div>
             </div>
-        </GoogleOAuthProvider>
     );
 };
 

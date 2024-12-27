@@ -76,15 +76,6 @@ const ProductDetail = ({ addToCart }) => {
         />
       </Helmet>
 
-      <section className={styles.pic}>
-        <img
-          src={imageUrl}
-          alt={`${product.name} - Thuê giá rẻ tại Bee RushTech`}
-          onError={handleImageError}
-          className={styles.product_img}
-        />
-      </section>
-
       <aside className={styles.detail}>
         <div className={styles.product_detail_info}>
           <h1 className={styles.name}>{product.name}</h1>

@@ -20,7 +20,9 @@ export const Cart = () => {
     const fetchCartItems = async () => {
       try {
         const response = await api.get('/customer/cart');
+        
         if (response.statusCode === 200) {
+          console.log(response);
           setCartItems(response.data);
         } else {
           setError('Không thể lấy dữ liệu giỏ hàng.');
@@ -42,12 +44,14 @@ export const Cart = () => {
         const response = await api.get('/user/profile');
         if (response.statusCode === 200) {
           setUserInfo(response.data);
+          
         } else {
           setError("Không thể lấy thông tin người dùng.");
         }
       } catch (err) {
         setError("Error fetching user info.");
       }
+
     };
     fetchUserInfo();
   }, []);
@@ -64,17 +68,19 @@ export const Cart = () => {
       order_method: 'home',
       shipping_address: userInfo.address || "",
       list_order_detail: cartItems.map(item => ({
-        cart_item_id: item.productId,
+        cart_item_id: item.id,
         time_renting: item.quantity,
       }))
     };
 
     try {
       setLoading(true);
+      console.log(orderData);
       const response = await api.post('/orders', orderData);
+      console.log(response);
       if (response.statusCode === 200) {
         setLoading(false);
-        navigate(response.data.payment_url);
+        window.open(response.data.payment_url, '_blank');
       } else {
         setError('Không thể tạo đơn hàng, vui lòng thử lại!');
       }

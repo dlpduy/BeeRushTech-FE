@@ -1,0 +1,64 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.successMessage {
+    background-color: #ffb13a;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.successMessage h2 {
+    color: #000;
+    font-size: 2rem;
+}
+
+.successMessage p {
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+.successMessage ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.successMessage li {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+.buttonContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.continueShoppingButton, .viewOrderButton {
+    background-color: #ffb13a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.continueShoppingButton:hover, .viewOrderButton:hover {
+    background-color:#ffb13a;
+}

@@ -12,6 +12,27 @@ const OrderSummary = ({
   const [note, setNote] = useState('hàng dễ vỡ');
   const [shippingAddress, setShippingAddress] = useState(userInfo ? userInfo.address : '');
   const [successMessage, setSuccessMessage] = useState('');
+  const [timeRenting, setTimeRenting] = useState(1); // Số giờ thuê chung (default = 1)
+
+  // Tăng thời gian thuê
+  const handleIncreaseTimeRenting = () => {
+    setTimeRenting((prev) => prev + 1);
+  };
+
+  // Giảm thời gian thuê
+  const handleDecreaseTimeRenting = () => {
+    if (timeRenting > 1) {
+      setTimeRenting((prev) => prev - 1);
+    }
+  };
+
+  // Cập nhật thời gian thuê bằng input
+  const handleTimeRentingChange = (event) => {
+    const newTimeRenting = parseInt(event.target.value, 10);
+    if (newTimeRenting >= 1) {
+      setTimeRenting(newTimeRenting);
+    }
+  };
 
   // Handle payment method change
   const handlePaymentMethodChange = (event) => {
@@ -32,7 +53,7 @@ const OrderSummary = ({
   const handleIncreaseQuantity = (productId) => {
     const item = cartItems.find(item => item.productId === productId);
     if (item) {
-      onQuantityChange(productId, item.quantity + 1);  // Increase quantity
+      onQuantityChange(productId, item.quantity + 1);
     }
   };
 
@@ -40,7 +61,7 @@ const OrderSummary = ({
   const handleDecreaseQuantity = (productId) => {
     const item = cartItems.find(item => item.productId === productId);
     if (item && item.quantity > 1) {
-      onQuantityChange(productId, item.quantity - 1);  // Decrease quantity
+      onQuantityChange(productId, item.quantity - 1);
     }
   };
 
@@ -48,17 +69,26 @@ const OrderSummary = ({
   const handleQuantityChange = (productId, event) => {
     const newQuantity = parseInt(event.target.value, 10);
     if (newQuantity >= 1) {
-      onQuantityChange(productId, newQuantity); // Update quantity
+      onQuantityChange(productId, newQuantity);
     }
   };
 
   // Handle remove product
   const handleRemoveProduct = (productId) => {
-    onRemoveProduct(productId); // Remove product
-    setSuccessMessage('Product removed from cart successfully!');  // Show success message
+    onRemoveProduct(productId);
+    setSuccessMessage('Product removed from cart successfully!');
     setTimeout(() => {
-      setSuccessMessage('');  // Hide success message after 3 seconds
+      setSuccessMessage('');
     }, 3000);
+  };
+
+  // Handle checkout
+  const handleCheckout = () => {
+    const updatedCartItems = cartItems.map((item) => ({
+      ...item,
+      time_renting: timeRenting, // Gán số giờ thuê chung
+    }));
+    onCheckout(updatedCartItems);
   };
 
   return (
@@ -70,19 +100,45 @@ const OrderSummary = ({
         <h3>Customer Information</h3>
         <div className={styles.infoRow}>
           <span className={styles.label}>Full Name:</span>
-          <span className={styles.value}>{userInfo.fullName}</span>
+          <span className={styles.value}>{userInfo?.fullName || "N/A"}</span>
         </div>
         <div className={styles.infoRow}>
           <span className={styles.label}>Email:</span>
-          <span className={styles.value}>{userInfo.email}</span>
+          <span className={styles.value}>{userInfo?.email || "N/A"}</span>
         </div>
         <div className={styles.infoRow}>
           <span className={styles.label}>Phone:</span>
-          <span className={styles.value}>{userInfo.phoneNumber}</span>
+          <span className={styles.value}>{userInfo?.phoneNumber || "N/A"}</span>
         </div>
         <div className={styles.infoRow}>
           <span className={styles.label}>Address:</span>
-          <span className={styles.value}>{userInfo.address}</span>
+          <span className={styles.value}>{userInfo?.address || "N/A"}</span>
+        </div>
+      </div>
+
+      {/* Time Renting Input */}
+      <div className={styles.timeRenting}>
+        <h3>Time Renting (Hours)</h3>
+        <div className={styles.quantityWrapper}>
+          <button 
+            className={styles.quantityButton} 
+            onClick={handleDecreaseTimeRenting}
+          >
+            -
+          </button>
+          <input
+            type="number"
+            value={timeRenting}
+            onChange={handleTimeRentingChange}
+            className={styles.quantityInput}
+            min="1"
+          />
+          <button 
+            className={styles.quantityButton} 
+            onClick={handleIncreaseTimeRenting}
+          >
+            +
+          </button>
         </div>
       </div>
 
@@ -102,8 +158,8 @@ const OrderSummary = ({
               <span className={styles.tableItem}>{item.name}</span>
               <span className={styles.tableItem}>
                 <div className={styles.quantityWrapper}>
-                  <button 
-                    className={styles.quantityButton} 
+                  <button
+                    className={styles.quantityButton}
                     onClick={() => handleDecreaseQuantity(item.productId)}
                   >
                     -
@@ -112,11 +168,11 @@ const OrderSummary = ({
                     type="number"
                     value={item.quantity}
                     onChange={(e) => handleQuantityChange(item.productId, e)}
-                    min="1"
                     className={styles.quantityInput}
+                    min="1"
                   />
-                  <button 
-                    className={styles.quantityButton} 
+                  <button
+                    className={styles.quantityButton}
                     onClick={() => handleIncreaseQuantity(item.productId)}
                   >
                     +
@@ -193,7 +249,7 @@ const OrderSummary = ({
       {/* Checkout Button */}
       <button
         className={styles.checkoutButton}
-        onClick={onCheckout}
+        onClick={handleCheckout}
       >
         Place Order
       </button>
