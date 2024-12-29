@@ -216,4 +216,45 @@
 .dropdownItem:hover {
   background-color: #E0E0E0; /* Màu sáng hơn khi hover */
 }
+/* Thiết kế danh sách gợi ý */
+.suggestions {
+  position: absolute; /* Cố định vị trí */
+  top: calc(100% + 8px); /* Đặt dưới ô tìm kiếm */
+  left: 0; /* Căn trái theo ô tìm kiếm */
+  width: 100%; /* Độ rộng khớp với ô tìm kiếm */
+  list-style: none; /* Xóa ký hiệu đầu dòng */
+  margin: 0;
+  padding: 0;
+  max-height: 200px; /* Giới hạn chiều cao (5 sản phẩm, mỗi sản phẩm 40px) */
+  overflow-y: auto; /* Hiển thị thanh cuộn khi danh sách quá dài */
+  background-color: #fff; /* Màu nền */
+  border: 1px solid #ccc; /* Viền bao quanh */
+  border-radius: 4px; /* Bo góc */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+  z-index: 1000; /* Hiển thị trên các phần tử khác */
+}
 
+/* Mỗi mục gợi ý (hiển thị tên sản phẩm trên một dòng) */
+.suggestionItem {
+  padding: 10px 16px; /* Khoảng cách trong từng mục */
+  cursor: pointer; /* Con trỏ khi hover */
+  font-size: 14px; /* Kích thước chữ */
+  color: #333; /* Màu chữ */
+  white-space: nowrap; /* Không xuống dòng */
+  overflow: hidden; /* Ẩn phần nội dung tràn ra ngoài */
+  text-overflow: ellipsis; /* Hiển thị dấu "..." nếu tên sản phẩm quá dài */
+  transition: background-color 0.3s ease; /* Hiệu ứng hover */
+  border-bottom: 1px solid #f0f0f0; /* Đường phân cách giữa các mục */
+  display: block;
+  border-radius: 15px;
+}
+
+/* Xóa đường viền cho mục cuối cùng */
+.suggestionItem:last-child {
+  border-bottom: none;
+}
+
+/* Hiệu ứng khi hover qua từng mục */
+.suggestionItem:hover {
+  background-color: #f7f7f7; /* Đổi màu nền */
+}

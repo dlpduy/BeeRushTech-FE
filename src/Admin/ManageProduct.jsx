@@ -189,20 +189,20 @@ const ManageProduct = () => {
 
   return (
     <div className={styles.manageContainer}>
-      <p className={styles.totalProducts}>Total Products: {products.length}</p>
+      <p className={styles.totalProducts}>Tổng số sản phẩm: {products.length}</p>
       <button onClick={() => setIsAddMode(true)} className={styles.addButton}>
-        Add Product
+        Thêm sản phẩm
       </button>
       {message && <div className={styles.message}>{message}</div>}
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Brand</th>
-            <th>Category</th>
-            <th>Total Quantity</th>
-            <th>Actions</th>
+            <th>Tên</th>
+            <th>Giá</th>
+            <th>Thương hiệu</th>
+            <th>Loại</th>
+            <th>Số lượng</th>
+            <th>Hành động</th>
           </tr>
         </thead>
         <tbody>
@@ -214,8 +214,8 @@ const ManageProduct = () => {
               <td>{product.category?.name || "Unknown"}</td>
               <td>{isNaN(product.quantity) ? 0 : product.quantity}</td>
               <td>
-              <button onClick={() => handleEditProduct(product.id)}>Edit</button>
-              <button onClick={() => handleDeleteClick(product.id)} > Delete</button>
+              <button onClick={() => handleEditProduct(product.id)}>Sửa</button>
+              <button onClick={() => handleDeleteClick(product.id)} > Xóa</button>
               </td>
             </tr>
           ))}
@@ -224,10 +224,10 @@ const ManageProduct = () => {
         {isEditMode && productToEdit && (
         <div className={styles.popupOverlay}>
           <div className={styles.editForm}>
-            <h2>Edit Product</h2>
+            <h2>Chỉnh sửa thông tin sản phẩm</h2>
 
             <label>
-              Name:
+              Tên:
               <input
                 type="text"
                 value={productToEdit.name}
@@ -238,7 +238,7 @@ const ManageProduct = () => {
             </label>
 
             <label>
-              Price:
+              Giá:
               <input
                 type="number"
                 value={productToEdit.price}
@@ -249,7 +249,7 @@ const ManageProduct = () => {
             </label>
 
             <label>
-              Brand:
+              Thương hiệu:
               <input
                 type="text"
                 value={productToEdit.brand}
@@ -260,7 +260,7 @@ const ManageProduct = () => {
             </label>
 
             <label>
-              Import Price:
+              Giá nhập:
               <input
                 type="number"
                 value={productToEdit.import_price}
@@ -271,7 +271,7 @@ const ManageProduct = () => {
             </label>
 
             <label>
-              Category ID:
+              Loại ID:
               <input
                 type="text"
                 value={productToEdit.category_id}
@@ -282,7 +282,7 @@ const ManageProduct = () => {
             </label>
 
             <label>
-              Description:
+              Mô tả:
               <textarea
                 value={productToEdit.description}
                 onChange={(e) =>
@@ -292,8 +292,8 @@ const ManageProduct = () => {
             </label>
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <button onClick={handleSaveChanges}>Save</button>
-              <button onClick={handleCancelEdit}>Cancel</button>
+              <button onClick={handleSaveChanges}>Lưu</button>
+              <button onClick={handleCancelEdit}>Hủy</button>
             </div>
           </div>
         </div>
@@ -303,12 +303,12 @@ const ManageProduct = () => {
         {showDeletePopup && (
         <div className={styles.popup}>
           <div className={styles.popupContent}>
-            <h3>Are you sure you want to delete this product?</h3>
+            <h3>Bạn có chắc chắn muốn xóa sản phẩm không ?</h3>
             <button onClick={deleteProduct} className={styles.confirmButton}>
-              Yes
+              Có
             </button>
             <button onClick={cancelDelete} className={styles.cancelButton}>
-              No
+              Không
             </button>
           </div>
         </div>
@@ -321,68 +321,68 @@ const ManageProduct = () => {
 
       <div className={styles.pagination}>
         <button onClick={() => handlePageChange("prev")} disabled={currentPage === 1}>
-          Previous
+          Trang trước
         </button>
         <span>
-          Page {currentPage} of {totalPages}
+          Trang {currentPage} trong {totalPages}
         </span>
         <button onClick={() => handlePageChange("next")} disabled={currentPage === totalPages}>
-          Next
+          Trang sau
         </button>
       </div>
 
       {isAddMode && (
         <div className={styles.popup}>
           <div className={styles.popupContent}>
-            <h3>Add Product</h3>
+            <h3>Thêm sản phẩm</h3>
             <input
               type="text"
               name="name"
               value={newProduct.name}
               onChange={handleNewProductChange}
-              placeholder="Name"
+              placeholder="Tên"
             />
             <input
               type="number"
               name="price"
               value={newProduct.price}
               onChange={handleNewProductChange}
-              placeholder="Price"
+              placeholder="Giá"
             />
             <input
               type="number"
               name="import_price"
               value={newProduct.import_price}
               onChange={handleNewProductChange}
-              placeholder="Import Price"
+              placeholder="Giá nhập"
             />
             <input
               type="text"
               name="thumbnail"
               value={newProduct.thumbnail}
               onChange={handleNewProductChange}
-              placeholder="Thumbnail URL"
+              placeholder="Link hình ảnh"
             />
             <input
               type="text"
               name="description"
               value={newProduct.description}
               onChange={handleNewProductChange}
-              placeholder="Description"
+              placeholder="Mô tả"
             />
             <input
               type="text"
               name="brand"
               value={newProduct.brand}
               onChange={handleNewProductChange}
-              placeholder="Brand"
+              placeholder="Thương hiệu"
             />
             <input
               type="number"
               name="category_id"
               value={newProduct.category_id}
               onChange={handleNewProductChange}
-              placeholder="Category ID"
+              placeholder="Loại ID"
             />
             <input
               type="checkbox"
@@ -396,17 +396,17 @@ const ManageProduct = () => {
               name="color"
               value={newProduct.color}
               onChange={handleNewProductChange}
-              placeholder="Color"
+              placeholder="Màu sắc"
             />
             <input
               type="number"
               name="quantity"
               value={newProduct.quantity}
               onChange={handleNewProductChange}
-              placeholder="Quantity"
+              placeholder="Số lượng"
             />
-            <button onClick={addNewProduct}>Add Product</button>
-            <button onClick={() => setIsAddMode(false)}>Cancel</button>
+            <button onClick={addNewProduct}>Thêm sản phẩm</button>
+            <button onClick={() => setIsAddMode(false)}>Hủy</button>
           </div>
         </div>
       )}

@@ -1,6 +1,10 @@
 import React from "react";
 import styles from "./ProductCard.module.css"
 
+function formatNumberWithDots(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+  
 const ProductCard = ({ id, name, price,brand, originalPrice, thumbnail, rating, discount, category, onClick }) => {
     return (
         <div className={styles.product_card} onClick={() => onClick(id)}>
@@ -13,13 +17,13 @@ const ProductCard = ({ id, name, price,brand, originalPrice, thumbnail, rating, 
             </div>
             <div className={styles.product_info}>
                 <h3>{name || "Unnamed Product"}</h3>
-                <p>{price || "N/A"} VND</p>
-                <p>{brand || "N/A"}</p>
+                <p>{formatNumberWithDots(price) || "N/A"} VND/ giờ</p>
+                <p>Thương hiệu: {brand || "N/A"}</p>
                 
                 {discount && (
                     <span className={styles.discount_percentage}>{discount}% off</span>
                 )}
-                <p> {category || "N/A"}</p>
+                <p> Loại: {category || "N/A"}</p>
             </div>
         </div>
     );

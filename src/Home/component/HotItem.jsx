@@ -4,6 +4,9 @@ import api from "../../api"; // Sử dụng instance API
 import styles from "./HotItem.module.css";
 import Loading from "../../MutualComponents/Loading/Loading"; // Component loading để hiển thị khi đang tải dữ liệu
 
+function formatNumberWithDots(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 const HotItem = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -43,34 +46,37 @@ const HotItem = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        <div className={styles.bold}>HOT</div> Items
-      </div>
-      <div className={styles.productContainer}>
-        {products.length ? (
-          products.map((product) => (
-            <div
-              key={product.id}
-              className={styles.productFrame}
-              onClick={() => handleProductClick(product.id)} // Khi click sẽ chuyển đến chi tiết sản phẩm
-            >
-              <img
-                src={product.thumbnail || "/logo.png"}
-                alt={product.name}
-                className={styles.productImage}
-              />
-              <div className={styles.productInfoOverlay}>
-                <h3>{product.name}</h3>
-                <p>{product.rented_quantity}+ rentals</p> {/* Hiển thị lượt thuê */}
-              </div>
+  <div className={styles.title}>
+    Sản phẩm<div className={styles.bold}> NỔI BẬT</div> 
+  </div>
+  <div className={styles.product}>
+    {products.length ? (
+      products.map((product) => (
+        <div className={styles.productContainer} key={product.id} onClick={() => handleProductClick(product.id)}>
+          <div
+            className={styles.productFrame}
+            
+          >
+            <img
+              src={product.thumbnail || "/logo.png"}
+              alt={product.name}
+              className={styles.productImage}
+            />
+          </div>
+          <div className={styles.productInfo}>
+              <p>{product.name}</p>
+              <p>{formatNumberWithDots(product.price)}VND/giờ</p>
+              <p>{product.rented_quantity}+ lượt thuê</p>
             </div>
-          ))
-        ) : (
-          <p>No hot items available</p> // Nếu không có sản phẩm thì hiển thị thông báo
-        )}
-      </div>
-      {message && <div className={styles.message}>{message}</div>}
-    </div>
+        </div>
+      ))
+    ) : (
+      <p>No hot items available</p>
+    )}
+  </div>
+  {message && <div className={styles.message}>{message}</div>}
+</div>
+
   );
 };
 

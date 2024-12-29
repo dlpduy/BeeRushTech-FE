@@ -19,6 +19,9 @@ function getColorFromString(color) {
           return "#000000";  // Mặc định là màu đen nếu không tìm thấy
   }
 }
+function formatNumberWithDots(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 
 const ProductDetail = ({ addToCart }) => {
   const { productId } = useParams(); // Lấy ID sản phẩm từ URL
@@ -128,14 +131,14 @@ const ProductDetail = ({ addToCart }) => {
         <div className={styles.product_detail_info}>
             <h1 className={styles.name}>{product.name}</h1>
 
-            <h3 className={styles.brand}>Brand: {product.brand}</h3>
+            <h3 className={styles.brand}>Thương hiệu: {product.brand}</h3>
 
-            <p className={styles.price}>Price : {product.price}</p>
+            <p className={styles.price}>Giá thuê : {formatNumberWithDots(product.price)} VND/ giờ</p>
 
-            <p className={styles.description}>Description: {product.description}</p>
+            <p className={styles.description}>Mô tả: {product.description}</p>
 
             <div className={styles.color}>
-              <p>Color: </p>
+              <p>Màu: </p>
             <div 
               style={{
                 width: '50px',
@@ -147,7 +150,7 @@ const ProductDetail = ({ addToCart }) => {
               />
             </div>
 
-            <p className={styles.quantity}>Quantity: {product.quantity}</p>
+            <p className={styles.quantity}>Số lượng: {product.quantity}</p>
 
           {/* Lựa chọn số lượng và nút "Add to Rent" */}
           <div className={styles.Rent}>
@@ -175,7 +178,7 @@ const ProductDetail = ({ addToCart }) => {
               disabled={isLoading}
               className={styles.add_to_rent}
             >
-              {isLoading ? "Adding..." : isAdded ? "Added to Cart" : "Add to Cart"}
+              {isLoading ? "Đang thêm ..." : isAdded ? "Đã thêm vào giỏ hàng" : "Thêm vào giỏ hàng"}
               {message && <div className={styles.message}>{message}</div>}
             </button>
           </div>

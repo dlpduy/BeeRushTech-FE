@@ -89,15 +89,15 @@ export const HeaderLog = () => {
                 aria-label="Shop"
                 onClick={() => handleCategoryNavigation("shop")}
               >
-                Shop
+                Cửa hàng
               </button>
             </li>
             <li className={styles.navItem}>
-              <button className={styles.navLink} aria-label="On Sale">On Sale</button>
+              <button className={styles.navLink} aria-label="On Sale">Giảm giá</button>
             </li>
             <li className={styles.navItem}>
               <Link to="/category" className={styles.navLink} aria-label="New Arrivals">
-                New Arrivals
+                Sản phẩm mới
               </Link>
             </li>
           </ul>

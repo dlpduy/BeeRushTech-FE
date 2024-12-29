@@ -180,7 +180,6 @@
   box-sizing: border-box;
 }
 .ordersContainer {
-  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Tạo lưới tự động với các thẻ có độ rộng tối thiểu là 250px */
   gap: 20px; /* Khoảng cách giữa các thẻ */
   width: 100%;
@@ -463,5 +462,13 @@ nav a:hover {
   .editForm button:nth-child(2):hover {
     background-color: #FFB13A;      /* Đổi màu khi hover */
   }
-  
+  .filterContainter select {
+    appearance: none; /* Loại bỏ giao diện mặc định */
+    -webkit-appearance: none; /* Loại bỏ trên Safari */
+    background-image: url('data:image/svg+xml;base64,<BASE64_ICON>'); /* Icon mũi tên */
+    background-repeat: no-repeat;
+    background-position: right 12px center; /* Vị trí icon */
+    background-size: 12px; /* Kích thước icon */
+    padding-right: 32px; /* Tạo khoảng cách đủ lớn cho icon */
+  }
   

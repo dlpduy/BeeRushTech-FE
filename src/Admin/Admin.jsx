@@ -53,13 +53,13 @@ export const Admin =() => {
             <Header/>
             <div className={styles.divider} />           
                 <nav className={styles.breadcrumb}>
-                    <button className={styles.breadcrumbLink} aria-label="Home"> Home </button>
+                    <button className={styles.breadcrumbLink} aria-label="Home">  </button>
                     <img 
                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/b2f5eb0a4928570b7fed31b03a3380bdd7847d7602a5565615f9e54341907dfa?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8" 
                         alt="" 
                         className={styles.breadcrumbIcon} 
                     />   
-                    <span className={styles.breadcrumbCurrent}>Admin</span> 
+                    <span className={styles.breadcrumbCurrent}>Quản trị viên</span> 
                 </nav>               
             </div>
 
@@ -68,12 +68,12 @@ export const Admin =() => {
                 <div className={styles.manageLayout}>
                     
                     <aside className={styles.sidebar}>
-                    <h1 className={styles.pageTitle}>Manage</h1>
+                    <h1 className={styles.pageTitle}>Quản lý</h1>
                         <nav className={styles.sidebarContent}>
-                        <NavLink to="/Admin/product" className={({ isActive }) => isActive ? `${styles.sidebarItem} ${styles.active}` : styles.sidebarItem}>Product</NavLink>
-                        <NavLink to="/Admin/order" className={({ isActive }) => isActive ? `${styles.sidebarItem} ${styles.active}` : styles.sidebarItem}>Order</NavLink>
+                        <NavLink to="/Admin/product" className={({ isActive }) => isActive ? `${styles.sidebarItem} ${styles.active}` : styles.sidebarItem}>Sản phẩm</NavLink>
+                        <NavLink to="/Admin/order" className={({ isActive }) => isActive ? `${styles.sidebarItem} ${styles.active}` : styles.sidebarItem}>Đơn hàng</NavLink>
                         <button onClick={handleLogout} className={styles.logoutButton}>
-                        {loading ? "Logging out..." : "Logout"}
+                        {loading ? "Đang đăng xuất..." : "Đăng xuất"}
     </button>
                         </nav>
                 </aside>

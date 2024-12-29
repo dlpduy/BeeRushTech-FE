@@ -10,7 +10,7 @@ export default function NewsletterSection() {
   return (
     <section className={styles.newsletterContainer}>
       <h2 className={styles.heading}>
-        STAY UPTO DATE ABOUT OUR LATEST OFFERS
+      CẬP NHẬT TIN TỨC MỚI NHẤT TỪ CHÚNG TÔI
       </h2>
       <form onSubmit={handleSubmit} className={styles.formContainer}>
         <div className={styles.inputWrapper}>
@@ -21,14 +21,14 @@ export default function NewsletterSection() {
             alt=""
           />
           <label htmlFor="emailInput" className={styles['visually-hidden']}>
-            Enter your email address
+            Nhập email của bạn
           </label>
           <input
             type="email"
             id="emailInput"
-            placeholder="Enter your email address"
+            placeholder="Nhập email của bạn"
             className={styles.input}
-            aria-label="Enter your email address"
+            aria-label="Nhập email của bạn"
             required
           />
         </div>
@@ -36,7 +36,7 @@ export default function NewsletterSection() {
           type="submit" 
           className={styles.subscribeButton}
         >
-          Subscribe to Newsletter
+          Đăng ký nhận tin
         </button>
       </form>
     </section>

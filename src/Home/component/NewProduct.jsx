@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api"; // Sử dụng instance API
-import styles from "./NewProduct.module.css";
+import styles from "./HotItem.module.css";
 import Loading from "../../MutualComponents/Loading/Loading";
 
+function formatNumberWithDots(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 const NewProduct = () => {
     const [products, setProducts] = useState([]); // Dữ liệu sản phẩm
     const [loading, setLoading] = useState(true); // Trạng thái tải
@@ -55,46 +58,35 @@ const NewProduct = () => {
     return (
         <div className={styles.container}>
             <div className={styles.title}>
-                <div className={styles.bold}>NEW</div> Products
+                Sản phẩm<div className={styles.bold}> MỚI</div> 
             </div>
-            <div className={styles.productContainer}>
-                {products.length ? (
-                    products.map((product) => (
-                        <div
-                            key={product.id}
-                            className={styles.productFrame}
-                            onClick={() => handleProductClick(product)}
-                        >
-                            <img
-                                src={product.thumbnail || "/logo.png"} // Thêm ảnh mặc định nếu không có ảnh
-                                alt={product.name}
-                                className={styles.productImage}
-                            />
-                            <div className={styles.productInfoOverlay}>
-                                <h3>{product.name}</h3>
-                                <p>{product.category.name}</p>
-                                <p>
-                                    From{" "}
-                                    <span className={styles.originalPrice}>
-                                        ${product.price}
-                                    </span>
-                                </p>
-                                {product.discountedPrice && product.discountedPrice < product.price && (
-                                    <p>
-                                        <span className={styles.discountedPrice}>
-                                            ${product.discountedPrice}
-                                        </span>
-                                    </p>
-                                )}
-                                <p>Rating: {product.rating || "N/A"} / 5</p>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p>No new products available</p>
-                )}
+            <div className={styles.product}>
+    {products.length ? (
+      products.map((product) => (
+        <div className={styles.productContainer} key={product.id} onClick={() => handleProductClick(product.id)}>
+          <div
+            className={styles.productFrame}
+            
+          >
+            <img
+              src={product.thumbnail || "/logo.png"}
+              alt={product.name}
+              className={styles.productImage}
+            />
+          </div>
+          <div className={styles.productInfo}>
+              <p>{product.name}</p>
+              <p>{formatNumberWithDots(product.price)}VND/giờ</p>
+
             </div>
         </div>
+      ))
+    ) : (
+      <p>No hot items available</p>
+    )}
+  </div>
+</div>
+
     );
 };
 

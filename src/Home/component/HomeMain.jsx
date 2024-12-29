@@ -62,25 +62,24 @@ export const HomeMain = () => {
             {/* Nội dung chính */}
             <div className={styles.mainContent}>
                 <div>
+                    <div className={styles.containerC}>
+                    <div className={styles.bold}>BEE RUSH TECH</div>
+                    </div>
                     EVERYTHING 
                     <div className={styles.containerC}>
-                        YOU <div className={styles.bold}>NEED,</div>
-                    </div>
-                    DELIVER 
-                    <div className={styles.containerC}>
-                        WITH <div className={styles.bold}>SPEED.</div>
+                   YOU <div className={styles.bold}>NEED</div>
                     </div>
                 </div>
             </div>
 
             <div className={styles.content}>
                 <div>
-                    Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.
+                    Tìm kiếm sản phẩm công nghệ cùng với Bee Rush Tech
                 </div>
                 <div className={styles.paddingButton}>
                     <div className={styles.rentButton} onClick={handleRentNowClick}>
                         <div className={styles.rentContent}>
-                            Rent Now
+                            Thuê ngay
                         </div>
                     </div>
                 </div>
@@ -89,12 +88,12 @@ export const HomeMain = () => {
             <div className={styles.statistic}>
                 <div className={styles.column}>
                     <div className={styles.data}>200+</div>
-                    <div className={styles.dataContent}> International Brands</div>
+                    <div className={styles.dataContent}> Thương hiệu</div>
                 </div>
                 <div className={styles.divider}></div>
                 <div className={styles.column}>
                     <div className={styles.data}>10k+</div>
-                    <div className={styles.dataContent}> Happy Customers</div>
+                    <div className={styles.dataContent}> Khách hàng</div>
                 </div>
             </div>
         </div>

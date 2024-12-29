@@ -93,13 +93,13 @@ const OrderSummary = ({
 
   return (
     <section className={styles.summary}>
-      <h2 className={styles.title}>Order Summary</h2>
+      <h2 className={styles.title}>Thông tin đơn hàng</h2>
 
       {/* Customer Information */}
       <div className={styles.customerInfo}>
-        <h3>Customer Information</h3>
+        <h3>Thông tin khách hàng</h3>
         <div className={styles.infoRow}>
-          <span className={styles.label}>Full Name:</span>
+          <span className={styles.label}>Họ và tên:</span>
           <span className={styles.value}>{userInfo?.fullName || "N/A"}</span>
         </div>
         <div className={styles.infoRow}>
@@ -107,18 +107,18 @@ const OrderSummary = ({
           <span className={styles.value}>{userInfo?.email || "N/A"}</span>
         </div>
         <div className={styles.infoRow}>
-          <span className={styles.label}>Phone:</span>
+          <span className={styles.label}>Số điện thoại:</span>
           <span className={styles.value}>{userInfo?.phoneNumber || "N/A"}</span>
         </div>
         <div className={styles.infoRow}>
-          <span className={styles.label}>Address:</span>
+          <span className={styles.label}>Địa chỉ:</span>
           <span className={styles.value}>{userInfo?.address || "N/A"}</span>
         </div>
       </div>
 
       {/* Time Renting Input */}
       <div className={styles.timeRenting}>
-        <h3>Time Renting (Hours)</h3>
+        <h3>Thời gian thuê (giờ)</h3>
         <div className={styles.quantityWrapper}>
           <button 
             className={styles.quantityButton} 
@@ -144,7 +144,7 @@ const OrderSummary = ({
 
       {/* Order Details */}
       <div className={styles.orderDetails}>
-        <h3>Order Details</h3>
+        <h3>Chi tiết đơn hàng</h3>
         <div className={styles.table}>
           <div className={styles.tableHeader}>
             <span className={styles.tableHeaderItem}>Product</span>
@@ -200,7 +200,7 @@ const OrderSummary = ({
 
       {/* Payment Method Selection */}
       <div className={styles.paymentMethod}>
-        <h3>Payment Method</h3>
+        <h3>Phương thức thanh toán</h3>
         <div className={styles.radioGroup}>
           <label>
             <input
@@ -209,7 +209,7 @@ const OrderSummary = ({
               checked={paymentMethod === 'CREDIT'}
               onChange={handlePaymentMethodChange}
             />
-            Credit
+            Thẻ tín dụng
           </label>
           <label>
             <input
@@ -218,30 +218,30 @@ const OrderSummary = ({
               checked={paymentMethod === 'CASH'}
               onChange={handlePaymentMethodChange}
             />
-            Cash on Delivery
+            Thanh toán khi nhận hàng
           </label>
         </div>
       </div>
 
       {/* Shipping Address Input */}
       <div className={styles.shippingAddressInput}>
-        <h3>Shipping Address</h3>
+        <h3>Địa chỉ giao hàng</h3>
         <input
           type="text"
           value={shippingAddress}
           onChange={handleShippingAddressChange}
-          placeholder="Enter shipping address"
+          placeholder="Nhập địa chỉ..."
           className={styles.input}
         />
       </div>
 
       {/* Note Input */}
       <div className={styles.noteInput}>
-        <h3>Order Note</h3>
+        <h3>Ghi chú</h3>
         <textarea
           value={note}
           onChange={handleNoteChange}
-          placeholder="Enter any special instructions..."
+          placeholder="Nhập ghi chú..."
           className={styles.textarea}
         />
       </div>
@@ -251,7 +251,7 @@ const OrderSummary = ({
         className={styles.checkoutButton}
         onClick={handleCheckout}
       >
-        Place Order
+        Đặt hàng
       </button>
     </section>
   );

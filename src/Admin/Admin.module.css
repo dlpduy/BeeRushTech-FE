@@ -240,6 +240,22 @@
     margin-left: 25px;
 }
 
+
+.manageDetails button{
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  
+  }
+  manageDetails button:hover {
+    background-color: #ffb13a;
+    color: #fff;
+  }
+  
+
 @media (max-width: 1200px) {
     .manageDetails {
     max-width: 100%;

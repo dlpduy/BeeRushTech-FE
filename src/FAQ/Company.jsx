@@ -45,8 +45,9 @@ const Company = () => {
         </p>
       </section>
     </div>
-      <Footer />
+      
       </div>
+      <Footer />
     </div>
   );
 };

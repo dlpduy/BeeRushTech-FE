@@ -1,6 +1,7 @@
 .OrderItem {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 16px;
     padding: 16px;
     border: 2px solid #e0e0e0;
@@ -12,11 +13,10 @@
   
   .orderDetails {
     width: 100%;
-    flex: 1;
+    flex: 2; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border: 2px solid #e0e0e0;
     margin:10px;
     padding: 10px;
   }
@@ -59,6 +59,13 @@
     font-size: 20px;
     font-weight: 700;
     color: #000;
+  }
+
+  .actionButtons {
+    flex: 1; 
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-end; 
   }
   .detailButton {
 

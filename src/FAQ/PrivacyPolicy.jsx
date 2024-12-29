@@ -5,21 +5,21 @@ import { Footer } from '../MutualComponents/Footer/Footer';
 
 const PrivacyPolicy = () => {
   const sidebarItems = [
-    'Personal Information Collection',
-    'Data Security',
-    'Access and Edit Rights',
-    'Cookie Policy',
-    'Information Sharing',
-    "Children's Privacy"
+    'Thu thập thông tin cá nhân',
+    'Bảo mật dữ liệu',
+    'Quyền truy cập và chỉnh sửa',
+    'Chính sách cookie',
+    'Chia sẻ thông tin',
+    "Quyền riêng tư của trẻ em"
   ];
 
   const policyDetails = [
-    'Specify the types of personal information collected (e.g., name, address, phone number, payment).',
-    'Describe how user information is protected through encryption and security measures to prevent unauthorized access.',
-    'Users have the right to access and edit their personal information.',
-    'Explain the use of cookies to enhance the user experience and allow users to accept or decline cookies.',
-    'Identify third parties that may receive shared information (e.g., payment partners) and require user consent.',
-    'No information will be collected from children under 13 years old, in compliance with legal requirements.'
+    'Chỉ định các loại thông tin cá nhân được thu thập (ví dụ: tên, địa chỉ, số điện thoại, thanh toán).',
+    'Mô tả cách thông tin người dùng được bảo vệ thông qua mã hóa và các biện pháp bảo mật để ngăn chặn truy cập trái phép.',
+    'Người dùng có quyền truy cập và chỉnh sửa thông tin cá nhân của mình.',
+    'Giải thích việc sử dụng cookie để nâng cao trải nghiệm người dùng và cho phép người dùng chấp nhận hoặc từ chối cookie.',
+    'Xác định các bên thứ ba có thể nhận được thông tin được chia sẻ (ví dụ: đối tác thanh toán) và yêu cầu sự đồng ý của người dùng.',
+    'Không có thông tin nào được thu thập từ trẻ em dưới 13 tuổi, tuân thủ các yêu cầu của pháp luật.'
   ];
 
   return (
@@ -29,12 +29,12 @@ const PrivacyPolicy = () => {
         <div className={styles.divider} />
         <nav className={styles.breadcrumb}>
           <div className={styles.breadcrumbItem}>
-            <span className={styles.breadcrumbText}>FAQ</span>
+            <span className={styles.breadcrumbText}>Chính sách và điều khoản</span>
             <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/e0fdb9d40ae6fc7a62a77a5aaf20539d594eebbec2c4dc4822936abf0751ce29?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8" alt="" className={styles.breadcrumbIcon} />
           </div>
-          <span className={styles.breadcrumbText}>Privacy</span>
+          <span className={styles.breadcrumbText}>Chính sách</span>
         </nav>
-        <h1 className={styles.pageTitle}>Privacy Policy</h1>
+        <h1 className={styles.pageTitle}>Chính sách bảo mật</h1>
         
         <section className={styles.policyContent}>
           <div className={styles.policyLayout}>

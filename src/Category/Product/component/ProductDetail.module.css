@@ -65,23 +65,18 @@ line-height: normal;
 }
 
 .price {
-    font-size: 24px;
+    font-size: 30px;
     margin-top: 12px;
+    color:#FFB13A
 }
 
-.price {
-    font-size: 20px;
-    text-decoration:wavy;
-}
 
 .description {
     margin: 10px 0;
-    font-size: 20px;
+    font-size: 16px;
 }
 
-p{
-    margin-top:15px;
-}
+
 
 .color{
     display: flex;

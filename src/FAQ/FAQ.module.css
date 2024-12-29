@@ -266,17 +266,10 @@
   
   .sidebarItem {
     align-self: stretch;
+    height: 60px;
   }
   
-  .sidebarItem + .sidebarItem {
-    margin-top: 32px;
-  }
-  
-  @media (max-width: 991px) {
-    .sidebarItem + .sidebarItem {
-      margin-top: 40px;
-    }
-  }
+ 
   
   .mainContent {
     display: flex;

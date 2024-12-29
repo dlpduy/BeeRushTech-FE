@@ -40,7 +40,7 @@ const OrderCard = ({
   const handleShowUpdateModal = () => setShowUpdateModal(true);
 
   // Xử lý cập nhật trạng thái
-  const handleUpdateStatus = async () => {
+  const handleUpdateStatus = async (id) => {
     if (!newStatus || (newStatus === "return" && !methodReturn)) {
       alert("Please select a status and method return if applicable.");
       return;
@@ -48,14 +48,14 @@ const OrderCard = ({
     console.log("Payload Sent:", {
       orderId: id,
       status: newStatus,
-      methodReturn: newStatus === "return" ? methodReturn : undefined,
+      methodReturn: newStatus === "return" ? methodReturn : "undefined",
     });
 
     try {
       const response = await api.put(`/orders/customer/handle`, {
         orderId: id,
       status: newStatus,
-      methodReturn: newStatus === "return" ? methodReturn : undefined,
+      methodReturn: newStatus === "return" ? methodReturn : "undefined",
     });
 
       console.log(response);
@@ -86,54 +86,60 @@ const OrderCard = ({
   return (
     <article className={styles.OrderItem}>
       <div className={styles.orderDetails}>
-        <div className={styles.mainDetail}>
-          <div className={styles.orderInfo}>
-            <h3 className={styles.orderTitle}>{tracking_number}</h3>
-            <div className={styles.orderSpecs}>
-              <p className={styles.specText}>
-                ID: <span className={styles.specValue}>{id}</span>
-              </p>
-              <p className={styles.specText}>
-                Status: <span className={styles.specValue}>{status}</span>
-              </p>
-            </div>
-          </div>
-          <p className={styles.price}>{price}</p>
+    <div className={styles.mainDetail}>
+      <div className={styles.orderInfo}>
+        <h3 className={styles.orderTitle}>{tracking_number}</h3>
+        <div className={styles.orderSpecs}>
+          <p className={styles.specText}>
+            ID: <span className={styles.specValue}>{id}</span>
+          </p>
+          <p className={styles.specText}>
+            Trạng thái: <span className={styles.specValue}>{status}</span>
+          </p>
         </div>
-        <button className={styles.detailButton} onClick={handleShowDetailModal}>
-          View Details
-        </button>
-        {status === "pending" && (
-          <button className={styles.detailButton} onClick={handleClickPay}>
-            Pay
-          </button>
-        )}
-        {status !== "cancelled" && status !== "return" && (
-          <button className={styles.detailButton} onClick={handleShowUpdateModal}>Update Status</button>
-        )}
       </div>
+      <p className={styles.price}>{}</p>
+    </div>
+  </div>
+
+  {/* Cụm nút ở bên phải */}
+  <div className={styles.actionButtons}>
+    <button className={styles.detailButton} onClick={handleShowDetailModal}>
+      Xem chi tiết
+    </button>
+    {status === "pending" && (
+      <button className={styles.detailButton} onClick={handleClickPay}>
+        Thanh toán
+      </button>
+    )}
+    {status !== "cancelled" && status !== "return" && (
+      <button className={styles.detailButton} onClick={handleShowUpdateModal}>
+        Cập nhật trạng thái
+      </button>
+    )}
+  </div>
 
       {/* Pop-up Chi Tiết */}
       {showDetailModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <h3>Order Details</h3>
-            <p><strong>Order ID:</strong> {id}</p>
-            <p><strong>Customer:</strong> {full_name}</p>
+            <h3>Chi tiết đơn hàng</h3>
+            <p><strong>ID đơn hàng:</strong> {id}</p>
+            <p><strong>Khách hàng:</strong> {full_name}</p>
             <p><strong>Email:</strong> {email}</p>
-            <p><strong>Phone:</strong> {phone_number}</p>
-            <p><strong>Address:</strong> {shipping_address}</p>
-            <p><strong>Note:</strong> {note}</p>
-            <p><strong>Status:</strong> {status}</p>
-            <p><strong>Total Amount:</strong> {total_money}</p>
-            <p><strong>Payment Method:</strong> {payment_method}</p>
-            <p><strong>Tracking Number:</strong>{tracking_number}</p>
-            <p><strong>Order Date:</strong> {order_date}</p>
+            <p><strong>Số điện thoại:</strong> {phone_number}</p>
+            <p><strong>Địa chỉ:</strong> {shipping_address}</p>
+            <p><strong>Ghi chú:</strong> {note}</p>
+            <p><strong>Trạng thái:</strong> {status}</p>
+            <p><strong>Tổng tiền:</strong> {total_money}</p>
+            <p><strong>Phương thức thanh toán:</strong> {payment_method}</p>
+            <p><strong>Mã vận chuyển:</strong>{tracking_number}</p>
+            <p><strong>Ngày đặt hàng:</strong> {order_date}</p>
             <button
               onClick={handleCloseDetailModal}
               className={styles.closeButton}
             >
-              Close
+              Đóng
             </button>
           </div>
         </div>
@@ -143,48 +149,48 @@ const OrderCard = ({
       {showUpdateModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <h3>Update Order Status</h3>
-            <p><strong>Order ID:</strong> {id}</p>
+            <h3>Cập nhật trạng thái</h3>
+            <p><strong>Mã đơn hàng:</strong> {id}</p>
             <div>
               <label>
-                <strong>New Status:</strong>
+                <strong>Trạng thái mới:</strong>
               </label>
               <select
                 value={newStatus}
                 onChange={(e) => setNewStatus(e.target.value)}
               >
-                <option value="">Select Status</option>
-                <option value="cancelled">Cancelled</option>
-                <option value="return">Return</option>
+                <option value="">Chọn trạng thái</option>
+                <option value="cancelled">Hủy</option>
+                <option value="return">Trả</option>
               </select>
             </div>
            
               <div>
                 <label>
-                  <strong>Method Return:</strong>
+                  <strong>Phương thức trả:</strong>
                 </label>
                 <select
                   value={methodReturn}
                   onChange={(e) => setMethodReturn(e.target.value)}
                 >
-                  <option value="">Select Method</option>
-                  <option value="home">Home</option>
-                  <option value="store">Store</option>
+                  <option value="">Chọn phương thức</option>
+                  <option value="home">Tại nhà</option>
+                  <option value="store">Tại cửa hàng</option>
                 </select>
               </div>
 
             <button
-              onClick={handleUpdateStatus}
+              onClick={() => handleUpdateStatus(id)}
               className={styles.updateButton}
               disabled={loading}
             >
-              {loading ? "Updating..." : "Submit"}
+              {loading ? "Updating..." : "Xác nhận"}
             </button>
             <button
               onClick={handleCloseUpdateModal}
               className={styles.closeButton}
             >
-              Cancel
+              Hủy
             </button>
           </div>
         </div>

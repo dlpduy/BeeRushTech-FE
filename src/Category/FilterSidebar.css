@@ -141,3 +141,28 @@
 .apply-filter-button:hover {
   background-color: #333;
 }
+
+.category-item {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.category-item.selected {
+  color: #007bff;
+}
+
+.brand-item {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.brand-item.selected {
+  font-weight: bold;
+  color: #ff5722;
+}
+
+.subcategory {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

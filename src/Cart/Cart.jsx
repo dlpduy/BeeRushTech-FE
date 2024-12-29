@@ -141,7 +141,7 @@ export const Cart = () => {
       <div className={styles.container}>
         <div className={styles.divider}></div>
 
-        <h1 className={styles.title}>Order Summary</h1>
+        <h1 className={styles.title}>Thông tin đơn hàng </h1>
 
         <div className={styles.content}>
           <div className={styles.sidebar}>

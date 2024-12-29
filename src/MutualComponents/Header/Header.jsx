@@ -19,15 +19,26 @@ export const Header = () => {
 
   // Fetch gợi ý tìm kiếm khi người dùng nhập liệu
   useEffect(() => {
-    const fetchSuggestions = async () => {
+    const fetchProducts = async () => {
       if (searchQuery.trim()) {
         try {
-          const response = await api.get(`/products/search`, {
-            params: { query: searchQuery },
+          // Gọi API lấy danh sách sản phẩm
+          const response = await api.get(`/products`, {
+            params: { page: 1, limit: 50 }, // Lấy nhiều hơn để đảm bảo đủ kết quả lọc
           });
-          setSuggestions(response.data.products || []);
+
+          // Lấy danh sách sản phẩm từ API response
+          const products = response.data?.products || [];
+
+          // Lọc sản phẩm theo searchQuery
+          const filteredProducts = products.filter((product) =>
+            product.name.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+
+          // Cập nhật suggestions với danh sách đã lọc
+          setSuggestions(filteredProducts);
         } catch (error) {
-          console.error("Failed to fetch suggestions:", error);
+          console.error("Failed to fetch products:", error);
           setSuggestions([]);
         }
       } else {
@@ -36,7 +47,7 @@ export const Header = () => {
     };
 
     // Thêm debounce để giảm tần suất gọi API
-    const debounceTimeout = setTimeout(fetchSuggestions, 300);
+    const debounceTimeout = setTimeout(fetchProducts, 300);
     return () => clearTimeout(debounceTimeout);
   }, [searchQuery]);
 
@@ -58,6 +69,19 @@ export const Header = () => {
       navigate(`/category?search=${encodeURIComponent(searchQuery)}`);
     }
   };
+  
+
+  // Đóng dropdown khi click bên ngoài
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
 
   const handleSignIn = () => {
     navigate('/signin');
@@ -91,7 +115,7 @@ export const Header = () => {
         navigate(`/category?filter=new`);
         break;
       default:
-        navigate(`/category`);
+        navigate(`/company`);
     }
   };
 
@@ -124,35 +148,38 @@ export const Header = () => {
         <nav className={styles.navigation}>
           <ul className={styles.navLinks}>
             <li>
-              <button onClick={() => handleCategoryNavigation("shop")} className={styles.navLink}>Shop</button>
+              <button onClick={() => handleCategoryNavigation("shop")} className={styles.navLink}>Cửa hàng</button>
             </li>
             <li>
-              <button onClick={() => handleCategoryNavigation("onsale")} className={styles.navLink}>On Sale</button>
+              <button onClick={() => handleCategoryNavigation("onsale")} className={styles.navLink}>Giảm giá</button>
             </li>
             <li>
-              <button onClick={() => handleCategoryNavigation("new")} className={styles.navLink}>New Arrivals</button>
+              <button onClick={() => handleCategoryNavigation("new")} className={styles.navLink}>Sản phẩm mới</button>
             </li>
           </ul>
-          <form className={styles.searchForm} onSubmit={handleSearchSubmit}>
-            <input
-              type="search"
-              placeholder="Search for products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            {suggestions.length > 0 && (
-              <ul className={styles.suggestions}>
-                {suggestions.map((item) => (
-                  <li
-                    key={item.id}
-                    onClick={() => navigate(`/product-info/${item.id}`)}
-                  >
-                    {item.name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </form>
+          <form className={styles.searchForm} onSubmit={handleSearchSubmit} style={{ position: "relative" }}>
+  <input
+    type="search"
+    placeholder="Tìm kiếm sản phẩm ..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className={styles.searchInput}
+  />
+  {suggestions.length > 0 && (
+    <ul className={styles.suggestions}>
+      {suggestions.map((item) => (
+        <li
+          key={item.id}
+          onClick={() => navigate(`/product-info/${item.id}`)}
+          className={styles.suggestionItem}
+        >
+          {item.name}
+        </li>
+      ))}
+    </ul>
+  )}
+</form>
+
           <div className={styles.userActions}>
             <button onClick={handleUserAction} ref={dropdownRef}>
               <img

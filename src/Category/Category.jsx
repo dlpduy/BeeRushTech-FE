@@ -9,6 +9,7 @@ import { Footer } from "../MutualComponents/Footer/Footer";
 import Loading from "../MutualComponents/Loading/Loading";
 import styles from "./Category.module.css";
 
+
 const Category = () => {
   const [allProducts, setAllProducts] = useState([]); // All products from API
   const [filteredProducts, setFilteredProducts] = useState([]); // Filtered products to display
@@ -28,7 +29,7 @@ const Category = () => {
       const response = await api.get("/products", {
         params: {
           page:0,
-          limit: 10, // Fetch all products to enable client-side filtering
+          limit: 9, // Fetch all products to enable client-side filtering
           ...Object.fromEntries(searchParams),
         },
       });
@@ -56,19 +57,20 @@ const Category = () => {
 
   // Filter products based on price range and other criteria
   const filterProducts = () => {
-    const { priceRange = [0, Infinity], categories = [] } = filterCriteria;
-
+    const { category, brand, priceRange } = filterCriteria;
+  
     const filtered = allProducts.filter((product) => {
+      const inCategory = !category || product.category.name === category;
+      const inBrand = !brand || product.brand === brand;
       const inPriceRange =
         product.price >= priceRange[0] && product.price <= priceRange[1];
-      const inCategory =
-        categories.length === 0 || categories.includes(product.category);
-      return inPriceRange && inCategory;
+      return inCategory && inBrand && inPriceRange;
     });
-
+  
     setFilteredProducts(filtered);
     setTotalPages(Math.ceil(filtered.length / productsPerPage));
   };
+  
 
   // Apply filters whenever criteria change
   useEffect(() => {
@@ -100,7 +102,7 @@ const Category = () => {
       <div className={styles.container}>
         <div className={styles.topBar}>
           <div className={styles.productCount}>
-            Showing {displayedProducts.length} of {filteredProducts.length} Products
+            Hiển thị {displayedProducts.length} trong {filteredProducts.length} sản phẩm
           </div>
         </div>
 
@@ -130,7 +132,7 @@ const Category = () => {
                 />
               ))
             ) : (
-              <p>No products found</p>
+              <p>Không tìm thấy sản phẩm</p>
             )}
           </section>
         </div>

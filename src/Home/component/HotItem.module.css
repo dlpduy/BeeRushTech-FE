@@ -8,7 +8,8 @@
 }
 
 .container {
-    padding-top: 50px;
+    padding-top: 35px;
+    margin-bottom: 20px;
 }
 
 .title {
@@ -40,57 +41,65 @@
     gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
-}
 
-.productFrame {
-    display: flex;
-    width: 295px;
-    height: 298px;
-    padding: 34px 47px 35px 48px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
     border-radius: 20px;
-    background: #FFB13A;
-    gap: 20px;
-    position: relative;
-    overflow: hidden;
     transition: transform 0.3s ease;
     cursor: pointer;
+    background: #FFB13A;
+}
+.productContainer:hover {
+    transform: scale(1.05);
+    background-color: #f89d15;
 }
 
-/* Scale up on hover */
+
+.product{
+    display: flex;
+    gap: 20px;
+    
+}/* HotItem.module.css */
+
+/* Căn chỉnh thẻ chứa sản phẩm */
+.productFrame {
+    width: 290px;
+    height: 290px;
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    flex-direction: column; /* Hiển thị nội dung theo cột */
+    padding: 20px; /* Tinh chỉnh khoảng cách bên trong */
+    flex-shrink: 0;
+    border-radius: 20px;
+
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    overflow: hidden; /* Ẩn phần hình ảnh bị tràn ra */
+    position: relative; /* Để đảm bảo các phần tử con nằm chính xác */
+}
+
+/* Hình ảnh sản phẩm */
+.productImage {
+    max-width: 250px; /* Đảm bảo không vượt quá chiều ngang khung */
+    max-height: 250px; /* Đảm bảo không vượt quá chiều cao khung */
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo và giữ nguyên tỷ lệ */
+    display: block;
+    transition: transform 0.3s ease;
+    margin: auto; /* Đảm bảo căn giữa */
+}
+
+/* Thông tin sản phẩm */
+.productInfo {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Hiệu ứng khi hover vào sản phẩm */
 .productFrame:hover {
     transform: scale(1.05);
 }
 
-/* Product image styling */
-.productImage {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-}
-
-/* Additional product info overlay (initially hidden) */
-.productInfoOverlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.3);
-    color: white;
-    padding: 10px;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
 
 /* Show overlay on hover */
-.productFrame:hover .productInfoOverlay {
-    opacity: 1;
-}
 
 .viewAll {
     display: flex;

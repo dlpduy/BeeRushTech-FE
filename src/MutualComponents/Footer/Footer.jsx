@@ -3,20 +3,20 @@ import styles from './Footer.module.css';
 import { Link } from 'react-router-dom';
 
 const footerLinks = {
-  company: [
-    { name: 'About Us', path: '/company' },
-    { name: 'Owner', path: '/owner' }
+  "công ty": [
+    { name: 'Về chúng tôi', path: '/company' },
+    { name: 'Chủ sở hữu', path: '/owner' }
   ],
-  faq: [
-    { name: 'Privacy Policy', path: '/privacy-policy' },
-    { name: 'Rental Terms', path: '/rental-terms' },
-    { name: 'Compensation Terms', path: '/compensation-terms' },
-    { name: 'Payment Terms', path: '/payment-terms' }
+  "chính sách và điều khoản": [
+    { name: 'Chính sách bảo mật', path: '/privacy-policy' },
+    { name: 'Điều khoản cho thuê', path: '/rental-terms' },
+    { name: 'Điều khoản bồi thường', path: '/compensation-terms' },
+    { name: 'Điều khoản thanh toán', path: '/payment-terms' }
   ],
-  resources: [
-    { name: 'Free eBooks', path: 'https://drive.google.com/drive/u/1/folders/1z-0b7t2yPKqvUYXzcMa5C_LVTgFD2cde' },
-    { name: 'Development Tutorial', path: 'https://www.geeksforgeeks.org/' },
-    { name: 'Youtube Playlist', path: 'https://www.youtube.com/playlist?list=PLTpNwHSD94us7MH9yy4wvIJME9Un4N65j' }
+  nguồn: [
+    { name: 'Sách miễn phí', path: 'https://drive.google.com/drive/u/1/folders/1z-0b7t2yPKqvUYXzcMa5C_LVTgFD2cde' },
+    { name: 'Hướng dẫn phát triển', path: 'https://www.geeksforgeeks.org/' },
+    { name: 'Danh sách phát Youtube', path: 'https://www.youtube.com/playlist?list=PLTpNwHSD94us7MH9yy4wvIJME9Un4N65j' }
   ]
 };
 
@@ -41,7 +41,7 @@ export const Footer = () => {
           </Link>
           <div className={styles.payments}>
             <div className={styles.contact}>
-              <p className={styles.brandName}>Contact for more</p>
+              <p className={styles.brandName}>Liên lạc</p>
               <button
                 onClick={openFacebook}
                 style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}
@@ -54,8 +54,8 @@ export const Footer = () => {
               </button>
             </div>
             <p>Email: hien.nguyenhophuoc@hcmut.edu.vn</p>
-            <p>Phone: 0869018053</p>
-            <p>Ly Thuong Kiet, Ward 10, Ho Chi Minh</p>
+            <p>Điện thoại: 0869018053</p>
+            <p>Lý Thường Kiệt, Quận 10, Hồ Chí Minh</p>
           </div>
           <p className={styles.brandDescription}></p>
         </div>

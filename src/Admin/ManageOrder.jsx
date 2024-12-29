@@ -114,7 +114,7 @@ const Orders = () => {
           <div className={styles.filterContainer}>
             <input
               type="text"
-              placeholder="Search by customer name"
+              placeholder="Tìm kiếm theo tên khách hàng"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -122,10 +122,10 @@ const Orders = () => {
               onChange={(e) => setStatusFilter(e.target.value)}
               value={statusFilter}
             >
-              <option value="">All Statuses</option>
-              <option value="received">Received</option>
-              <option value="pending">Pending</option>
-              <option value="confirmed">Confirmed</option>
+              <option value="">Các trạng thái</option>
+              <option value="received">Đã nhận</option>
+              <option value="pending">Đang chờ</option>
+              <option value="confirmed">Đã xác nhận</option>
             </select>
           </div>
 
@@ -133,12 +133,12 @@ const Orders = () => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Customer</th>
+                <th>Khách hàng</th>
                 <th>Email</th>
-                <th>Order Date</th>
-                <th>Status</th>
-                <th>Total Money</th>
-                <th>Actions</th>
+                <th>Ngày đặt hàng</th>
+                <th>Trạng thái</th>
+                <th>Tổng giá tiền</th>
+                <th>Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -151,8 +151,8 @@ const Orders = () => {
                   <td>{order.status}</td>
                   <td>{order.total_money}</td>
                   <td>
-                    <button onClick={() => viewOrderDetails(order)}>View Details</button>
-                    <button onClick={() => openStatusModal(order)}>Update Status</button>
+                    <button onClick={() => viewOrderDetails(order)}>Xem chi tiết</button>
+                    <button onClick={() => openStatusModal(order)}>Cập nhật trạng thái</button>
                   </td>
                 </tr>
               ))}
@@ -171,9 +171,9 @@ const Orders = () => {
           {showStatusModal && selectedOrder && (
   <div className={styles.modal}>
     <div className={styles.modalContent}>
-      <h3>Update Order Status</h3>
-      <p><strong>Order ID:</strong> {selectedOrder.id}</p>
-      <p><strong>Customer:</strong> {selectedOrder.full_name}</p>
+      <h3>Cập nhật trạng thái đơn hàng</h3>
+      <p><strong>Mã đơn hàng:</strong> {selectedOrder.id}</p>
+      <p><strong>Khách hàng:</strong> {selectedOrder.full_name}</p>
 
       {/* Hiển thị nút dựa trên trạng thái hiện tại */}
       {selectedOrder.status === 'received'}
@@ -181,7 +181,7 @@ const Orders = () => {
       {selectedOrder.status === 'confirmed'&& (
         <>
           <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'received')}>
-            Received
+            Nhận
           </button>
         </>
       )}
@@ -189,10 +189,10 @@ const Orders = () => {
       { selectedOrder.status === 'paid' && (
         <>
           <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'confirmed')}>
-            Confirm
+            Xác nhận
           </button>
           <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'received')}>
-            Receive
+            Nhận
           </button>
         </>
       )}
@@ -200,15 +200,15 @@ const Orders = () => {
       {selectedOrder.status === 'pending'  && (
         <>
           <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'confirmed')}>
-            Confirm
+            Xác nhận
           </button>
           <button onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'received')}>
-            Receive
+            Nhận
           </button>
         </>
       )}
 
-      <button onClick={closeStatusModal}>Cancel</button>
+      <button onClick={closeStatusModal}>Hủy</button>
     </div>
   </div>
 )}
@@ -217,19 +217,19 @@ const Orders = () => {
           {showModal && selectedOrder && (
             <div className={styles.modal}>
               <div className={styles.modalContent}>
-                <h3>Order Details</h3>
-                <p><strong>Order ID:</strong> {selectedOrder.id}</p>
-                <p><strong>Customer:</strong> {selectedOrder.full_name}</p>
+                <h3>Chi tiết đơn hàng</h3>
+                <p><strong>Mã đơn hàng:</strong> {selectedOrder.id}</p>
+                <p><strong>Khách hàng:</strong> {selectedOrder.full_name}</p>
                 <p><strong>Email:</strong> {selectedOrder.email}</p>
-                <p><strong>Phone:</strong> {selectedOrder.phone_number}</p>
-                <p><strong>Address:</strong> {selectedOrder.shipping_address}</p>
-                <p><strong>Note:</strong> {selectedOrder.note}</p>
-                <p><strong>Status:</strong> {selectedOrder.status}</p>
-                <p><strong>Total Amount:</strong> {selectedOrder.total_money}</p>
-                <p><strong>Payment Method:</strong> {selectedOrder.payment_method}</p>
-                <p><strong>Tracking Number:</strong>{selectedOrder.tracking_number}</p>
-                <p><strong>Order Date:</strong> {selectedOrder.order_date}</p>
-                <button onClick={closeModal}>Close</button>
+                <p><strong>Số điện thoại:</strong> {selectedOrder.phone_number}</p>
+                <p><strong>Địa chỉ:</strong> {selectedOrder.shipping_address}</p>
+                <p><strong>Ghi chú:</strong> {selectedOrder.note}</p>
+                <p><strong>Trạng thái:</strong> {selectedOrder.status}</p>
+                <p><strong>Tổng tiền:</strong> {selectedOrder.total_money}</p>
+                <p><strong>Phương thức thanh toán:</strong> {selectedOrder.payment_method}</p>
+                <p><strong>Mã vận chuyển:</strong>{selectedOrder.tracking_number}</p>
+                <p><strong>Ngày đặt hàng:</strong> {selectedOrder.order_date}</p>
+                <button onClick={closeModal}>Đóng</button>
               </div>
             </div>
           )}

@@ -13,6 +13,7 @@ export const User = () => {
   const [orders, setOrders] = useState([]); 
   const [loadingOrders, setLoadingOrders] = useState(true); 
   const [editMode, setEditMode] = useState(false); 
+  const [filterStatus, setFilterStatus] = useState('all');
   const [updatedUser, setUpdatedUser] = useState({
     fullName: '',
     phoneNumber: '',
@@ -25,6 +26,20 @@ export const User = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
+  const [sortOrder, setSortOrder] = useState("asc");
+
+  
+  
+
+  const filteredOrders = filterStatus === 'all'
+  ? orders
+  : orders.filter(order => order.status === filterStatus);
+
+  const sortedOrders = [...filteredOrders].sort((a, b) => {
+    const dateA = new Date(a.order_date);
+    const dateB = new Date(b.order_date);
+    return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+  });
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -205,7 +220,7 @@ export const User = () => {
 
           {/* Breadcrumb */}
           <nav className={styles.breadcrumb}>
-            <button className={styles.breadcrumbLink} aria-label="Home"> User </button>
+            <button className={styles.breadcrumbLink} aria-label="Home"> Khách hàng </button>
             <img 
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/b2f5eb0a4928570b7fed31b03a3380bdd7847d7602a5565615f9e54341907dfa?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8" 
               alt="" 
@@ -219,12 +234,12 @@ export const User = () => {
         <section className={styles.manageContent}>
           <div className={styles.manageLayout}>
             <aside className={styles.sidebar}>
-              <h1 className={styles.pageTitle}>Profile</h1>
+              <h3 className={styles.pageTitle}>Thông tin</h3>
 
               {editMode ? (
           <div className={styles.editForm}>
             <div>
-              <label>Full Name</label>
+              <label>Họ và tên:</label>
               <input
                 type="text"
                 name="fullName"
@@ -233,7 +248,7 @@ export const User = () => {
               />
             </div>
             <div>
-              <label>Phone Number</label>
+              <label>Số điện thoại</label>
               <input
                 type="text"
                 name="phoneNumber"
@@ -242,7 +257,7 @@ export const User = () => {
               />
             </div>
             <div>
-              <label>Address</label>
+              <label>Địa chỉ</label>
               <input
                 type="text"
                 name="address"
@@ -253,30 +268,30 @@ export const User = () => {
             <button onClick={handleSaveChanges} disabled={loading}>
               {loading ? 'Saving...' : 'Save Changes'}
             </button>
-            <button onClick={handleCancelEdit}>Cancel</button>
+            <button onClick={handleCancelEdit}>Hủy</button>
           </div>
         ) : (
           <div className={styles.profileInfo}>
-            <p><strong>Full Name:</strong> {user.fullName}</p>
-            <p><strong>Phone Number:</strong> {user.phoneNumber}</p>
-            <p><strong>Address:</strong> {user.address}</p>
-            <button onClick={handleEdit}>Edit Profile</button>
+            <p><strong>Họ và tên:</strong> {user.fullName}</p>
+            <p><strong>Số điện thoại:</strong> {user.phoneNumber}</p>
+            <p><strong>Địa chỉ:</strong> {user.address}</p>
+            <button onClick={handleEdit}>Chỉnh sửa thông tin</button>
             <div className={styles.profileActions}>
     <button onClick={handleLogout} className={styles.logoutButton}>
-      {loading ? "Logging out..." : "Logout"}
+      {loading ? "Đang đăng xuất..." : "Đăng xuất"}
     </button>
   </div>
   <div className={styles.userContainer}>
-        <button onClick={handleOpenChangePassword}>Change Password</button>
+        <button onClick={handleOpenChangePassword}>Đổi mật khẩu</button>
 
         {/* Pop-up đổi mật khẩu */}
         {showChangePasswordModal && (
           <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <h3>Change Password</h3>
+            <h3>Đổi mật khẩu</h3>
             <div className={styles.inputGroup}>
               <label>
-                Old Password:
+                Mật khẩu cũ:
                 <input
                   type="password"
                   value={oldPassword}
@@ -286,7 +301,7 @@ export const User = () => {
             </div>
             <div className={styles.inputGroup}>
               <label>
-                New Password:
+                Mật khẩu mới:
                 <input
                   type="password"
                   value={newPassword}
@@ -296,7 +311,7 @@ export const User = () => {
             </div>
             <div className={styles.inputGroup}>
               <label>
-                Re-enter New Password:
+                Nhập lại mật khẩu mới:
                 <input
                   type="password"
                   value={confirmPassword}
@@ -307,7 +322,7 @@ export const User = () => {
             {passwordError && <p className={styles.error}>{passwordError}</p>}
             <div className={styles.modalActions}>
               <button onClick={handleChangePassword} disabled={loading}>
-                {loading ? 'Changing...' : 'Save Changes'}
+                {loading ? 'Đang lưu...' : 'Lưu thay đổi'}
               </button>
               <button onClick={handleCloseChangePassword}>Cancel</button>
             </div>
@@ -324,24 +339,42 @@ export const User = () => {
             <main className={styles.mainContent}>
                 
               <div className={styles.manageInfo}>
-                <h2>Your Orders</h2>
-                <div className={styles.sideBar}>
-                {/* Hiển thị danh sách đơn hàng */}
-                {loadingOrders ? (
-                  <p>Loading orders...</p>
-                ) : orders.length > 0 ? (
-                  
+              <div className={styles.filterContainer}>
+    <label htmlFor="orderStatus">Lọc theo trạng thái:</label>
+    <select
+      id="orderStatus"
+      value={filterStatus}
+      onChange={(e) => setFilterStatus(e.target.value)}
+      
+    >
+      <option value="all">Tất cả</option>
+      <option value="pending">Đang chờ</option>
+      <option value="completed">Hoàn thành</option>
+      <option value="cancelled">Đã hủy</option>
+    </select>
+    <label htmlFor="sortOrder">Sắp xếp theo:</label>
+                  <select
+                    id="sortOrder"
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value)}
                     
-                    <div className={styles.ordersContainer}> {/* Sử dụng ordersContainer */}
-          {orders.map((order) => (
-            <OrderCard key={order.id} {...order} />
-          ))}
-        </div>
+                  >
+                    <option value="asc">Thời gian: Lâu nhât</option>
+                    <option value="desc">Thời gian: Gần nhất</option>
+                  </select>
+  </div>
 
-                ) : (
-                  <p>You have no orders yet.</p>
-                )}
+  {/* Danh sách đơn hàng */}
+  <div className={styles.ordersContainer}>
+                  {sortedOrders.length > 0 ? (
+                    sortedOrders.map((order) => (
+                      <OrderCard key={order.id} {...order} />
+                    ))
+                  ) : (
+                    <p>Bạn chưa có đơn hàng trong trạng thái này.</p>
+                  )}
                 </div>
+
               </div>
             </main>
           </div>

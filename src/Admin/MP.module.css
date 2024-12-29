@@ -76,6 +76,21 @@
   margin: 0 auto;
   align-items:center;
 }
+
+.popupContent button{
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+}
+.popupContentt button:hover {
+  background-color: #ffb13a;
+  color: #fff;
+}
+
 .popupInputGroup {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Hai cột có chiều rộng bằng nhau */
