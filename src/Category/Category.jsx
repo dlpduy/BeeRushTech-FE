@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
+import { Helmet } from "react-helmet";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import FilterSidebar from "./FilterSidebar";
@@ -11,18 +12,17 @@ import styles from "./Category.module.css";
 
 
 const Category = () => {
-  const [allProducts, setAllProducts] = useState([]); // All products from API
-  const [filteredProducts, setFilteredProducts] = useState([]); // Filtered products to display
-  const [filterCriteria, setFilterCriteria] = useState({}); // Filter criteria state
-  const [currentPage, setCurrentPage] = useState(1); // Current page number
-  const [totalPages, setTotalPages] = useState(1); // Total pages from API
-  const [loading, setLoading] = useState(true); // Loading state
+  const [allProducts, setAllProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filterCriteria, setFilterCriteria] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const productsPerPage = 10;
 
-  // Fetch all products from API
   const fetchProducts = async () => {
     setLoading(true);
     try {
@@ -30,17 +30,18 @@ const Category = () => {
         params: {
           page:0,
           limit: 9, // Fetch all products to enable client-side filtering
+
+          page: 0,
+          limit: 10,
           ...Object.fromEntries(searchParams),
         },
       });
-        console.log(response);
       if (response?.data) {
         const { products, total_pages } = response.data;
         setAllProducts(products || []);
         setFilteredProducts(products || []);
         setTotalPages(total_pages || 1);
       } else {
-        console.error("Invalid response format", response);
         setAllProducts([]);
         setFilteredProducts([]);
         setTotalPages(1);
@@ -54,8 +55,7 @@ const Category = () => {
       setLoading(false);
     }
   };
-
-  // Filter products based on price range and other criteria
+ 
   const filterProducts = () => {
     const { category, brand, priceRange } = filterCriteria;
   
@@ -72,7 +72,6 @@ const Category = () => {
   };
   
 
-  // Apply filters whenever criteria change
   useEffect(() => {
     filterProducts();
   }, [filterCriteria, allProducts]);
@@ -98,6 +97,25 @@ const Category = () => {
 
   return (
     <main className={styles.category}>
+      <Helmet>
+        <title>Danh Mục Sản Phẩm - Thuê Máy Ảnh, Flycam, Thiết Bị Công Nghệ</title>
+        <meta
+          name="description"
+          content="Tìm kiếm và thuê máy ảnh, flycam, thiết bị công nghệ chất lượng cao với giá tốt nhất tại Bee RushTech. Khám phá các sản phẩm đa dạng và dễ dàng đặt hàng ngay hôm nay!"
+        />
+        <meta
+          name="keywords"
+          content="thuê máy ảnh, thuê flycam, danh mục sản phẩm, thiết bị công nghệ, dịch vụ cho thuê"
+        />
+        <meta name="author" content="Bee RushTech" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content="Danh Mục Sản Phẩm - Bee RushTech" />
+        <meta
+          property="og:description"
+          content="Khám phá danh mục sản phẩm đa dạng từ máy ảnh, flycam đến thiết bị công nghệ hiện đại. Đặt thuê ngay tại Bee RushTech!"
+        />
+      </Helmet>
+
       <Header />
       <div className={styles.container}>
         <div className={styles.topBar}>
