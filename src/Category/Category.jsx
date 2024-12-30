@@ -28,11 +28,8 @@ const Category = () => {
     try {
       const response = await api.get("/products", {
         params: {
-          page:0,
-          limit: 9, // Fetch all products to enable client-side filtering
-
           page: 0,
-          limit: 10,
+          limit: 9,
           ...Object.fromEntries(searchParams),
         },
       });

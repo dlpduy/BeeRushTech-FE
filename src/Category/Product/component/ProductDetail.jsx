@@ -30,6 +30,8 @@ const ProductDetail = ({ addToCart }) => {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isAdded, setIsAdded] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -58,6 +60,28 @@ const ProductDetail = ({ addToCart }) => {
     setImageError(true);
   };
 
+  const handleAddToCart = async () => {
+    try {
+      
+      const response = await api.post("/customer/cart", {
+        productId: product.id,
+        quantity: quantity,
+      });
+        console.log(response);
+      if (response.statusCode === 200) {
+        setIsAdded(true); 
+        setMessage("Product added to cart successfully!");
+        
+      } else {
+        setIsAdded(false);
+      }
+    } catch (err) {
+      console.error("Error adding product to cart:", err);
+      setIsAdded(false); 
+      setIsLoading(false); 
+    }
+  };
+
   const imageUrl = imageError ? "/public/logo.png" : (product?.image || "/public/logo.png");
 
   if (isLoading) {
@@ -78,6 +102,14 @@ const ProductDetail = ({ addToCart }) => {
           content={`${product.description}. Thuê ngay tại Bee RushTech với giá chỉ ${product.price}.`}
         />
       </Helmet>
+      <section className={styles.pic}>
+        <img
+          src={imageUrl}
+          alt={`${product.name} - Thuê giá rẻ tại Bee RushTech`}
+          onError={handleImageError}
+          className={styles.product_img}
+        />
+      </section>
 
       <aside className={styles.detail}>
         <div className={styles.product_detail_info}>
@@ -98,7 +130,7 @@ const ProductDetail = ({ addToCart }) => {
               style={{
                 width: '50px',
                 height: '50px',
-                backgroundColor: getColorFromString(product.color), // Lấy màu từ hàm ánh xạ
+                backgroundColor: getColorFromString(product.color),
                 marginTop: '10px',
                 borderRadius: '5px',
                 }}
@@ -108,6 +140,7 @@ const ProductDetail = ({ addToCart }) => {
             <p className={styles.quantity}>Số lượng: {product.quantity}</p>
 
           {/* Lựa chọn số lượng và nút "Add to Rent" */}
+          
 
           <div className={styles.Rent}>
             <div className={styles.quantity_section}>
@@ -125,19 +158,15 @@ const ProductDetail = ({ addToCart }) => {
                 +
               </button>
             </div>
-
-            {/* Hiển thị thông báo lỗi nếu có */}
             {error && <div className="error-message">{error}</div>}
-
-            {/* Hiển thị nút "Add to Cart" với trạng thái loading */}
-            {/* <button
+            <button
               onClick={handleAddToCart}
               disabled={isLoading}
               className={styles.add_to_rent}
             >
               {isLoading ? "Đang thêm ..." : isAdded ? "Đã thêm vào giỏ hàng" : "Thêm vào giỏ hàng"}
               {message && <div className={styles.message}>{message}</div>}
-            </button> */}
+            </button>
           </div>
         </div>
       </aside>
