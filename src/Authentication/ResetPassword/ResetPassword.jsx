@@ -23,43 +23,15 @@ const ResetPassword = () => {
     const handleNextStep = async () => {
         try {
             if (step === "emailForm") {
-                const response = await api.post("/auth/reset-password", { email: formData.email });
+                const response = await api.post("/auth/reset-password?email=" + formData.email);
                 console.log(response);
                 if (response.statusCode === 200) {
                     alert("A reset link has been sent to your email.");
-                    setStep("verification"); // Chuyển sang bước nhập mã OTP
-                }
-            } else if (step === "verification") {
-                const response = await api.post("/auth/reset-password", { email: formData.email });
-                if (response.statusCode === 200) {
-                    alert("OTP verified successfully.");
-                    setStep("newPassword"); // Chuyển sang bước nhập mật khẩu mới
+                    setStep("newPassword"); // Chuyển sang bước nhập mã OTP
                 }
             }
         } catch (error) {
             alert(error.response?.data?.message || "An error occurred. Please try again.");
-        }
-    };
-
-    // Hàm xử lý khi người dùng nhập mật khẩu mới
-    const handleSubmitNewPassword = async (e) => {
-        e.preventDefault();
-        if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match.");
-            return;
-        }
-        try {
-            const response = await api.put("/auth/reset-password", {
-                email: formData.email,
-                password: formData.password,
-                otp: formData.otp,
-            });
-            
-            if (response.statusCode === 200) {
-                setStep("congratulations"); // Hiển thị thông báo thành công
-            }
-        } catch (error) {
-            alert(error.response?.data?.message || "An error occurred while resetting the password.");
         }
     };
 
@@ -80,13 +52,9 @@ const ResetPassword = () => {
             <div className={styles.container}>
                 <div className={styles.content}>
                     <section className={styles.formInfo}>
-                        {step === "emailForm" && <EmailForm onChange={handleChange} formData={formData} />}
-                        {step === "verification" && <ResetVerification onChange={handleChange} formData={formData} />}
-                        {step === "newPassword" && <NewPassword onChange={handleChange} formData={formData} onSubmit={handleSubmitNewPassword} />}
+                        {step === "emailForm" && <EmailForm onChange={handleChange} formData={formData} setStep={setStep} />}
+                        {step === "newPassword" && <NewPassword onChange={handleChange} formData={formData} setStep={setStep} />}
                         {step === "congratulations" && <Congratulations />}
-                        <button onClick={handleNextStep}>
-                {step === "emailForm" ? "Next" : step === "verification" ? "Verify OTP" : "Reset Password"}
-            </button>
                     </section>
                     <aside className={styles.sidebar}>
                         <div className={styles.logoContainer}>
