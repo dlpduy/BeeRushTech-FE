@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Cấu hình axios
 const api = axios.create({
-  baseURL: "https://beerushtech-production.up.railway.app/api/v1", // Base URL của API
+  baseURL: "https://bee-rush-tech-fe.up.railway.app/api/v1", // Base URL của API
   headers: {
     "Content-Type": "application/json",
   },
