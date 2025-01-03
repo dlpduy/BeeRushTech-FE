@@ -2,7 +2,7 @@
   "name": "my-ecommerce-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:9090",
+  "proxy": "https://beerushtech-production.up.railway.app/",
   "dependencies": {
     "@react-oauth/google": "^0.12.1",
     "@testing-library/jest-dom": "^5.17.0",
