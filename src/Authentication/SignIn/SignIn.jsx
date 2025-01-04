@@ -106,7 +106,7 @@ const SignIn = () => {
                                         required
                                     />
                                     <div className={styles.forget}>
-                                        <button onClick={handleForgotPassword}>Forgot Password?</button>
+                                        <button onClick={handleForgotPassword}>Quên mật khẩu?</button>
                                     </div>
                                 </div>
                             </div>
