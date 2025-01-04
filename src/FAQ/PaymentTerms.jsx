@@ -5,20 +5,20 @@ import { Footer } from '../MutualComponents/Footer/Footer';
 
 const PaymentTerms = () => {
   const sidebarItems = [
-    'Payment Methods',
-    'Payment Process',
-    'Refunds',
-    'Security Deposit',
-    'Late Payment Fees'
+    'Phương thức Thanh toán',
+    'Quy trình Thanh toán',
+    'Hoàn tiền',
+    'Tiền Đặt cọc',
+    'Phí Trả chậm'
 
   ];
 
   const PaymentTermsDetail = [
-    'We accept credit cards, debit cards, bank transfers, and e-wallets.',
-    'Users must complete the payment online before receiving the device. The process is secure and encrypted to protect user information.',
-    'Refunds are available in case of order cancellations or device issues, according to the refund policy.',
-    'A security deposit may be required to protect against damage or loss of the device.',
-    'Penalties may apply for late payments or contract violations.'
+    'Chúng tôi chấp nhận thẻ tín dụng, thẻ ghi nợ, chuyển khoản ngân hàng và ví điện tử.',
+    'Người dùng phải hoàn tất thanh toán trực tuyến trước khi nhận thiết bị. Quy trình này được bảo mật và mã hóa để bảo vệ thông tin người dùng.',
+    'Việc hoàn tiền sẽ được áp dụng trong trường hợp hủy đơn hàng hoặc thiết bị gặp vấn đề, theo chính sách hoàn tiền.',
+    'Một khoản tiền đặt cọc có thể được yêu cầu để bảo vệ trước các thiệt hại hoặc mất mát của thiết bị.',
+    'Các khoản phạt có thể được áp dụng đối với việc thanh toán trễ hoặc vi phạm hợp đồng.'
   ];
 
   return (
@@ -31,9 +31,9 @@ const PaymentTerms = () => {
             <span className={styles.breadcrumbText}>FAQ</span>
             <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/e0fdb9d40ae6fc7a62a77a5aaf20539d594eebbec2c4dc4822936abf0751ce29?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8" alt="" className={styles.breadcrumbIcon} />
           </div>
-          <span className={styles.breadcrumbText}>Payment Terms</span>
+          <span className={styles.breadcrumbText}>Điều khoản thanh toán</span>
         </nav>
-        <h1 className={styles.pageTitle}>Payment Terms</h1>
+        <h1 className={styles.pageTitle}>Điều khoản thanh toán</h1>
         
         <section className={styles.policyContent}>
           <div className={styles.policyLayout}>

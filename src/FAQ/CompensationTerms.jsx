@@ -5,17 +5,17 @@ import { Footer } from '../MutualComponents/Footer/Footer';
 
 const CompensationTerms = () => {
   const sidebarItems = [
-    'Damage or Loss',
-    'Damage Assessment',
-    'Device Insurance',
-    'Dispute Resolution'
+    'Thiệt hại hoặc Mất mát',
+    'Đánh giá Thiệt hại',
+    'Bảo hiểm Thiết bị',
+    'Giải quyết Tranh chấp'
   ];
 
   const CompensationTermsDetail = [
-    'Renters are responsible for compensating any damage or loss of the device during the rental period.',
-    'The cost of compensation will be based on the actual damage and device value.',
-    'Renters are encouraged to purchase insurance to protect the device throughout the rental period.',
-    'Any disputes related to damage or compensation will follow a defined resolution process.'
+    'Người thuê chịu trách nhiệm bồi thường cho bất kỳ thiệt hại hoặc mất mát nào của thiết bị trong thời gian thuê.',
+    'Chi phí bồi thường sẽ dựa trên mức độ thiệt hại thực tế và giá trị của thiết bị.',
+    'Người thuê được khuyến khích mua bảo hiểm để bảo vệ thiết bị trong suốt thời gian thuê.',
+    'Mọi tranh chấp liên quan đến thiệt hại hoặc bồi thường sẽ tuân theo quy trình giải quyết được định sẵn.'
     
   ];
 
@@ -29,9 +29,9 @@ const CompensationTerms = () => {
             <span className={styles.breadcrumbText}>FAQ</span>
             <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/e0fdb9d40ae6fc7a62a77a5aaf20539d594eebbec2c4dc4822936abf0751ce29?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8" alt="" className={styles.breadcrumbIcon} />
           </div>
-          <span className={styles.breadcrumbText}>Compensation Terms</span>
+          <span className={styles.breadcrumbText}>Điều khoản Bồi thường</span>
         </nav>
-        <h1 className={styles.pageTitle}>Compensation Terms</h1>
+        <h1 className={styles.pageTitle}>Điều khoản Bồi thường</h1>
         
         <section className={styles.policyContent}>
           <div className={styles.policyLayout}>

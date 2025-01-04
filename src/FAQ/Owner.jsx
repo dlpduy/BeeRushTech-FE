@@ -9,7 +9,7 @@ const CV = () => {
     <div>
       <head>
         {/* SEO Meta Tags */}
-        <title>Nguyen Ho Phuoc Hien - Project Owner | Bee RushTech</title>
+        <title>Nguyen Ho Phuoc Hien - Chủ dự án | Bee RushTech</title>
         <meta
           name="description"
           content="Nguyen Ho Phuoc Hien - Project Owner của Bee RushTech. Với kỹ năng quản lý dự án và nền tảng học vấn từ Đại học Bách Khoa, tôi cam kết mang đến giải pháp công nghệ tối ưu."

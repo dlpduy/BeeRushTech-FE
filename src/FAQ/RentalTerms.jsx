@@ -5,21 +5,21 @@ import { Footer } from '../MutualComponents/Footer/Footer';
 
 const RentalTerms = () => {
   const sidebarItems = [
-    'Rental Process',
-    'Rental Period',
-    'Device Inspection',
-    'Renter’s Responsibility',
-    'Rental Fees and Service Charges',
-    "Cancellation Policy"
+    'Quy trình Thuê',
+    'Thời gian Thuê',
+    'Kiểm tra Thiết bị',
+    'Trách nhiệm của Người thuê',
+    'Phí Thuê và Phí Dịch vụ',
+    "Chính sách Hủy thuê"
   ];
 
   const RentalTermsDetail = [
-    'Users need to create an account, select a device, confirm the rental order, and make an online payment through supported methods.',
-    'Users can choose to rent by the hour, day, or week, with a minimum rental period of 1 hour and a maximum of 4 weeks.',
-    'Users have the right to inspect the device before receiving it and must sign a handover form to confirm its condition.',
-    'The renter must take care of the device and return it on time in good condition. If the device is damaged or lost, the renter is responsible for compensation.',
-    'The rental price includes base fees, service charges, and possible delivery fees. All costs will be clearly displayed before order confirmation.',
-    'Renters can cancel the order for free within 1 hour after placing it. Cancellations after this time may incur a fee.'
+    'Người dùng cần tạo tài khoản, chọn thiết bị, xác nhận đơn thuê và thanh toán trực tuyến qua các phương thức được hỗ trợ.',
+    'Người dùng có thể chọn thuê theo giờ, ngày hoặc tuần, với thời gian thuê tối thiểu là 1 giờ và tối đa là 4 tuần.',
+    'Người dùng có quyền kiểm tra thiết bị trước khi nhận và phải ký vào biên bản bàn giao để xác nhận tình trạng thiết bị.',
+    'Người thuê phải bảo quản thiết bị cẩn thận và trả đúng hạn trong tình trạng tốt. Nếu thiết bị bị hỏng hoặc mất, người thuê phải chịu trách nhiệm bồi thường.',
+    'Giá thuê bao gồm phí cơ bản, phí dịch vụ và có thể bao gồm phí giao hàng. Tất cả chi phí sẽ được hiển thị rõ ràng trước khi xác nhận đơn hàng.',
+    'Người thuê có thể hủy đơn hàng miễn phí trong vòng 1 giờ sau khi đặt. Việc hủy sau thời gian này có thể bị tính phí.'
   ];
 
   return (
@@ -32,9 +32,9 @@ const RentalTerms = () => {
             <span className={styles.breadcrumbText}>FAQ</span>
             <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/e0fdb9d40ae6fc7a62a77a5aaf20539d594eebbec2c4dc4822936abf0751ce29?placeholderIfAbsent=true&apiKey=aa0c3b8d094f45b48d52977318229ea8" alt="" className={styles.breadcrumbIcon} />
           </div>
-          <span className={styles.breadcrumbText}>Rental Terms</span>
+          <span className={styles.breadcrumbText}>Điều khoản Thuê</span>
         </nav>
-        <h1 className={styles.pageTitle}>Rental Terms</h1>
+        <h1 className={styles.pageTitle}>Điều khoản Thuê</h1>
         
         <section className={styles.policyContent}>
           <div className={styles.policyLayout}>
