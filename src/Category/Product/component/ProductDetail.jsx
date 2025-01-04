@@ -114,10 +114,6 @@ const ProductDetail = ({ addToCart }) => {
       <aside className={styles.detail}>
         <div className={styles.product_detail_info}>
           <h1 className={styles.name}>{product.name}</h1>
-          <h3 className={styles.brand}>Brand: {product.brand}</h3>
-          <p className={styles.price}>Price: {product.price}</p>
-          <p className={styles.description}>Description: {product.description}</p>
-          <p className={styles.quantity}>Quantity: {product.quantity}</p>
             <h3 className={styles.brand}>Thương hiệu: {product.brand}</h3>
 
             <p className={styles.price}>Giá thuê : {formatNumberWithDots(product.price)} VND/ giờ</p>
