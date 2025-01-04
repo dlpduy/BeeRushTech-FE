@@ -36,6 +36,21 @@ const OrderCard = ({
     setMethodReturn("");
   };
 
+  const getStatusMessage = (status) => {
+    switch (status) {
+      case 'pending':
+        return 'Đang chờ';
+      case 'cancelled':
+        return 'Đã hủy';
+      case 'confirmed':
+        return 'Xác nhận';
+      case 'received':
+        return 'Đã nhận';
+      default:
+        return 'Trạng thái không xác định'; // Trường hợp nếu status không phải pending hoặc cancelled
+    }
+  };
+
   // Mở pop-up cập nhật
   const handleShowUpdateModal = () => setShowUpdateModal(true);
 
@@ -94,7 +109,7 @@ const OrderCard = ({
             ID: <span className={styles.specValue}>{id}</span>
           </p>
           <p className={styles.specText}>
-            Trạng thái: <span className={styles.specValue}>{status}</span>
+            Trạng thái: <span className={styles.specValue}>{getStatusMessage(status)}</span>
           </p>
         </div>
       </div>

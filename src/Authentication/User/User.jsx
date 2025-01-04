@@ -266,7 +266,7 @@ export const User = () => {
               />
             </div>
             <button onClick={handleSaveChanges} disabled={loading}>
-              {loading ? 'Saving...' : 'Save Changes'}
+              {loading ? 'Đang lưu...' : 'Lưu thay đổi'}
             </button>
             <button onClick={handleCancelEdit}>Hủy</button>
           </div>
