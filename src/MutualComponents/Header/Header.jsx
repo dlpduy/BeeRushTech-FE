@@ -205,11 +205,11 @@ export const Header = () => {
               ) : (
                 <>
                   <div className={styles.authButton}>
-              <button onClick={handleSignIn} className={styles.dropdownItem}>Sign In</button>
-              <button onClick={handleSignUp} className={styles.dropdownItem}>Sign Up</button>
+              <button onClick={handleSignIn} className={styles.dropdownItem}>Đăng nhập</button>
+              <button onClick={handleSignUp} className={styles.dropdownItem}>Đăng ký</button>
               </div>
               <div className={styles.forget}>
-              <button onClick={handleForgotPassword} >Forgot Password?</button>
+              <button onClick={handleForgotPassword} >Quên mật khẩu?</button>
               </div>
                 </>
               )}
