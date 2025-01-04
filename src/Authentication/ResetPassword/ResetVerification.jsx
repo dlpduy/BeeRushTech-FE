@@ -5,9 +5,9 @@ const ResetVerification = ({ onChange, formData }) => {
     return (
         <div className={styles.form_container}>
             <div className={styles.verification}>
-                <div className={styles.verification_title}>Verification</div>
+                <div className={styles.verification_title}>Xác thực</div>
                 <div className={styles.verinormal}>
-                    <div>Enter the OTP sent to your email:</div>
+                    <div>Nhập mã OTP đã gửi đến email của bạn:</div>
                     <input
                         type="text"
                         name="otp"
@@ -16,7 +16,7 @@ const ResetVerification = ({ onChange, formData }) => {
                         required
                     />
                     <button onClick={onChange} className={styles.submitButton}>
-                        Verify OTP
+                        Xác thực OTP
                     </button>
                 </div>
             </div>

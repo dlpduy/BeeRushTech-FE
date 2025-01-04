@@ -4,7 +4,7 @@ import styles from "./SignUp.module.css";
 const Form = ({ onChange, formData }) => {
     return (
         <div className={styles.form}>
-            <label>First Name</label>
+            <label>Họ</label>
             <input
                 type="text"
                 name="firstName"
@@ -12,7 +12,7 @@ const Form = ({ onChange, formData }) => {
                 onChange={onChange}
                 required
             />
-            <label>Last Name</label>
+            <label>Tên</label>
             <input
                 type="text"
                 name="lastName"
@@ -28,7 +28,7 @@ const Form = ({ onChange, formData }) => {
                 onChange={onChange}
                 required
             />
-            <label>Password</label>
+            <label>Mật khẩu</label>
             <input
                 type="password"
                 name="password"
@@ -36,7 +36,7 @@ const Form = ({ onChange, formData }) => {
                 onChange={onChange}
                 required
             />
-            <label>Re-enter Password</label>
+            <label>Nhập lại mật khẩu</label>
             <input
                 type="password"
                 name="confirmPassword"
@@ -44,7 +44,7 @@ const Form = ({ onChange, formData }) => {
                 onChange={onChange}
                 required
             />
-            <label>Phone Number</label>
+            <label>Số điện thoại</label>
             <input
                 type="tel"
                 name="phoneNumber"

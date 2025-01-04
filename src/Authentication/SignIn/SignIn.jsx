@@ -78,8 +78,8 @@ const SignIn = () => {
             <div className={styles.signin}>
                 <HeaderLog />
                 <nav className={styles.signin_container}>
-                    <div className={styles.signin_title}>Sign In</div>
-                    <div className={styles.normal}>Welcome back!</div>
+                    <div className={styles.signin_title}>Đăng nhập</div>
+                    <div className={styles.normal}>Chào mừng trở lại!</div>
                 </nav>
 
                 <div className={styles.container}>
@@ -87,7 +87,7 @@ const SignIn = () => {
                         <section className={styles.formInfo}>
                             <div className={styles.form_container}>
                                 <div className={styles.form}>
-                                    <label>Email/Phone</label>
+                                    <label>Email</label>
                                     <input
                                         type="text"
                                         name="email"
@@ -96,7 +96,7 @@ const SignIn = () => {
                                         placeholder="Enter your email or phone"
                                         required
                                     />
-                                    <label>Password</label>
+                                    <label>Mật khẩu</label>
                                     <input
                                         type="password"
                                         name="password"
@@ -123,7 +123,7 @@ const SignIn = () => {
                                 </Link>
                             </div>
                             <div className={styles.signup_button} onClick={handleSignIn}>
-                                <div className={styles.signup_content}>Sign In</div>
+                                <div className={styles.signup_content}>Đăng nhập</div>
                             </div>
                             <div className={styles.googleLogin}>
                                 <GoogleLogin

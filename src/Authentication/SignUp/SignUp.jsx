@@ -56,9 +56,9 @@ const SignUp = () => {
         <div className={styles.signup}>
             <HeaderLog />
             <nav className={styles.signup_container}>
-                <div className={styles.signup_title}>Sign Up</div>
+                <div className={styles.signup_title}>Đăng ký</div>
                 <div className={styles.normal}>
-                    Ready to become a <div className={styles.bold}>Bee Rushter?</div>
+                    Bạn đã chuẩn bị để trở thành một <div className={styles.bold}>Bee Rushter?</div>
                 </div>
             </nav>
             <div className={styles.container}>
@@ -79,7 +79,7 @@ const SignUp = () => {
                             </Link>
                         </div>
                         <div className={styles.signup_button} onClick={handleSignUp}>
-                            <div className={styles.signup_content}>Sign Up</div>
+                            <div className={styles.signup_content}>Đăng ký</div>
                         </div>
                     </aside>
                 </div>

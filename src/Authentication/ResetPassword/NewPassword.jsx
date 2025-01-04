@@ -29,7 +29,7 @@ const NewPassword = ({ onChange, formData, setStep }) => {
     return (
         <form className={styles.form_container}>
             <div className={styles.verification}>
-                <div className={styles.verification_title}>Enter New Password</div>
+                <div className={styles.verification_title}>Nhập mật khẩu mới</div>
                 <div className={styles.form}>
                     <label>OTP</label>
                     <input
@@ -39,7 +39,7 @@ const NewPassword = ({ onChange, formData, setStep }) => {
                         onChange={onChange}
                         required
                     />
-                    <label>New Password</label>
+                    <label>Mật khẩu mới</label>
                     <input
                         type="password"
                         name="password"
@@ -47,7 +47,7 @@ const NewPassword = ({ onChange, formData, setStep }) => {
                         onChange={onChange}
                         required
                     />
-                    <label>Re-enter Password</label>
+                    <label>Nhập lại mật khẩu mới</label>
                     <input
                         type="password"
                         name="confirmPassword"
@@ -56,7 +56,7 @@ const NewPassword = ({ onChange, formData, setStep }) => {
                         required
                     />
                     <button type="button" disabled={loading} onClick={handleSubmitNewPassword} className={styles.submitButton}>
-                        Reset Password
+                        Thay đổi mật khẩu
                     </button>
                 </div>
             </div>

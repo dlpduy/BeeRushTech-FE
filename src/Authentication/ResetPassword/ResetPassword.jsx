@@ -45,8 +45,8 @@ const ResetPassword = () => {
         <div className={styles.signin}>
             <HeaderLog />
             <div className={styles.signin_container}>
-                <div className={styles.signin_title}>Reset Password</div>
-                <div className={styles.normal}>Don't worry! We will get you back!</div>
+                <div className={styles.signin_title}>Thay đổi mật khẩu</div>
+                <div className={styles.normal}>Đừng lo lắng! Chúng tôi sẽ giúp bạn!</div>
             </div>
 
             <div className={styles.container}>

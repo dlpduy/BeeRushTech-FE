@@ -15,10 +15,10 @@ const Congratulation = () => {
         <div className={styles.signup}>
             <HeaderLog />
             <nav className={styles.signup_container}>
-                <div className={styles.signup_title}>Congratulations</div>
+                <div className={styles.signup_title}>Chúc mừng!</div>
                 <div className={styles.normal}>
-                    You have successfully registered to our system.
-                    <span onClick={() => navigate("/signin")} className={styles.bold}> Sign in now!</span>
+                    Bạn đã đăng ký thành công !
+                    <span onClick={() => navigate("/signin")} className={styles.bold}> Đăng nhập ngay!</span>
                 </div>
             </nav>
         </div>

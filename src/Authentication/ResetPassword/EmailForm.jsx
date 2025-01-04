@@ -32,7 +32,7 @@ const EmailForm = ({ onChange, formData, setStep }) => {
                     required
                 />
                 <button onClick={onSendOTP} className={styles.submitButton} disabled={loading}>
-                    Send OTP
+                    Gửi mã OTP
                 </button>
             </div>
         </div>

@@ -14,10 +14,10 @@ const Congratulations = () => {
         <div className={styles.signup}>
             <HeaderLog />
             <nav className={styles.signup_container}>
-                <div className={styles.signup_title}>Congratulations</div>
+                <div className={styles.signup_title}>Chúc mừng!</div>
                 <div className={styles.normal}>
-                    You have successfully changed your password.
-                    <span onClick={handleSignIn} className={styles.bold}> Sign in now!</span>
+                    Bạn đã thay đổi mật khẩu thành công!
+                    <span onClick={handleSignIn} className={styles.bold}> Đăng nhập ngay!</span>
                 </div>
             </nav>
         </div>
