@@ -62,28 +62,27 @@ const ProductDetail = ({ addToCart }) => {
 
   const handleAddToCart = async () => {
     try {
-      
+
       const response = await api.post("/customer/cart", {
         productId: product.id,
         quantity: quantity,
       });
-        console.log(response);
+      console.log(response);
       if (response.statusCode === 200) {
-        setIsAdded(true); 
+        setIsAdded(true);
         setMessage("Product added to cart successfully!");
-        
+
       } else {
         setIsAdded(false);
       }
     } catch (err) {
       console.error("Error adding product to cart:", err);
-      setIsAdded(false); 
-      setIsLoading(false); 
+      setIsAdded(false);
+      setIsLoading(false);
     }
   };
 
-  const imageUrl = imageError ? "/public/logo.png" : (product?.image || "/public/logo.png");
-
+  const imageUrl = `https://bee-rush-tech-fe.up.railway.app/images/${productId}/image.png`;
   if (isLoading) {
     return <div><Loading /></div>;
   }
@@ -114,29 +113,29 @@ const ProductDetail = ({ addToCart }) => {
       <aside className={styles.detail}>
         <div className={styles.product_detail_info}>
           <h1 className={styles.name}>{product.name}</h1>
-            <h3 className={styles.brand}>Thương hiệu: {product.brand}</h3>
+          <h3 className={styles.brand}>Thương hiệu: {product.brand}</h3>
 
-            <p className={styles.price}>Giá thuê : {formatNumberWithDots(product.price)} VND/ giờ</p>
+          <p className={styles.price}>Giá thuê : {formatNumberWithDots(product.price)} VND/ giờ</p>
 
-            <p className={styles.description}>Mô tả: {product.description}</p>
+          <p className={styles.description}>Mô tả: {product.description}</p>
 
-            <div className={styles.color}>
-              <p>Màu: </p>
-            <div 
+          <div className={styles.color}>
+            <p>Màu: </p>
+            <div
               style={{
                 width: '50px',
                 height: '50px',
                 backgroundColor: getColorFromString(product.color),
                 marginTop: '10px',
                 borderRadius: '5px',
-                }}
-              />
-            </div>
+              }}
+            />
+          </div>
 
-            <p className={styles.quantity}>Số lượng: {product.quantity}</p>
+          <p className={styles.quantity}>Số lượng: {product.quantity}</p>
 
           {/* Lựa chọn số lượng và nút "Add to Rent" */}
-          
+
 
           <div className={styles.Rent}>
             <div className={styles.quantity_section}>
